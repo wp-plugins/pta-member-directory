@@ -1,0 +1,520 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PTA Member Directory\n"
+"POT-Creation-Date: 2013-07-25 16:24-0800\n"
+"PO-Revision-Date: 2013-07-25 16:25-0800\n"
+"Last-Translator: Stephen Sherrard <stephen@dbar-productions.com>\n"
+"Language-Team: \n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;_x\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: pta-member-directory.php:49
+msgid "Members"
+msgstr ""
+
+#: pta-member-directory.php:50
+msgid "Member"
+msgstr ""
+
+#: pta-member-directory.php:51
+msgid "Member Directory"
+msgstr ""
+
+#: pta-member-directory.php:53
+msgid "All Members"
+msgstr ""
+
+#: pta-member-directory.php:54
+msgid "View Member"
+msgstr ""
+
+#: pta-member-directory.php:55
+msgid "Add New Member"
+msgstr ""
+
+#: pta-member-directory.php:56
+msgid "New Member"
+msgstr ""
+
+#: pta-member-directory.php:57
+msgid "Edit Member"
+msgstr ""
+
+#: pta-member-directory.php:58
+msgid "Update Member"
+msgstr ""
+
+#: pta-member-directory.php:59
+msgid "Search members"
+msgstr ""
+
+#: pta-member-directory.php:60
+msgid "No members found"
+msgstr ""
+
+#: pta-member-directory.php:61
+msgid "No members found in Trash"
+msgstr ""
+
+#: pta-member-directory.php:65
+msgid "member"
+msgstr ""
+
+#: pta-member-directory.php:66
+msgid "PTA Board Members and Chairs"
+msgstr ""
+
+#: pta-member-directory.php:87 pta-member-directory.php:97
+msgid "Positions"
+msgstr ""
+
+#: pta-member-directory.php:88 pta-member-directory.php:923
+#: pta-member-directory.php:947
+msgid "Position"
+msgstr ""
+
+#: pta-member-directory.php:89
+msgid "Search Positions"
+msgstr ""
+
+#: pta-member-directory.php:90
+msgid "All Positions"
+msgstr ""
+
+#: pta-member-directory.php:91
+msgid "Parent Category"
+msgstr ""
+
+#: pta-member-directory.php:92
+msgid "Parent Category:"
+msgstr ""
+
+#: pta-member-directory.php:93
+msgid "Edit Position"
+msgstr ""
+
+#: pta-member-directory.php:94
+msgid "Update Position"
+msgstr ""
+
+#: pta-member-directory.php:95
+msgid "Add New Position"
+msgstr ""
+
+#: pta-member-directory.php:96
+msgid "New Position"
+msgstr ""
+
+#: pta-member-directory.php:198
+#, php-format
+msgid "Member updated. <a href=\"%s\">View Member</a>"
+msgstr ""
+
+#: pta-member-directory.php:199
+msgid "Custom field updated."
+msgstr ""
+
+#: pta-member-directory.php:200
+msgid "Custom field deleted."
+msgstr ""
+
+#: pta-member-directory.php:201
+msgid "Member updated."
+msgstr ""
+
+#: pta-member-directory.php:202
+#, php-format
+msgid "Member restored to revision from %s"
+msgstr ""
+
+#: pta-member-directory.php:203
+#, php-format
+msgid "Member published. <a href=\"%s\">View Member</a>"
+msgstr ""
+
+#: pta-member-directory.php:204
+msgid "Member saved."
+msgstr ""
+
+#: pta-member-directory.php:205
+#, php-format
+msgid "Member submitted. <a target=\"_blank\" href=\"%s\">Preview Member</a>"
+msgstr ""
+
+#: pta-member-directory.php:206
+#, php-format
+msgid ""
+"Member scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
+"\">Preview Member</a>"
+msgstr ""
+
+#: pta-member-directory.php:206
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: pta-member-directory.php:207
+#, php-format
+msgid ""
+"Member draft updated. <a target=\"_blank\" href=\"%s\">Preview Member</a>"
+msgstr ""
+
+#: pta-member-directory.php:226
+msgid "Contact Phone:"
+msgstr ""
+
+#: pta-member-directory.php:227
+msgid "contact phone #"
+msgstr ""
+
+#: pta-member-directory.php:232
+msgid "Contact Email:"
+msgstr ""
+
+#: pta-member-directory.php:233
+msgid "contact email address"
+msgstr ""
+
+#: pta-member-directory.php:238
+msgid "Positions: "
+msgstr ""
+
+#: pta-member-directory.php:274
+msgid ""
+"<p>Select one or more positions, or use the box below to add a new position."
+"</p>"
+msgstr ""
+
+#: pta-member-directory.php:498
+msgid "Show All Positions"
+msgstr ""
+
+#: pta-member-directory.php:613
+msgid "Member Directory Options"
+msgstr ""
+
+#: pta-member-directory.php:614
+msgid "Automatically format 7 or 10 digit phone numbers in US format?"
+msgstr ""
+
+#: pta-member-directory.php:615
+msgid ""
+" YES <em>(if checked, any new 7 or 10 digit inputs will be formatted as "
+"(555) 555-5555.<br />Existing entries won't be changed unless you update "
+"them.)</em>"
+msgstr ""
+
+#: pta-member-directory.php:616
+msgid "Show phone numbers in directory?"
+msgstr ""
+
+#: pta-member-directory.php:617
+msgid ""
+" YES <em>(if checked, member contact phone numbers will be shown if they are "
+"set for that member.)</em>"
+msgstr ""
+
+#: pta-member-directory.php:618
+msgid "Show photos in directory?"
+msgstr ""
+
+#: pta-member-directory.php:619
+msgid ""
+" YES <em>(if checked, member photos will be shown if one exists for that "
+"member.  They will be linked to that members post page.)</em>"
+msgstr ""
+
+#: pta-member-directory.php:620
+msgid "Directory Photo Size?"
+msgstr ""
+
+#: pta-member-directory.php:621
+msgid " Size of member photos to display in directory listing."
+msgstr ""
+
+#: pta-member-directory.php:622
+msgid "Use Contact Form?"
+msgstr ""
+
+#: pta-member-directory.php:623
+msgid ""
+" YES <em>(if checked, email will be hidden and replaced with a contact form "
+"link)</em>"
+msgstr ""
+
+#: pta-member-directory.php:624
+msgid "Hide From Public?"
+msgstr ""
+
+#: pta-member-directory.php:625
+msgid ""
+" YES <em>(if checked, member directory will only be displayed to logged in "
+"members)</em>"
+msgstr ""
+
+#: pta-member-directory.php:626
+msgid "Minimum user level to view:"
+msgstr ""
+
+#: pta-member-directory.php:627
+msgid "(only applies if Hide From Public is checked)"
+msgstr ""
+
+#: pta-member-directory.php:628
+msgid "Contact form page: "
+msgstr ""
+
+#: pta-member-directory.php:629
+msgid ""
+"Only use this if you have set up a page with the [pta_member_contact] "
+"contact form shortcode, or want to use a different contact form.<br /"
+">Otherwise, leave this set to None to generate the contact form dynamically "
+"from the directory page."
+msgstr ""
+
+#: pta-member-directory.php:630
+msgid "Reset Options: "
+msgstr ""
+
+#: pta-member-directory.php:631
+msgid ""
+" Resets the above options to default values upon deactivation and "
+"reactivation of the plugin."
+msgstr ""
+
+#: pta-member-directory.php:632
+msgid "Display name for Position: "
+msgstr ""
+
+#: pta-member-directory.php:633
+msgid ""
+" This is the label used for the \"Position\" table column header in the "
+"public directory."
+msgstr ""
+
+#: pta-member-directory.php:634
+msgid "Contact form dropdown shows: "
+msgstr ""
+
+#: pta-member-directory.php:635
+msgid ""
+" Select if you want to show positions, individuals, or both on the contact "
+"form recipient drop down select box."
+msgstr ""
+
+#: pta-member-directory.php:636
+msgid "Show first names after positions? "
+msgstr ""
+
+#: pta-member-directory.php:637
+msgid ""
+" YES <em>(if checked, and showing positions (or both) on contact form, the "
+"first names of members who hold that position will be listed after the "
+"position name.)</em>"
+msgstr ""
+
+#: pta-member-directory.php:638
+msgid "Show positions after names? "
+msgstr ""
+
+#: pta-member-directory.php:639
+msgid ""
+" YES <em>(if checked, and showing individuals (or both) on contact form, the "
+"positions a member holds will be listed after their name.)</em>"
+msgstr ""
+
+#: pta-member-directory.php:640
+msgid "Contact form message: "
+msgstr ""
+
+#: pta-member-directory.php:641
+msgid ""
+" The message to display on the screen after a message has been successfully "
+"sent.  HTML allowed."
+msgstr ""
+
+#: pta-member-directory.php:642
+msgid "Enable post to CFDB: "
+msgstr ""
+
+#: pta-member-directory.php:643
+msgid ""
+"  YES <em>(If the Contact Form DB plugin is installed, check this to save "
+"contact form submissions to the database via CFDB.)</em>"
+msgstr ""
+
+#: pta-member-directory.php:644
+msgid "Contact Form DB form title: "
+msgstr ""
+
+#: pta-member-directory.php:645
+msgid ""
+"Sets the form title that results will be stored under with the Contact Form "
+"DB plugin. (hidden form field)"
+msgstr ""
+
+#: pta-member-directory.php:856
+msgid "<div id=\"message\" class=\"error\">Invalid Referrer!</div>"
+msgstr ""
+
+#: pta-member-directory.php:858
+msgid "<div id=\"message\" class=\"error\">Update Cancelled</div>"
+msgstr ""
+
+#: pta-member-directory.php:876
+msgid "<div id=\"message\" class=\"updated\">Options Updated!</div>"
+msgstr ""
+
+#: pta-member-directory.php:878
+msgid "<div id=\"message\" class=\"error\">Error! Options not changed.</div>"
+msgstr ""
+
+#: pta-member-directory.php:885
+msgid "PTA Member Directory - Options"
+msgstr ""
+
+#: pta-member-directory.php:886
+msgid ""
+"To display the member directory on a page, use the shortcode "
+"[pta_member_directory] <br />\n"
+"\tIf you want to use the contact form on its own separate page, use the "
+"shortcode [pta_member_contact]"
+msgstr ""
+
+#: pta-member-directory.php:910
+msgid "PTA Member Directory - Sort Position Display Order"
+msgstr ""
+
+#: pta-member-directory.php:913
+msgid ""
+"<h2>No Positions to display</h2>\n"
+"\t\t\t\t<p>Positions can be added from the Positions submenu, or when adding "
+"a new member.</p>"
+msgstr ""
+
+#: pta-member-directory.php:918
+msgid ""
+"Drag and Drop the Positions below to change the display order on the public "
+"page.<br />\n"
+"\t\t\t\t\t\t\t(Order numbers will change after you refresh the page)"
+msgstr ""
+
+#: pta-member-directory.php:924 pta-member-directory.php:948
+msgid "Order"
+msgstr ""
+
+#: includes/pta-display-directory.php:10
+msgid "Sorry!  You must be logged in to view the directory."
+msgstr ""
+
+#: includes/pta-display-directory.php:13
+msgid "Sorry!  You don't have the proper user level to view the directory."
+msgstr ""
+
+#: includes/pta-display-directory.php:28
+msgid "Name"
+msgstr ""
+
+#: includes/pta-display-directory.php:29
+msgid "Phone"
+msgstr ""
+
+#: includes/pta-display-directory.php:30
+msgid "Email"
+msgstr ""
+
+#: includes/pta-display-directory.php:31
+msgid "VACANT"
+msgstr ""
+
+#: includes/pta-display-directory.php:32
+msgid "Send A Message"
+msgstr ""
+
+#: includes/pta-display-directory.php:33
+msgid "Send group a message"
+msgstr ""
+
+#: includes/pta-display-directory.php:34
+msgid "more info..."
+msgstr ""
+
+#: includes/pta-display-directory.php:198
+#: includes/pta-display-directory.php:228
+msgid "Send a message to: "
+msgstr ""
+
+#: includes/pta-display-directory.php:199
+msgid "Or, select a different recipient:"
+msgstr ""
+
+#: includes/pta-display-directory.php:227
+msgid "Or select a different recipient:"
+msgstr ""
+
+#: includes/pta-display-directory.php:234
+msgid "Please select a recipient:"
+msgstr ""
+
+#: includes/pta-display-directory.php:235
+msgid "Send a message: "
+msgstr ""
+
+#: includes/pta-display-directory.php:240
+msgid "Your Name"
+msgstr ""
+
+#: includes/pta-display-directory.php:241
+msgid "Your E-mail Address"
+msgstr ""
+
+#: includes/pta-display-directory.php:242
+msgid "Subject"
+msgstr ""
+
+#: includes/pta-display-directory.php:243
+msgid "Your Message"
+msgstr ""
+
+#: includes/pta-display-directory.php:244
+msgid "Submit"
+msgstr ""
+
+#: includes/pta-display-directory.php:245
+msgid "Select a recipient"
+msgstr ""
+
+#: includes/pta-display-directory.php:247
+msgid "Please fill in all the required fields."
+msgstr ""
+
+#: includes/pta-display-directory.php:249
+msgid "Please enter a valid e-mail address."
+msgstr ""
+
+#: includes/pta-display-directory.php:250
+msgid ""
+"That recipient doesn't currently have a valid email address.  Please choose "
+"another recipient."
+msgstr ""
+
+#: includes/pta-display-directory.php:251
+msgid "Invalid Referrer!"
+msgstr ""
+
+#: includes/pta-display-directory.php:252
+msgid "Spambot!"
+msgstr ""
+
+#: includes/pta-display-directory.php:253
+msgid "No recipient selected.  Please select one."
+msgstr ""
+
+#: includes/pta-display-directory.php:432
+msgid "Individuals"
+msgstr ""
