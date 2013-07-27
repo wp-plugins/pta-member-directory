@@ -12,7 +12,7 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 0.4
+Version: 0.5
 Author URI: http://dbar-productions.com
 */
 
@@ -569,40 +569,6 @@ function pta_title_text_input( $title ){
     return $title;
 }
 add_filter( 'enter_title_here', 'pta_title_text_input' ); // Hook for the above function
-
-/**
- * Sets up our default template for showing the directory on the public side of the site
- * Allows themes to create their own template for our post type, but if it doesn't exist in the theme,
- * then this function sets the path for our member templates.
- * @param  [string] $template_path current path to the theme template files
- * @return [string] $template_path updated template path
- * @todo Not being used right now, but could make a default template for single-member.php to format their pages
- */
-
-//function pta_include_template_function( $template_path ) {
-//    if ( get_post_type() == 'member' ) {
-//        if ( is_single() ) {
-            // just return if it's a single, so we can show individual member page for now
-            // in future, can set up a custom template to show individual members
-//            return $template_path;
-            /*if ( $theme_file = locate_template( array ( 'single-member.php' ) ) ) {
-                $template_path = $theme_file;
-            } else {
-                $template_path = plugin_dir_path( __FILE__ ) . '/single-member.php';
-            } */
-//        } else {
-        	// checks if the file exists in the theme first,
-            // otherwise serve the file from the plugin
- //       	if ( $theme_file = locate_template( array ( 'archive-member.php' ) ) ) {
- //               $template_path = $theme_file;
- //           } else {
- //               $template_path = plugin_dir_path( __FILE__ ) . '/archive-member.php';
- //           }
- //       }
- //   }
- //   return $template_path;
-//}
-//add_filter( 'template_include', 'pta_include_template_function', 1 ); // hook the above function to template_include action
 
 function pta_directory_options_form( $options=array() ) {
 	$capabilities = array(

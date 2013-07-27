@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 0.4
+Stable tag: 0.5
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -60,6 +60,9 @@ I'm not a fan of captcha as I often can\'t even read them myself, and it makes s
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 0.4**
+*	Minor housekeeping and readme.txt cleanup - no functional changes
+
 **Version 0.4**
 
 *	Added integration with Contact Form DB plugin
