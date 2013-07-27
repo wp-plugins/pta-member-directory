@@ -1,6 +1,6 @@
 === PTA Member Directory and Contact Form ===
 Contributors: DBAR Productions 
-Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8JA4AL
+Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7U6S4U46CKYPJ
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.5.1
@@ -20,8 +20,8 @@ There is built-in integration with the Contact Form DB plugin so any form submis
 
 The directory has a variety of options for customization:
 
-*   Choose the heading to display for \"Position\" in the directory (e.g., you can choose to show \"Title\" instead of \"Position\")
-*   Contact form contact select drop down can be configured to display individuals, positions, or both.  If you choose \"both\", there are nice headers to separate positions and individuals.    
+*   Choose the heading to display for "Position" in the directory (e.g., you can choose to show "Title" instead of "Position")
+*   Contact form contact select drop down can be configured to display individuals, positions, or both.  If you choose "both", there are nice headers to separate positions and individuals.    
     
 *   You can choose to show first names after positions on the contact form select box, which will show the first name for each person that holds that position
 *   You can also choose to show the positions a person holds after their name when showing individuals on the contact form.
@@ -44,13 +44,13 @@ Place the shortcode [pta\_member\_directory] on the page where you want the dire
 
 **How do I use the contact form?**
 
-If you want to use the contact form instead of displaying emails in the directory, make sure the \"Use Contact Form?\" option is checked. This will replace all email addresses in the directory with a \"Send A Message\" link.  Clicking on that link will automatically generate the contact form on the same page, with the recipient already selected.
+If you want to use the contact form instead of displaying emails in the directory, make sure the "Use Contact Form?" option is checked. This will replace all email addresses in the directory with a "Send A Message" link.  Clicking on that link will automatically generate the contact form on the same page, with the recipient already selected.
 
-However, you can also use the shortcode [pta\_member\_contact] to put the Contact Form on its own separate page.  This will allow you to use the contact form independently of the directory.  If you then enter the permalink to your contact form on the options page, when you click on \"Send A Message\" in the directory, the link will take the user to the contact form page with the recipient field already selected.
+However, you can also use the shortcode [pta\_member\_contact] to put the Contact Form on its own separate page.  This will allow you to use the contact form independently of the directory.  If you then enter the permalink to your contact form on the options page, when you click on "Send A Message" in the directory, the link will take the user to the contact form page with the recipient field already selected.
 
 **Is there any spam protection?  There is no captcha field?**
 
-I\'m not a fan of captcha as I often can\'t even read them myself, and it makes setup a bit more complicated since you need to obtain and enter a key for a captcha service.  Instead, I used the honeypot method of spam protection.  There is a hidden spambot field that normal visitors won\'t see, but spambots will fill in.  Any form submission that has that spambot field filled in will be rejected.
+I'm not a fan of captcha as I often can\'t even read them myself, and it makes setup a bit more complicated since you need to obtain and enter a key for a captcha service.  Instead, I used the honeypot method of spam protection.  There is a hidden spambot field that normal visitors won't see, but spambots will fill in.  Any form submission that has that spambot field filled in will be rejected.
 == Screenshots ==
 1. Add New Member - Admin
 
