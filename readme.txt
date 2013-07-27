@@ -51,14 +51,13 @@ However, you can also use the shortcode [pta\_member\_contact] to put the Contac
 **Is there any spam protection?  There is no captcha field?**
 
 I'm not a fan of captcha as I often can\'t even read them myself, and it makes setup a bit more complicated since you need to obtain and enter a key for a captcha service.  Instead, I used the honeypot method of spam protection.  There is a hidden spambot field that normal visitors won't see, but spambots will fill in.  Any form submission that has that spambot field filled in will be rejected.
+
 == Screenshots ==
+
 1. Add New Member - Admin
-
-2. Options Page - Admin
-
-3. Member Directory - Public Side
-
-4. Contact Form - Public Side
+1. Options Page - Admin
+1. Member Directory - Public Side
+1. Contact Form - Public Side
 
 == Changelog ==
 **Version 0.4**
