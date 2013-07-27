@@ -60,7 +60,7 @@ I'm not a fan of captcha as I often can\'t even read them myself, and it makes s
 1. Contact Form - Public Side
 
 == Changelog ==
-**Version 0.4**
+**Version 0.5**
 *	Minor housekeeping and readme.txt cleanup - no functional changes
 
 **Version 0.4**
