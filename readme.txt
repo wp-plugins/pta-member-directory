@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 0.5
+Stable tag: 0.6
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -22,7 +22,6 @@ The directory has a variety of options for customization:
 
 *   Choose the heading to display for "Position" in the directory (e.g., you can choose to show "Title" instead of "Position")
 *   Contact form contact select drop down can be configured to display individuals, positions, or both.  If you choose "both", there are nice headers to separate positions and individuals.    
-    
 *   You can choose to show first names after positions on the contact form select box, which will show the first name for each person that holds that position
 *   You can also choose to show the positions a person holds after their name when showing individuals on the contact form.
 *   Use the shortcode to put the directory on any page and dynamically generate a contact form.  Or, use a separate shortcode for the contact form so it can also be used independently of the directory (the directory will then use that page for the contact form)
@@ -46,7 +45,7 @@ Place the shortcode [pta\_member\_directory] on the page where you want the dire
 
 If you want to use the contact form instead of displaying emails in the directory, make sure the "Use Contact Form?" option is checked. This will replace all email addresses in the directory with a "Send A Message" link.  Clicking on that link will automatically generate the contact form on the same page, with the recipient already selected.
 
-However, you can also use the shortcode [pta\_member\_contact] to put the Contact Form on its own separate page.  This will allow you to use the contact form independently of the directory.  If you then enter the permalink to your contact form on the options page, when you click on "Send A Message" in the directory, the link will take the user to the contact form page with the recipient field already selected.
+However, you can also use the shortcode [pta\_member\_contact] to put the Contact Form on its own separate page.  This will allow you to use the contact form independently of the directory.  If you then select the page with your contact form on the options page, when you click on "Send A Message" in the directory, the link will take the user to the contact form page with the recipient field already selected.
 
 **Is there any spam protection?  There is no captcha field?**
 
@@ -60,6 +59,11 @@ I'm not a fan of captcha as I often can\'t even read them myself, and it makes s
 1. Contact Form - Public Side
 
 == Changelog ==
+**version 0.6**
+
+*	Added option to show full name or only first names after positions on contact form
+*	Some extra escaping on form POST data
+
 **Version 0.5**
 *	Minor housekeeping and readme.txt cleanup - no functional changes
 

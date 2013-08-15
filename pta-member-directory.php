@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: PTA Member Directory
-Plugin URI: http://www.dbar-productions.com
+Plugin URI: http://wordpress.org/plugins/pta-member-directory/
 Description: Member/Staff directory listing and management system with contact form.  Uses custom post type and taxonomies.  
 Creates a default template for viewing direcotry on the public side. 
 Simple public view with options to show or hide contact info, or only show contact info for logged in users with admin specified role/capability,
@@ -12,7 +12,7 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 0.5
+Version: 0.6
 Author URI: http://dbar-productions.com
 */
 
@@ -115,6 +115,7 @@ function pta_member_directory_init() {
 				'position_label' => 'Position',
 				'contact_display' => 'both',
 				'show_contact_names' => true,
+				'show_first_names'	=> true,
 				'show_positions' => true,
 				'show_phone' => true,
 				'show_photo' => true,
@@ -122,7 +123,8 @@ function pta_member_directory_init() {
 				'photo_size_y' => 100,
 				'contact_message' => "Thanks for your message! We'll get back to you as soon as we can.",
 				'enable_cfdb' => false,
-				'form_title' => 'PTA Member Directory Contact Form'
+				'form_title' => 'PTA Member Directory Contact Form',
+				'hide_donation_button' => false,
 				);
 	$options = get_option( 'pta_directory_options', $defaults );
 	// Make sure each option is set -- this helps if new options have been added during plugin upgrades
@@ -599,8 +601,10 @@ function pta_directory_options_form( $options=array() ) {
 	$position_label_desc = __(' This is the label used for the "Position" table column header in the public directory.', 'pta-member-directory');
 	$contact_select_label = __('Contact form dropdown shows: ', 'pta-member-directory');
 	$contact_select_desc = __(' Select if you want to show positions, individuals, or both on the contact form recipient drop down select box.', 'pta-member-directory');
-	$show_contact_names_label = __('Show first names after positions? ', 'pta-member-directory');
-	$show_contact_names_desc = __(' YES <em>(if checked, and showing positions (or both) on contact form, the first names of members who hold that position will be listed after the position name.)</em>', 'pta-member-directory');
+	$show_contact_names_label = __('Show names after positions? ', 'pta-member-directory');
+	$show_contact_names_desc = __(' YES <em>(if checked, and showing positions (or both) on contact form, the names of members who hold that position will be listed after the position name.)</em>', 'pta-member-directory');
+	$show_first_names_label = __('Show only first names after positions? ', 'pta-member-directory');
+	$show_first_names_desc = __(' YES <em>(if checked, and showing names after positions (see above), only the first names will be shown. Useful if several people hold a position and the form is getting too wide.)</em>', 'pta-member-directory');
 	$show_positions_label = __('Show positions after names? ', 'pta-member-directory');
 	$show_positions_desc = __(' YES <em>(if checked, and showing individuals (or both) on contact form, the positions a member holds will be listed after their name.)</em>', 'pta-member-directory');
 	$contact_message_label = __('Contact form message: ', 'pta-member-directory');
@@ -609,6 +613,9 @@ function pta_directory_options_form( $options=array() ) {
 	$enable_cfdb_desc = __('  YES <em>(If the Contact Form DB plugin is installed, check this to save contact form submissions to the database via CFDB.)</em>', 'pta-member-directory');
 	$form_title_label = __('Contact Form DB form title: ', 'pta-member-directory');
 	$form_title_desc = __('Sets the form title that results will be stored under with the Contact Form DB plugin. (hidden form field)', 'pta-member-directory');
+	$donation_text = __('Please help support continued development of this plugin. Any donation amount is greatly appreciated!', 'pta-member-directory');
+	$hide_donation_button_label = __('Hide Donation Button: ', 'pta-member-directory');
+	$hide_donation_button_desc = __('Check this if you already donated, or just don\'t want to see the donation button any more.', 'pta-member-directory');
 	$return = '
 		<h3>'.$form_title.'</h3>
 		<form name="pta_directory_options" id="pta_directory_options" method="post" action="">
@@ -647,6 +654,16 @@ function pta_directory_options_form( $options=array() ) {
 								$return .= 'checked'; 
 							}
 							$return .= ' />'.$show_contact_names_desc.'</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$show_first_names_label.'</th>
+					<td>
+						<label><input name="show_first_names" type="checkbox" value="true" ';
+							if (isset($options['show_first_names']) && true === $options['show_first_names']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$show_first_names_desc.'</label>
 					</td>
 				</tr>
 				<tr>
@@ -797,6 +814,16 @@ function pta_directory_options_form( $options=array() ) {
 							$return .= ' />'.$reset_options_desc.'</label>
 					</td>
 				</tr>
+				<tr>
+					<th scope="row">'.$hide_donation_button_label.'</th>
+					<td>
+						<label><input name="hide_donation_button" type="checkbox" value="true" ';
+							if (isset($options['hide_donation_button']) && true === $options['hide_donation_button']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$hide_donation_button_desc.'</label>
+					</td>
+				</tr>
 			</table>
 			<p class="submit">'
             	.wp_nonce_field($action = "pta_directory_options", $name = "pta_directory_options_nonce").'
@@ -805,7 +832,19 @@ function pta_directory_options_form( $options=array() ) {
             	<input type="submit" name="cancel" class="button-secondary" value="CANCEL" />
             </p>
 		</form>
-	';
+		';
+	if (false === $options['hide_donation_button']) {
+		$return .= '
+			<h5>'.$donation_text.'</h5>
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+				<input type="hidden" name="cmd" value="_s-xclick">
+				<input type="hidden" name="hosted_button_id" value="7U6S4U46CKYPJ">
+				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>
+		';
+	}
+		
 	return $return;
 }
 

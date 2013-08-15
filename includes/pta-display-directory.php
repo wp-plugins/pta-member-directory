@@ -18,8 +18,8 @@ function pta_display_directory() {
 		$return = pta_directory_contact_form($id);
 		return $return;
 	}
-	if(isset($_REQUEST['action']) && 'contact' == $_REQUEST['action'] ) {
-		$id = $_REQUEST['id'];
+	if(isset($_GET['action']) && 'contact' == $_GET['action'] ) {
+		$id = $_GET['id'];
 		$return = pta_directory_contact_form($id);
 		return $return;
 	}
@@ -37,14 +37,14 @@ function pta_display_directory() {
 	<table class="pta_directory_table">
 	        <thead>
 	            <tr>
-	                <th>'.$column_position.'</th>
-	                <th>'.$column_name.'</th>';
+	                <th>'.esc_html($column_position).'</th>
+	                <th>'.esc_html($column_name).'</th>';
                 if($options['show_phone']) {
-                	$return .= '<th>'.$column_phone.'</th>';
+                	$return .= '<th>'.esc_html($column_phone).'</th>';
                 	$cols++; // add one to our colspan
                 }
               	$return .= '  
-	                <th>'.$column_email.'</th>
+	                <th>'.esc_html($column_email).'</th>
 	            </th>';
 	            if($options['show_photo']) {
                 	$return .= '<th>&nbsp;</th>';
@@ -67,8 +67,8 @@ function pta_display_directory() {
 	        $loop = new WP_Query( $mypost );
 	        $count = $loop->post_count;
 	        if ( 0 == $count ) {
-	            $return .= '<tr><td><strong>'.$category.'</strong></td>';
-	            $return .= '<td colspan="'.$cols.'">'.$vacant.'</td></tr>';
+	            $return .= '<tr><td><strong>'.esc_html($category).'</strong></td>';
+	            $return .= '<td colspan="'.(int)$cols.'">'.esc_html($vacant).'</td></tr>';
 	        } else {
 	        	// Do we already have a contact page setup with the contact form shortcode?
 	            // if so, get the link and add the id argument for the group
@@ -78,11 +78,11 @@ function pta_display_directory() {
 	            	$contact_url = add_query_arg( array ( 'action' => 'contact', 'id' => $slug ));
 	            }
 	            // Add group message link if there is more than one person for the position
-	            $return .= '<tr><td rowspan="'.$count.'" style="vertical-align: middle;"><strong>'.$category.'</strong>';
+	            $return .= '<tr><td rowspan="'.(int)$count.'" style="vertical-align: middle;"><strong>'.esc_html($category).'</strong>';
 	            if (1 == $count) {
 	                $return .= '</td>';
 	            } else {
-	                $return .= ' <br><br><a href="'.$contact_url.'">'.$group_message.'</a></td>';
+	                $return .= ' <br><br><a href="'.esc_url($contact_url).'">'.esc_html($group_message).'</a></td>';
 	            }
 	        }
 	        $i=0;
@@ -97,23 +97,23 @@ function pta_display_directory() {
 		            } else {
 		            	$contact_url = add_query_arg( array ( 'action' => 'contact', 'id' => $id ));
 		            }
-		            $email = '<a href="'.$contact_url.'">'.$send_message.'</a>';
+		            $email = '<a href="'.esc_url($contact_url).'">'.$send_message.'</a>';
 		        } else { // display the email with mailto link
 		            $mail = esc_html( get_post_meta( get_the_ID(), '_pta_member_directory_email', true ) );
-	            	$email = '<a href="mailto:'.$mail.'">'.$mail.'</a>';
+	            	$email = '<a href="mailto:'.esc_attr($mail).'">'.esc_html($mail).'</a>';
 		        }
 		        if (!is_email( get_post_meta( $id, '_pta_member_directory_email', true ) ) ) {
 		        	$email = ''; // if they don't have an email, don't show anything
 				}
 		        $name = get_the_title(get_the_ID());
-		        $phone = esc_html( get_post_meta( get_the_ID(), '_pta_member_directory_phone', true ) );
+		        $phone = get_post_meta( get_the_ID(), '_pta_member_directory_phone', true );
 	            if($i>0) {
 	                $return .= '<tr>';
 	            }
 	            $return .= '
-	                <td style="vertical-align: middle;">'. $name.'</td>';
+	                <td style="vertical-align: middle;">'. esc_html($name).'</td>';
 	            if($options['show_phone']) {
-	                $return .= '<td style="vertical-align: middle;">'. $phone .'</td>';
+	                $return .= '<td style="vertical-align: middle;">'. esc_html($phone) .'</td>';
 	            }
 	            $return .= '
 	                <td style="vertical-align: middle;">'. $email .'</td>';
@@ -123,14 +123,14 @@ function pta_display_directory() {
 	            		$size[] = $options['photo_size_x'];
 	            		$size[] = $options['photo_size_y'];
 	            		$image = get_the_post_thumbnail($id, $size);
-	            		$return .= '<a href="'.$link.'">'. $image .'</a>';
+	            		$return .= '<a href="'.esc_url($link).'">'. $image .'</a>';
 	            	} else {
 	            		$return .= '&nbsp;';
 	            	}
 
 	            	$cc = get_the_content();
 	            	if($cc != '') {
-	            	     $return .= '<br><a href="'.$link.'">'.$more_info.'</a>';
+	            	     $return .= '<br><a href="'.esc_url($link).'">'.esc_html($more_info).'</a>';
 	            	}
 					$return .= '</td>';
 	            }
@@ -172,13 +172,13 @@ function pta_directory_contact_form($id='') {
 			$id = false; // make sure this is unset
 			$group = sanitize_text_field( $_POST['recipient'] ); // set group to the position category slug
 		}		
-	} elseif (isset($_REQUEST['id']) && '' != $_REQUEST['id'] && !$id) {
+	} elseif (isset($_GET['id']) && '' != $_GET['id'] && !$id) {
 		// check if we got a member id or a group name(slug) passed in
-		if (is_numeric($_REQUEST['id'])) {
-			$id = (int)$_REQUEST['id'];
+		if (is_numeric($_GET['id'])) {
+			$id = (int)$_GET['id'];
 		} else { // name or other characters passed in
-			if (in_array($_REQUEST['id'], $categories)) { // Make sure it's one of our category slugs
-				$group = sanitize_text_field( $_REQUEST['id'] );
+			if (in_array($_GET['id'], $categories)) { // Make sure it's one of our category slugs
+				$group = sanitize_text_field( $_GET['id'] );
 			} 
 			$id = false; // unset this for later logic operations
 		}		
@@ -368,13 +368,13 @@ function pta_directory_contact_form($id='') {
 	}
 	// anyways, let's build the form!
 	
-	$email_form = '<h3>'.$label_send_message.'</h3>
+	$email_form = '<h3>'.esc_html($label_send_message).'</h3>
 	<form class="contact-form" method="post" action="' . get_permalink() . '">
-		<input type="hidden" name="form_title" value="'.$options["form_title"].'"/>
+		<input type="hidden" name="form_title" value="'.esc_attr($options["form_title"]).'"/>
 		<div>
-			<label for="cf_recipient">'.$label_recipient.'</label>
+			<label for="cf_recipient">'.esc_html($label_recipient).'</label>
 			<select name="recipient" id="cf_recipient">
-				<option value="">'.$label_option.'</option>';
+				<option value="">'.esc_html($label_option).'</option>';
 			$members = get_posts(  array(
 				'numberposts'		=> -1,
 				'orderby'			=>	'meta_value',
@@ -386,7 +386,7 @@ function pta_directory_contact_form($id='') {
 			if( 'positions' == $options['contact_display'] || 'both' == $options['contact_display'] ) {
 				// Create list of positions/categories for multi-recipient mail
 				if ('both' == $options['contact_display']) {
-					$email_form .= '<optgroup label="'. $options['position_label'].'">';
+					$email_form .= '<optgroup label="'. esc_attr($options['position_label']).'">';
 				}
 				foreach ($categories as $category) {
 					$args = array( 'hide_empty'=>true,  'slug' => $category  );
@@ -399,7 +399,7 @@ function pta_directory_contact_form($id='') {
 			        }
 			        // Get member names that hold position and make sure there is at least one valid email
 			        $email_exists = false; // will set this to true if we find at least one member in this position with valid email
-			        $first_names = ''; // Use this to create a list of first names of people in each position
+			        $display_names = ''; // Use this to create a list of names of people in each position
 			        $name_count = 0;
 			        foreach ($members as $member) {
 			        	if(has_term( $category, 'member_category', $member )) {
@@ -407,12 +407,17 @@ function pta_directory_contact_form($id='') {
 			        		if (!is_email($member_email)) continue; // Don't list the member if they have no valid email
 			        		$email_exists = true; // got an email
 			        		if(0 == $name_count) {
-			        			$first_names .= ' - '; // put a separator before the first name in the list
+			        			$display_names .= ' - '; // put a separator before the first name in the list
 			        		} else {
-			        			$first_names .= ' | '; // separate names with a pipe
+			        			$display_names .= ' | '; // separate names with a pipe
 			        		}
-			        		$name_arr = explode(' ',trim($member->post_title));
-			        		$first_names .= esc_attr($name_arr[0]); // put just the first name in there
+			        		// Check if we want full names or just first names
+			        		if ( true === $options['show_first_names']) {
+			        			$name_arr = explode(' ',trim($member->post_title));
+			        			$display_names .= esc_attr($name_arr[0]); // put just the first name in there
+			        		} else {
+			        			$display_names .= esc_attr($member->post_title);
+			        		}			        		
 			        		$name_count++;
 			        	}
 			        }
@@ -423,9 +428,9 @@ function pta_directory_contact_form($id='') {
 						$email_form .= 'selected="selected"';
 					}
 					$email_form .= '>'.$display_name;
-					// Show first names after position name if the option is set
+					// Show names after position name if the option is set
 					if ($options['show_contact_names']) {
-						$email_form .= $first_names;
+						$email_form .= $display_names;
 					}
 			 		$email_form .= '</option>';
 				}
@@ -467,24 +472,24 @@ function pta_directory_contact_form($id='') {
 			</select>
 		</div>
 	    <div>
-	        <label for="cf_name">' . $label_name . ':</label>
+	        <label for="cf_name">' . esc_html($label_name) . ':</label>
 	        <input type="text" name="your_name" id="cf_name" size="50" maxlength="50" value="' . 
-	        	( isset($form_data['your_name']) ? $form_data['your_name'] : "" ) . '" />
+	        	( isset($form_data['your_name']) ? esc_attr($form_data['your_name']) : "" ) . '" />
 	    </div>
 	    <div>
-	        <label for="cf_email">' . $label_email . ':</label>
+	        <label for="cf_email">' . esc_html($label_email) . ':</label>
 	        <input type="text" name="email" id="cf_email" size="50" maxlength="50" value="' .
-	        	 ( isset($form_data['email']) ? $form_data['email'] : "" ) . '" />
+	        	 ( isset($form_data['email']) ? esc_attr($form_data['email']) : "" ) . '" />
 	    </div>
 	    <div>
-	        <label for="cf_subject">' . $label_subject . ':</label>
-	        <input type="text" name="subject" id="cf_subject" size="50" maxlength="50" value="' . $subject . 
-	        	( isset($form_data['subject']) ? $form_data['subject'] : "" ) . '" />
+	        <label for="cf_subject">' . esc_html($label_subject) . ':</label>
+	        <input type="text" name="subject" id="cf_subject" size="50" maxlength="50" value="' . esc_attr($subject) . 
+	        	( isset($form_data['subject']) ? esc_attr($form_data['subject']) : "" ) . '" />
 	    </div>
 	    <div>
-	        <label for="cf_message">' . $label_message . ':</label>
+	        <label for="cf_message">' . esc_html($label_message) . ':</label>
 	        <textarea name="message" id="cf_message" cols="50" rows="15">' . 
-	        	( isset($form_data['message']) ? $form_data['message'] : "" ) . '</textarea>
+	        	( isset($form_data['message']) ? esc_textarea($form_data['message']) : "" ) . '</textarea>
 	    </div>
 	    <div style="visibility:hidden"> 
 			<input name="contactbot" type="text"size="20"  >
@@ -492,8 +497,8 @@ function pta_directory_contact_form($id='') {
 	    <div>
 	    	'.wp_nonce_field("pta_directory_contact_form", "pta_directory_contact_form_nonce").'
 	    	<input type="hidden" name="contact_mode" value="submitted" />
-	        <input type="submit" value="' . $label_submit . '" name="send" id="cf_send" />
-	        <input type="hidden" value="'.$id.'" name="id" />
+	        <input type="submit" value="' . esc_attr($label_submit) . '" name="send" id="cf_send" />
+	        <input type="hidden" value="'.esc_attr($id).'" name="id" />
 	    </div>
 	</form>';
 
