@@ -22,7 +22,7 @@ The directory has a variety of options for customization:
 
 *   Choose the heading to display for "Position" in the directory (e.g., you can choose to show "Title" instead of "Position")
 *   Contact form contact select drop down can be configured to display individuals, positions, or both.  If you choose "both", there are nice headers to separate positions and individuals.    
-*   You can choose to show first names after positions on the contact form select box, which will show the first name for each person that holds that position
+*   You can choose to show full names, only first names, or nothing, after positions on the contact form select box, which will show for each person that holds that position
 *   You can also choose to show the positions a person holds after their name when showing individuals on the contact form.
 *   Use the shortcode to put the directory on any page and dynamically generate a contact form.  Or, use a separate shortcode for the contact form so it can also be used independently of the directory (the directory will then use that page for the contact form)
 *   Choose to show or hide phone numbers in the directory
@@ -59,7 +59,11 @@ I'm not a fan of captcha as I often can\'t even read them myself, and it makes s
 1. Contact Form - Public Side
 
 == Changelog ==
-**version 0.6**
+**Version 0.7**
+
+*	Fixed syntax on load_plugin_textdomain for proper translation setup
+
+**Version 0.6**
 
 *	Added option to show full name or only first names after positions on contact form
 *	Some extra escaping on form POST data

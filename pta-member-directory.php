@@ -12,7 +12,7 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 0.6
+Version: 0.7
 Author URI: http://dbar-productions.com
 */
 
@@ -141,7 +141,7 @@ function pta_member_directory_init() {
 
 	register_deactivation_hook( __FILE__, 'pta_member_directory_deactivate' );
 
-	load_plugin_textdomain( 'pta-member-directory', false, '/languages/' );
+	load_plugin_textdomain( 'pta-member-directory', false, dirname(plugin_basename( __FILE__ )) . '/languages/' );
 
 	// Make sure the theme allows thumbnails for our custom post type
 	if ( ! current_theme_supports( 'post-thumbnails', 'member' ) ) {
