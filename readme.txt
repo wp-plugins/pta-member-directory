@@ -84,6 +84,7 @@ http://yoursite.com/your_directory_page/?location=seattle
 
 == Changelog ==
 **Version 1.0**
+
 *	Added Locations to allow showing directories or contact form for a specific location, office, branch, etc. 
 *	Locations can be set with arguments in the shortcodes to set up fixed directory/contact pages for each location, or locations can be passed in as an argument in a link.
 *	Added an option to enable/disable showing of Vacant positions
