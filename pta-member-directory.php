@@ -12,14 +12,11 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 0.7
+Version: 1.0
 Author URI: http://dbar-productions.com
 */
 
 /**
- * @todo For public release version Create a "location" or "office" option.
- *       Then can add members to the office/location, and query the results to filter by location
- *       if want to show members from just one office.
  * @todo Set taxonomy 'member_category' to heirarchial so can assign positions to parent groups
  *       This would require making a separate order table/option for parents, as well as other sort
  *       tables to order the children in each parent category.  This would probably require a nested
@@ -104,19 +101,25 @@ function pta_member_directory_init() {
 	);
 	register_taxonomy( 'member_category', 'member', $args );
 
+	
+
 	// If options haven't previously been setup, create the default member directory options
 	$defaults = array(
 				'format_phone' => true,
+				'show_vacant_positions' => true,
 				'use_contact_form' => true,
 				'hide_from_public' => true,
 				'capability' => "read",
 				'contact_page_id' => 0,
 				'reset_options' => false,
 				'position_label' => 'Position',
+				'enable_location' => false,
+				'location_label' => 'Location',
 				'contact_display' => 'both',
 				'show_contact_names' => true,
 				'show_first_names'	=> true,
 				'show_positions' => true,
+				'show_locations' => false,
 				'show_phone' => true,
 				'show_photo' => true,
 				'photo_size_x' => 100,
@@ -135,6 +138,29 @@ function pta_member_directory_init() {
 	}
 	update_option( 'pta_directory_options', $options );
 
+	if (true === $options['enable_location']) {
+		// Labels for the Taxonomy - We're calling them "locations" for the 'member_location' taxonomy
+		$labels = array(
+			'name'              => _x( 'Locations', 'taxonomy general name', 'pta-member-directory' ),
+			'singular_name'     => _x( 'Location', 'taxonomy singular name', 'pta-member-directory' ),
+			'search_items'      => __( 'Search Locations', 'pta-member-directory' ),
+			'all_items'         => __( 'All Locations', 'pta-member-directory' ),
+			'parent_item'       => __( 'Parent Location', 'pta-member-directory' ),
+			'parent_item_colon' => __( 'Parent Location:', 'pta-member-directory' ),
+			'edit_item'         => __( 'Edit Location', 'pta-member-directory' ), 
+			'update_item'       => __( 'Update Location', 'pta-member-directory' ),
+			'add_new_item'      => __( 'Add New Location', 'pta-member-directory' ),
+			'new_item_name'     => __( 'New Location', 'pta-member-directory' ),
+			'menu_name'         => __( 'Locations', 'pta-member-directory' ),
+			'popular_items' 	=> NULL,
+		);
+		$args = array(
+			'labels' 		=> $labels,
+			'show_tagcloud' => false,
+			'hierarchical' 	=> false, // single level only
+		);
+		register_taxonomy( 'member_location', 'member', $args );
+	}
 
 	add_shortcode( 'pta_member_directory', 'pta_member_directory_shortcode' );
 	add_shortcode( 'pta_member_contact', 'pta_member_contact_shortcode' );
@@ -238,10 +264,20 @@ function pta_member_directory_show_contact_meta_box($post) {
 	    ), 
 	    array(  
 		    'label' => __('Positions: ', 'pta-member-directory'), 
+		    'desc'  => __('Select one or more positions, or use the box below to add a new position.', 'pta-member-directory'), 
 		    'id'    => 'member_category',  
 		    'type'  => 'tax_select'  
-		)   
+		)  
 	);  
+	$options = get_option( 'pta_directory_options' );
+	if ( isset($options['enable_location']) && true === $options['enable_location']) {
+		$custom_meta_fields[] = array(  
+		    'label' => __('Locations: ', 'pta-member-directory'), 
+		    'desc'  => __('Select one or more locations, or use the box below to add a new location.', 'pta-member-directory'), 
+		    'id'    => 'member_location',  
+		    'type'  => 'tax_select'  
+		);
+	}
 	// Use nonce for verification  
 	echo '<input type="hidden" name="pta_member_directory_post_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';  	      
 	    // Begin the field table and loop  
@@ -273,8 +309,8 @@ function pta_member_directory_show_contact_meta_box($post) {
 						        }  
 						        echo ' /><label for="'.$term->slug.'"> '.$term->name.'</label><br />';
 						    }
-						    _e('<p>Select one or more positions, or use the box below to add a new position.</p>', 'pta-member-directory');
-						    echo '<input type="text" name="new_position" id="new_position" value="" size="30" />';
+						    echo '<p>'.$field['desc'].'</p>';
+						    echo '<input type="text" name="new_'.$field['id'].'" id="new_'.$field['id'].'" value="" size="30" />';
 						break;
 	                } //end switch  
 	        echo '</td></tr>';  
@@ -404,8 +440,8 @@ function pta_member_directory_save_post_meta ( $post_id, $post ) {
 	$categories = array();
 	// Check if they entered a new term, if so, insert it into database, then fetch it to get the generated slug
 	// and set our first categories array value to the slug
-	if (isset($_POST['new_position']) && '' != $_POST['new_position']) {
-		$position = sanitize_text_field( $_POST['new_position'] );
+	if (isset($_POST['new_member_category']) && '' != $_POST['new_member_category']) {
+		$position = sanitize_text_field( $_POST['new_member_category'] );
 		$result = wp_insert_term( $position, 'member_category' );
 		if($result) {
 			$term_id = $result['term_id'];
@@ -424,6 +460,32 @@ function pta_member_directory_save_post_meta ( $post_id, $post ) {
 		}
 	} 
 	wp_set_object_terms( $post_id, $categories, 'member_category' ); // Set the terms	
+
+	if(isset($options['enable_location']) && true === $options['enable_location']) {
+		$locations = array();
+		// Check if they entered a new term, if so, insert it into database, then fetch it to get the generated slug
+		// and set our first locations array value to the slug
+		if (isset($_POST['new_member_location']) && '' != $_POST['new_member_location']) {
+			$position = sanitize_text_field( $_POST['new_member_location'] );
+			$result = wp_insert_term( $position, 'member_location' );
+			if($result) {
+				$term_id = $result['term_id'];
+				$term = get_term_by('id', $term_id, 'member_location');
+				if($term) {
+					$locations[] = $term->slug;
+				}
+			}
+		}
+		// Now Process the positions entered or cleared by checkboxes
+		$args = array( 'hide_empty' => false, );
+		$terms = get_terms( 'member_location', $args );
+		foreach ($terms as $term) {
+			if(isset($_POST[$term->slug])) {
+				$locations[] = $term->slug;
+			}
+		} 
+		wp_set_object_terms( $post_id, $locations, 'member_location' ); // Set the terms
+	}
 }
 
 
@@ -444,13 +506,17 @@ add_action( 'load-post-new.php', 'pta_member_directory_post_meta_boxes_setup' );
  * @return array          returns our filtered column array
  */
 function pta_member_columns( $columns ) {
-	$columns['id'] = 'ID';
-	$columns['title'] = 'Member Name';
-	$columns['pta_member_directory_position'] = 'Position';
-    $columns['_pta_member_directory_phone'] = 'Phone';
-    $columns['_pta_member_directory_email'] = 'Email';
+	$columns['id'] = __('ID', 'pta-member-directory');
+	$columns['title'] = __('Member Name', 'pta-member-directory');
+	$columns['pta_member_directory_position'] = __('Position', 'pta-member-directory');
+    $columns['_pta_member_directory_phone'] = __('Phone', 'pta-member-directory');
+    $columns['_pta_member_directory_email'] = __('Email', 'pta-member-directory');
     unset( $columns['comments'] );
     unset( $columns['date'] );
+    $options = get_option('pta_directory_options');
+    if(isset($options['enable_location']) && true === $options['enable_location']) {
+    	$columns['pta_member_directory_location'] = __('Location', 'pta-member-directory');
+    }
     return $columns;
 }
 add_filter( 'manage_edit-member_columns', 'pta_member_columns' );  // registers the above function for the wp filter
@@ -462,6 +528,7 @@ add_filter( 'manage_edit-member_columns', 'pta_member_columns' );  // registers 
  * @return HTML          retrieves and echos out our custom meta data for the column
  */
 function populate_pta_columns( $column, $post_id ) {
+	$options = get_option('pta_directory_options');
     if ( '_pta_member_directory_phone' == $column ) {
         $pta_member_directory_phone = esc_html( get_post_meta( get_the_ID(), '_pta_member_directory_phone', true ) );
         echo $pta_member_directory_phone;
@@ -480,6 +547,18 @@ function populate_pta_columns( $column, $post_id ) {
         } else {
         	$pta_member_directory_position = esc_html(get_post_meta( get_the_ID(), 'member_category', true ));
         	echo $pta_member_directory_position;
+        }
+    }
+    elseif ( isset($options['enable_location']) && true === $options['enable_location'] && 'pta_member_directory_location' == $column ) {
+    	$locations = get_the_terms($post_id, 'member_location');
+        if (is_array($locations)) {
+            foreach($locations as $key => $location) {
+                $locations[$key] = $location->name;
+            }
+        	echo esc_html(implode(' | ',$locations));
+        } else {
+        	$pta_member_directory_location = esc_html(get_post_meta( get_the_ID(), 'member_location', true ));
+        	echo $pta_member_directory_location;
         }
     }
     elseif ('id' == $column ) {
@@ -507,6 +586,20 @@ function pta_filter_list() {
             'show_count' => false,
             'hide_empty' => true,
         ) );
+        $options = get_option('pta_directory_options');
+        if (isset($options['enable_location']) && true === $options['enable_location']) {
+        	wp_dropdown_categories( array(
+	            'show_option_all' => __('Show All Locations', 'pta-member-directory'),
+	            'taxonomy' => 'member_location',
+	            'name' => 'member_location',
+	            'orderby' => 'name',
+	            'selected' => ( isset( $wp_query->query['member_location'] ) ? $wp_query->query['member_location'] : '' ),
+	            'hierarchical' => true,
+	            'depth' => 2,
+	            'show_count' => false,
+	            'hide_empty' => true,
+	        ) );
+        }
     }
 }
 add_action( 'restrict_manage_posts', 'pta_filter_list' ); // hook the above function into wordpress
@@ -525,6 +618,13 @@ function pta_perform_filtering( $query ) {
         $term = get_term_by( 'id', $qv['member_category'], 'member_category' );
         $qv['member_category'] = $term->slug;
     }
+    if (!array_key_exists( 'member_location', $qv )) {
+    	return;
+    }
+    if ( ( $qv['member_location'] ) && is_numeric( $qv['member_location'] ) ) {
+        $term = get_term_by( 'id', $qv['member_location'], 'member_location' );
+        $qv['member_location'] = $term->slug;
+    }
 }
 add_filter( 'parse_query','pta_perform_filtering' ); // hooks the above function to the parse query filter
 
@@ -536,7 +636,7 @@ add_filter( 'parse_query','pta_perform_filtering' ); // hooks the above function
  * @param  [type] $vars [description]
  * @return [type]       [description]
  */
-function title_column_orderby( $vars ) {
+function pta_title_column_orderby( $vars ) {
 	if (!is_admin()) {
 		return $vars;
 	}
@@ -552,7 +652,7 @@ function title_column_orderby( $vars ) {
     } 
     return $vars;
 }
-add_filter( 'request', 'title_column_orderby' ); // hook for ordering column by title
+add_filter( 'request', 'pta_title_column_orderby' ); // hook for ordering column by title
 
 /**
  * Changes the "Enter title" default text for our member posts to "Enter Member Name"
@@ -599,6 +699,10 @@ function pta_directory_options_form( $options=array() ) {
 	$reset_options_desc = __(' Resets the above options to default values upon deactivation and reactivation of the plugin.', 'pta-member-directory');
 	$position_label = __('Display name for Position: ', 'pta-member-directory');
 	$position_label_desc = __(' This is the label used for the "Position" table column header in the public directory.', 'pta-member-directory');
+	$enable_location_label = __('Enable Locations: ', 'pta-member-directory');
+	$enable_location_desc = __('  YES <em>(Check this to enable locations/offices.  Locations will be displayed in the main member directory, or add a location to the shortcode to show a directory for a specific location/office.)</em>', 'pta-member-directory');
+	$location_label = __('Display name for location: ', 'pta-member-directory');
+	$location_label_desc = __(' If locations are enabled, this is the label used for the "Location" table column header in the public directory.', 'pta-member-directory');
 	$contact_select_label = __('Contact form dropdown shows: ', 'pta-member-directory');
 	$contact_select_desc = __(' Select if you want to show positions, individuals, or both on the contact form recipient drop down select box.', 'pta-member-directory');
 	$show_contact_names_label = __('Show names after positions? ', 'pta-member-directory');
@@ -607,6 +711,10 @@ function pta_directory_options_form( $options=array() ) {
 	$show_first_names_desc = __(' YES <em>(if checked, and showing names after positions (see above), only the first names will be shown. Useful if several people hold a position and the form is getting too wide.)</em>', 'pta-member-directory');
 	$show_positions_label = __('Show positions after names? ', 'pta-member-directory');
 	$show_positions_desc = __(' YES <em>(if checked, and showing individuals (or both) on contact form, the positions a member holds will be listed after their name.)</em>', 'pta-member-directory');
+	$show_vacant_positions_label = __('Show Vacant Positions? ', 'pta-member-directory');
+	$show_vacant_positions_desc = __(" YES <em>(if checked, any positions you have created that don't have assigned members will show in the directory list with VACANT listed in the name column.)</em>", 'pta-member-directory');
+	$show_locations_label = __('Show locations after names? ', 'pta-member-directory');
+	$show_locations_desc = __(' YES <em>(if checked, and locations are enabled, the locations of a member will be shown in parenthesis after their name for individual contacts (not position groups).)</em>', 'pta-member-directory');
 	$contact_message_label = __('Contact form message: ', 'pta-member-directory');
 	$contact_message_desc = __(' The message to display on the screen after a message has been successfully sent.  HTML allowed.', 'pta-member-directory');
 	$enable_cfdb_label = __('Enable post to CFDB: ', 'pta-member-directory');
@@ -629,6 +737,37 @@ function pta_directory_options_form( $options=array() ) {
 						}
 						$return .= '" /><br />
 						<em>'.$position_label_desc.'</em>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$show_vacant_positions_label.'</th>
+					<td>
+						<label><input name="show_vacant_positions" type="checkbox" value="true" ';
+							if (isset($options['show_vacant_positions']) && true === $options['show_vacant_positions']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$show_vacant_positions_desc.'</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$enable_location_label.'</th>
+					<td>
+						<label><input name="enable_location" type="checkbox" value="true" ';
+							if (isset($options['enable_location']) && true === $options['enable_location']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$enable_location_desc.'</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$location_label.'</th>
+					<td>
+						<input type="text" maxlength="50" size="50" name="location_label" value="';
+						if (isset($options['location_label'])) {
+							$return .= esc_attr($options['location_label']);
+						}
+						$return .= '" /><br />
+						<em>'.$location_label_desc.'</em>
 					</td>
 				</tr>
 				<tr>
@@ -674,6 +813,16 @@ function pta_directory_options_form( $options=array() ) {
 								$return .= 'checked'; 
 							}
 							$return .= ' />'.$show_positions_desc.'</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$show_locations_label.'</th>
+					<td>
+						<label><input name="show_locations" type="checkbox" value="true" ';
+							if (isset($options['show_locations']) && true === $options['show_locations']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$show_locations_desc.'</label>
 					</td>
 				</tr>
 				<tr>
@@ -848,6 +997,7 @@ function pta_directory_options_form( $options=array() ) {
 	return $return;
 }
 
+
 /**
  * Displays the settings page for our member post type
  * @return HTML Calls and Processes the options page form
@@ -863,7 +1013,7 @@ function pta_directory_settings_page() {
 			$messages = __('<div id="message" class="error">Update Cancelled</div>', 'pta-member-directory');
 		} elseif (isset($_POST['update']) && 'SUBMIT' == $_POST['update'] ) { // update the options
 			foreach ($options as $key => $value) {
-				if ('capability' == $key || 'position_label' == $key || 'contact_display' == $key || 'form_title' == $key) {
+				if ('capability' == $key || 'position_label' == $key  || 'location_label' == $key || 'contact_display' == $key || 'form_title' == $key) {
 					$options[$key] = strip_tags($_POST[$key]);
 				} elseif ( 'photo_size_x' == $key || 'photo_size_y' == $key || 'contact_page_id' == $key ) {
 					$options[$key] = (int)(strip_tags($_POST[$key])); // these need to be numbers
@@ -888,8 +1038,8 @@ function pta_directory_settings_page() {
 	<div class="wrap">
 	<div id="icon-users" class="icon32"><br/></div>
 	<h2><?php _e('PTA Member Directory - Options', 'pta-member-directory'); ?></h2>
-	<p><?php _e('To display the member directory on a page, use the shortcode [pta_member_directory] <br />
-	If you want to use the contact form on its own separate page, use the shortcode [pta_member_contact]', 'pta-member-directory'); ?></p>
+	<p><strong><?php _e('Click on the Help tab in the upper right for detailed help.', 'pta_member_directory'); ?> <br />
+	</strong></p>
 		<?php 
 		echo $messages; // show any messages
 		echo pta_directory_options_form($options); // Show the display options form
@@ -898,6 +1048,8 @@ function pta_directory_settings_page() {
 	<?php
 	echo ob_get_clean();
 }
+
+
 
 /**
  * Display a simple table list of all positions and allows them to be sorted by drag and drop
@@ -959,16 +1111,71 @@ function pta_directory_sort_page() {
 	echo ob_get_clean();
 }
 
+
 /* Add the "settings" submenu item to our custom post type admin menu */
 function pta_member_plugin_menu() {
 	global $pta_directory_page;
 	global $pta_directory_sort_page;	
 	$pta_directory_page = add_submenu_page( 'edit.php?post_type=member', 'settings',  'Options', 'manage_options', 'pta_member_settings', 'pta_directory_settings_page');
-	//add_action('admin_print_styles-' . $pta_directory_page, 'pta_member_directory_load_scripts');
 	$pta_directory_sort_page = add_submenu_page( 'edit.php?post_type=member', 'sort',  'Sort Positions', 'manage_options', 'pta_member_sort', 'pta_directory_sort_page');
 	add_action('admin_print_styles-' . $pta_directory_sort_page, 'pta_member_directory_load_scripts');
 }
 add_action('admin_menu', 'pta_member_plugin_menu'); // Calls the function above to add the submenu when we are in the admin menu
+
+function pta_directory_custom_help() {
+	global $pta_directory_page;
+	global $pta_directory_sort_page;
+	$screen = get_current_screen();
+	if('member' != $screen->post_type)
+		return;
+
+	include_once('/includes/pta-directory-help-tabs.php');
+
+	$members_help = pta_members_help_tab();
+	$positions_help = pta_positions_help_tab();
+	$locations_help = pta_locations_help_tab();
+	$options_help = pta_options_help_tab();
+	$shortcodes_help = pta_shortcodes_help_tab();
+	$custom_links_help = pta_custom_links_help_tab();
+	$sorting_help = pta_sort_positions_help_tab();
+
+	$screen->add_help_tab( array(
+	    'id'      => 'pta-members',
+	    'title'   => __('Members Help', 'pta-member-directory'),
+	    'content' => $members_help,
+	));
+	$screen->add_help_tab( array(
+	    'id'      => 'pta-positions',
+	    'title'   => __('Positions Help', 'pta-member-directory'),
+	    'content' => $positions_help,
+	));
+	$screen->add_help_tab( array(
+	    'id'      => 'pta-locations',
+	    'title'   => __('Locations Help', 'pta-member-directory'),
+	    'content' => $locations_help,
+	));
+	$screen->add_help_tab( array(
+	    'id'      => 'pta-options',
+	    'title'   => __('Options Help', 'pta-member-directory'),
+	    'content' => $options_help,
+	));
+	$screen->add_help_tab( array(
+	    'id'      => 'pta-shortcodes',
+	    'title'   => __('Shortcodes Help', 'pta-member-directory'),
+	    'content' => $shortcodes_help,
+	));
+	$screen->add_help_tab( array(
+	    'id'      => 'pta-links',
+	    'title'   => __('Custom links', 'pta-member-directory'),
+	    'content' => $custom_links_help,
+	));
+	$screen->add_help_tab( array(
+		    'id'      => 'pta-sort',
+		    'title'   => __('Sorting Positions', 'pta-member-directory'),
+		    'content' => $sorting_help,
+	));	
+}
+add_action('admin_head', 'pta_directory_custom_help');
 
 /**
  * Saves and updates our Wordpress Option that stores the list of positions in the order we want them displayed

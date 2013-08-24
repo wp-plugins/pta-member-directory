@@ -1,6 +1,9 @@
 <?php
 
-function pta_display_directory() {
+function pta_display_directory($location='') {
+	if ('' != $location) {
+		$location = esc_html($location);
+	}
 	$categories = get_option( 'pta_member_categories' );  // Ordered list of categories to display
 	$options = get_option( 'pta_directory_options' ); // Display Options
 	// First, check to see if option is set to hide the display from the public
@@ -15,12 +18,14 @@ function pta_display_directory() {
 	}
 	if ( isset($_POST['contact_mode']) && 'submitted' == $_POST['contact_mode'] ) {
 		$id = (int)($_POST['id']);
-		$return = pta_directory_contact_form($id);
+		$location = isset($_GET['location']) ? $_GET['location'] : '';
+		$return = pta_directory_contact_form($id, $location);
 		return $return;
 	}
 	if(isset($_GET['action']) && 'contact' == $_GET['action'] ) {
 		$id = $_GET['id'];
-		$return = pta_directory_contact_form($id);
+		$location = isset($_GET['location']) ? $_GET['location'] : '';
+		$return = pta_directory_contact_form($id, $location);
 		return $return;
 	}
 	// Set up table text for translation
@@ -32,8 +37,18 @@ function pta_display_directory() {
 	$send_message = __('Send A Message', 'pta-member-directory');
 	$group_message = __('Send group a message', 'pta-member-directory');
 	$more_info = __('more info...', 'pta-member-directory');
-	$cols = 2; // used to determine colspan for vacant positions
-	$return = '
+	$cols = 2;	 // used to determine colspan for vacant positions
+	$return = '';
+	if($options['enable_location'] && '' != $location) {
+		$args = array( 'hide_empty'=>false,  'slug' => $location  );
+        $terms = get_terms( 'member_location', $args );
+        if ($terms) {
+            $term = array_shift($terms);
+            $show_location = $term->name;
+            $return .= '<h3>'.esc_html($options['location_label']).': '.esc_html($show_location).'</h3>';
+        }		
+	}
+	$return .= '
 	<table class="pta_directory_table">
 	        <thead>
 	            <tr>
@@ -46,6 +61,11 @@ function pta_display_directory() {
               	$return .= '  
 	                <th>'.esc_html($column_email).'</th>
 	            </th>';
+	            if($options['enable_location'] && '' == $location) {
+	            	// Show the location for each member if a specific location was not passed in
+	            	$return .= '<th>'.esc_html($options['location_label']).'</th>';
+	            	$cols++;
+	            }
 	            if($options['show_photo']) {
                 	$return .= '<th>&nbsp;</th>';
                 	$cols++; // add one to our colspan
@@ -64,9 +84,17 @@ function pta_display_directory() {
 	            $category = '&nbsp;';
 	        }
 	        $mypost = array( 'post_type' => 'member', 'member_category' => $slug, 'meta_key' => '_pta_member_directory_lastname', 'orderby' => 'meta_value', 'order' => 'ASC' );
+	        if ('' != $location) {
+	        	$mypost['member_location'] = $location;
+	        }
 	        $loop = new WP_Query( $mypost );
 	        $count = $loop->post_count;
-	        if ( 0 == $count ) {
+	        if ( 0 == $count) {
+	        	if ('' != $location || !$options['show_vacant_positions']) {
+	        		// Don't show VACANT positions for specific locations, since not every location will have every position
+	        		// Perhaps update this in the future so positions can be linked to one or more locations (or all)
+	        		continue;
+	        	}
 	            $return .= '<tr><td><strong>'.esc_html($category).'</strong></td>';
 	            $return .= '<td colspan="'.(int)$cols.'">'.esc_html($vacant).'</td></tr>';
 	        } else {
@@ -74,8 +102,15 @@ function pta_display_directory() {
 	            // if so, get the link and add the id argument for the group
 	            if ( isset($options['contact_page_id']) && 0 != $options['contact_page_id'] ) {
 	            	$contact_url = get_permalink($options['contact_page_id']) .'?id='.$slug;
+	            	if ($options['enable_location'] && '' != $location ) {
+	            		$contact_url .= '&location='.$location;
+	            	}
 	            } else {
-	            	$contact_url = add_query_arg( array ( 'action' => 'contact', 'id' => $slug ));
+	            	$args = array ('action' => 'contact', 'id' => $slug);
+	            	if ($options['enable_location'] && '' != $location) {
+	            		$args['location'] = $location;
+	            	}
+	            	$contact_url = add_query_arg( $args );
 	            }
 	            // Add group message link if there is more than one person for the position
 	            $return .= '<tr><td rowspan="'.(int)$count.'" style="vertical-align: middle;"><strong>'.esc_html($category).'</strong>';
@@ -94,8 +129,15 @@ function pta_display_directory() {
 		            // if so, get the link and add the id argument
 		            if ( isset($options['contact_page_id']) && 0 != $options['contact_page_id'] ) {
 		            	$contact_url = get_permalink($options['contact_page_id']) .'?id='.$id;
+		            	if ($options['enable_location'] && '' != $location ) {
+		            		$contact_url .= '&location='.$location;
+		            	}
 		            } else {
-		            	$contact_url = add_query_arg( array ( 'action' => 'contact', 'id' => $id ));
+		            	$args = array ('action' => 'contact', 'id' => $id);
+		            	if ($options['enable_location'] && '' != $location) {
+		            		$args['location'] = $location;
+		            	}
+		            	$contact_url = add_query_arg( $args );
 		            }
 		            $email = '<a href="'.esc_url($contact_url).'">'.$send_message.'</a>';
 		        } else { // display the email with mailto link
@@ -117,6 +159,20 @@ function pta_display_directory() {
 	            }
 	            $return .= '
 	                <td style="vertical-align: middle;">'. $email .'</td>';
+                if($options['enable_location'] && '' == $location) {
+                	$return .= '<td style="vertical-align: middle;">';
+                	$locations = get_the_terms( get_the_ID(), 'member_location');
+			        if (is_array($locations)) {
+			            foreach($locations as $key => $mlocation) {
+			                $locations[$key] = $mlocation->name;
+			            }
+			        	$return .= esc_html(implode(' | ',$locations));
+			        } else {
+			        	$pta_member_directory_location = esc_html(get_post_meta( get_the_ID(), 'member_location', true ));
+			        	$return .= $pta_member_directory_location;
+			        }
+			        $return .= '</td>';
+                }
 	            if( $options['show_photo'] ) {
 					$return .= '<td>';
 	            	if ( has_post_thumbnail($id)) {
@@ -158,13 +214,17 @@ function pta_directory_get_the_ip() {
     }
 }
 
-function pta_directory_contact_form($id='') {
+function pta_directory_contact_form($id='', $location='') {
 	// check if they selected a recipient from the drop down select box, and update the id for proper name/email
+	$location = esc_html($location);
 	$selected = false;
 	$group = false;
 	$categories = get_option( 'pta_member_categories' ); // use this more than once, so put it up top
 	$options = get_option( 'pta_directory_options' ); // Display Options
 	$cc_mail = array(); // reset our CC mail list
+	if(isset($_POST['location']) && '' != $_POST['location']) {
+		$location = sanitize_text_field( $_POST['location'] );
+	}
 	if (isset($_POST['recipient']) && '' != $_POST['recipient']) {
 		if (is_numeric($_POST['recipient'])) { // if it's a number, they selected a single member to contact
 			$id = (int)$_POST['recipient'];
@@ -201,9 +261,14 @@ function pta_directory_contact_form($id='') {
 	} else {
 		if ($group) { // $group recipient selected, so get posts with that taxonomy
 			$args = array( 'post_type' => 'member', 'member_category' => $group );
+			if ($options['enable_location'] && '' != $location) {
+				$args['member_location'] = $location;
+			}
 			$members = get_posts( $args );
 			$count = 1;
+			$email = '';
 			foreach ($members as $member) {
+
 				if ( 1 == $count ) { // set main email to the first email
 					$email = esc_html( get_post_meta( $member->ID, '_pta_member_directory_email', true ) );
 				} else {
@@ -366,9 +431,18 @@ function pta_directory_contact_form($id='') {
 	if ( $result != "" ) {
 	    $info = '<div class="info">' . $result . '</div>';
 	}
-	// anyways, let's build the form!
-	
-	$email_form = '<h3>'.esc_html($label_send_message).'</h3>
+	// Let's build the form!
+	$email_form = '';
+	if($options['enable_location'] && '' != $location) {
+		$args = array( 'hide_empty'=>false,  'slug' => $location  );
+        $terms = get_terms( 'member_location', $args );
+        if ($terms) {
+            $term = array_shift($terms);
+            $show_location = $term->name;
+            $email_form .= '<h2>'.esc_html($options['location_label']).': '.esc_html($show_location).'</h2>';
+        }
+	}
+	$email_form .= '<h3>'.esc_html($label_send_message).'</h3>
 	<form class="contact-form" method="post" action="' . get_permalink() . '">
 		<input type="hidden" name="form_title" value="'.esc_attr($options["form_title"]).'"/>
 		<div>
@@ -405,6 +479,18 @@ function pta_directory_contact_form($id='') {
 			        	if(has_term( $category, 'member_category', $member )) {
 			        		$member_email = get_post_meta( $member->ID, '_pta_member_directory_email', true );
 			        		if (!is_email($member_email)) continue; // Don't list the member if they have no valid email
+
+			        		// Only show members for the specific location, if enabled and set
+			        		if($options['enable_location'] && '' != $location) {
+			        			$locations = get_the_terms( $member->ID, 'member_location');
+						        if (is_array($locations)) {
+						            if(!has_term( $location, 'member_location', $member->ID )) continue;
+						        } else {
+						        	$member_location = esc_html(get_post_meta( $member->ID, 'member_location', true ));
+						        	if($location != $member_location) continue;
+						        }
+			        		}
+
 			        		$email_exists = true; // got an email
 			        		if(0 == $name_count) {
 			        			$display_names .= ' - '; // put a separator before the first name in the list
@@ -428,6 +514,7 @@ function pta_directory_contact_form($id='') {
 						$email_form .= 'selected="selected"';
 					}
 					$email_form .= '>'.$display_name;
+
 					// Show names after position name if the option is set
 					if ($options['show_contact_names']) {
 						$email_form .= $display_names;
@@ -453,12 +540,39 @@ function pta_directory_contact_form($id='') {
 					}
 					$member_email = get_post_meta( $member->ID, '_pta_member_directory_email', true );
 					if (!is_email($member_email)) continue; // Don't list the member if they have no valid email
+					// Only show members for the specific location, if enabled and set
+	        		if($options['enable_location'] && '' != $location) {
+	        			$locations = get_the_terms( $member->ID, 'member_location');
+				        if (is_array($locations)) {
+				            if(!has_term( $location, 'member_location', $member->ID )) continue;
+				        } else {
+				        	$member_location = esc_html(get_post_meta( $member->ID, 'member_location', true ));
+				        	if($location != $member_location) continue;
+				        }
+	        		}
 					$email_form .= '
 					<option value="'.$member->ID.'" ';
 					if(isset($id) && $member->ID == $id) {
 						$email_form .= 'selected="selected"';
 					}
 					$email_form .= '>'.$member->post_title;
+					if ($options['enable_location'] && $options['show_locations'] && '' == $location) {
+	        			// Show location after name, if enabled
+	        			$member_locations = wp_get_post_terms( $member->ID, 'member_location' );
+	        			if ($member_locations) {
+	        				$email_form .= ' (';
+	        				$count = count($member_locations);
+	        				$i = 0;
+	        				foreach ($member_locations as $mlocation) {
+	        					$email_form .= $mlocation->name;
+	        					$i++;
+	        					if ($i < $count) {
+	        						$email_form .= ', ';
+	        					}
+	        				}
+	        				$email_form .= ')';
+	        			}
+	        		}
 				 	if ( $positions && $options['show_positions'] ) {
 				 		$email_form .= ' - '.$positions;
 			 		}
@@ -499,6 +613,7 @@ function pta_directory_contact_form($id='') {
 	    	<input type="hidden" name="contact_mode" value="submitted" />
 	        <input type="submit" value="' . esc_attr($label_submit) . '" name="send" id="cf_send" />
 	        <input type="hidden" value="'.esc_attr($id).'" name="id" />
+	        <input type="hidden" value="'.esc_attr($location).'" name="location" />
 	    </div>
 	</form>';
 
@@ -516,12 +631,33 @@ function pta_directory_add_my_stylesheet() {
     wp_enqueue_style( 'pta_directory-style' );
 }
 
-function pta_member_directory_shortcode() {
-	return pta_display_directory();
+function pta_member_directory_shortcode($atts) {
+	extract( shortcode_atts( array(
+			'location' => '',
+		), $atts ) );
+	if ('' != $location) {
+		$location = esc_html($atts['location']);
+	} elseif (isset($_GET['location']) && '' != $_GET['location']) {
+		$location = esc_html($_GET['location']);
+	} else {
+		$location = '';
+	}
+	return pta_display_directory($location);
 }
 
-function pta_member_contact_shortcode() {
-	return pta_directory_contact_form();
+function pta_member_contact_shortcode($atts) {
+	extract( shortcode_atts( array(
+			'location' => '',
+		), $atts ) );
+	if ('' != $location) {
+		$location = esc_html($atts['location']);
+	} elseif (isset($_GET['location']) && '' != $_GET['location']) {
+		$location = esc_html($_GET['location']);
+	} else {
+		$location = '';
+	}
+	$id = ''; // won't be passing in contact form id from shortcode
+	return pta_directory_contact_form($id, $location);
 }
 
     /*EOF*/
