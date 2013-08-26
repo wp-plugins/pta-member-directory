@@ -1,6 +1,6 @@
-.contact-form label, .contact-form input, .contact-form textarea, .contact-form select { display: block; margin: 10px 0; }
-.contact-form label { font-size: larger; }
-.contact-form input, .contact-form select { padding: 5px; }
+.pta-contact-form label, .pta-contact-form input, .pta-contact-form textarea, .pta-contact-form select { display: block; margin: 10px 0; }
+.pta-contact-form label { font-size: larger; }
+.pta-contact-form input, .pta-contact-form select { padding: 5px; }
 #cf_message { width: 90%; padding: 10px; }
 #cf_send { padding: 5px 10px; }
 table.pta_directory_table { width: 100%;}

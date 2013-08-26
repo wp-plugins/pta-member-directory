@@ -61,6 +61,9 @@ function pta_options_help_tab() {
 		location, either via a shortcode argument, or through an argument in a link, any vacant positions for that location will always be skipped, 
 		regardless of how you set the options. This is because positions aren't tied to a specific location, and we don't want to show Vacant 
 		for a position that is actually filled, but just not at that location.", 'pta-member-directory') . '</p>';
+	$return .= '<p>'. __("If you theme doesn't show borders on tables by default, and you don't want to add or edit CSS styles, use the Force Table Borders option 
+		to add borders to the directory table. This can make it much easier to read. You can also choose the color and size of the table borders, as well as cell padding (only if Force Table Borders is enabled). 
+		If the color picker doesn't show up on your system, enter the hex code for the border color in the format: #000000", 'pta-member-directory') . '</p>';
 	return $return;
 }
 
@@ -118,6 +121,21 @@ function pta_sort_positions_help_tab() {
 	$return .= '<p>' . __( "Within each position, members are sorted by Last Name. The program assumes that the last word in the member name is the last name of the member, 
 		and uses that for alphabetical sorting.", 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( '<strong>Note: Members will NOT show up in the directory if they do not have at least one position.</strong>', 'pta-member-directory') . '</p>';
+	return $return;
+}
+
+function pta_styling_help_tab() {
+	$return = '<h4>' . __( 'PTA Member Directory &amp; Contact Form - Styling/Appearance Help' ,'pta-member-directory') . '</h4>';
+	$return .= '<p>' . __( "As this is a plugin, the main focus is on adding functionality. Styling and appearance should be handled by the theme.", 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( "This plugin uses a simple table layout to display the member directory, and simple form fields for the contact form. The appearance of the table and forms 
+		on your site is mostly determined by your theme.", 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( 'By default, the only CSS styling this plugin adds to tables is to make the table width 100%, and to align the table header text to the left. 
+		For the contact form, the plugin formats the fields display styling to block, sets some margins, and increases the label font size to "larger".', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( "To override, or add to, the plugin's CSS styling, you can add custom CSS to your theme styles section (many themes offer options to allow you to enter custom CSS), 
+		or you can modify the plugin's CSS file (pta-contact-form.css in the includes/css directory of the plugin).", 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( 'The contact form uses the class "pta-contact-form" and the directory table uses the class "pta_directory_table".', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( "If you don't want to mess with CSS styles, there is an option to Force Table Borders for the directory table, as well as set the border color and size, and cell padding. 
+		Since many themes don't use table borders, this option was added to make it easy to add your own border to the directory table, making it much easier to read.", 'pta-member-directory') . '</p>';
 	return $return;
 }
 

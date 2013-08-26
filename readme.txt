@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 1.0.2
+Stable tag: 1.1
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -83,13 +83,21 @@ http://yoursite.com/your_directory_page/?location=seattle
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.1**
+
+*	New option to force table borders (plus a little padding) in the directory for themes that don't show borders by default (and for users who don't want to edit the theme CSS styles themselves). Border color and size, plus cell padding, can also be set.
+*	Changed contact form CSS class from "contact-form" to "pta-contact-form" to avoid any conflicts with other contact forms
+*	Minor error checking fix on contact form
+*	Strip any slashes from sanitized form fields before sending emails
+*	Added filter and action hooks for extensibility
+
 **Version 1.0.2**
 
-* Wrong include path for help tabs
+*	Fixed wrong include path for help tabs
 
 **Version 1.0.1**
 
-* Help tabs file didn't get uploaded with 1.0.
+*	Help tabs file didn't get uploaded with 1.0.
 
 **Version 1.0**
 

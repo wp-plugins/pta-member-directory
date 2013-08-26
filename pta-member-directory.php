@@ -12,22 +12,10 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.0.2
+Version: 1.1
 Author URI: http://dbar-productions.com
 */
 
-/**
- * @todo Set taxonomy 'member_category' to heirarchial so can assign positions to parent groups
- *       This would require making a separate order table/option for parents, as well as other sort
- *       tables to order the children in each parent category.  This would probably require a nested
- *       array for the category sort order, and extra logic and display options in the public directory.
- *       When adding a new member, only show child positions to select.  Edit parents and parent>child
- *       relationship on the edit positions page.
- * @todo Create a page on admin where you can view positions and type in names of people for each position,
- *       as opposed to creating/editing people and picking their positions.  Perhaps an option to allow
- *       selecting existing site users for positions, and then automatically filling in their info.  This
- *       could later be enhanced by an jQuery search/select box to quickly select from large list of people
- */
 
 include(dirname(__FILE__).'/includes/scripts.php');
 include(dirname(__FILE__).'/includes/process-ajax.php');
@@ -125,6 +113,10 @@ function pta_member_directory_init() {
 				'photo_size_x' => 100,
 				'photo_size_y' => 100,
 				'contact_message' => "Thanks for your message! We'll get back to you as soon as we can.",
+				'force_table_borders' => false,
+				'border_color' => '#000000',
+				'border_size' => '1',
+				'cell_padding' => '5',
 				'enable_cfdb' => false,
 				'form_title' => 'PTA Member Directory Contact Form',
 				'hide_donation_button' => false,
@@ -721,6 +713,13 @@ function pta_directory_options_form( $options=array() ) {
 	$enable_cfdb_desc = __('  YES <em>(If the Contact Form DB plugin is installed, check this to save contact form submissions to the database via CFDB.)</em>', 'pta-member-directory');
 	$form_title_label = __('Contact Form DB form title: ', 'pta-member-directory');
 	$form_title_desc = __('Sets the form title that results will be stored under with the Contact Form DB plugin. (hidden form field)', 'pta-member-directory');
+	$force_table_borders_label = __('Force Table Borders? ', 'pta-member-directory');
+	$force_table_borders_desc = __(" YES <em>Adds some extra inline styling to the directory page to show tables borders, plus a bit of padding, for themes that don't use borders on tables by default (and for those who don't want to edit CSS).</em>", 'pta-member-directory');
+	$border_properties_label = __('Table Properties: ', 'pta-member-directory');
+	$border_color_label = __('Border Color', 'pta-member-directory');
+	$border_size_label = __('Border Size (pixels)', 'pta-member-directory');
+	$cell_padding_label = __('Cell padding (pixels)', 'pta-member-directory');
+	$border_properties_desc = __('These table properties are only used if Force Table Borders is enabled.', 'pta-member-directory');
 	$donation_text = __('Please help support continued development of this plugin. Any donation amount is greatly appreciated!', 'pta-member-directory');
 	$hide_donation_button_label = __('Hide Donation Button: ', 'pta-member-directory');
 	$hide_donation_button_desc = __('Check this if you already donated, or just don\'t want to see the donation button any more.', 'pta-member-directory');
@@ -742,21 +741,21 @@ function pta_directory_options_form( $options=array() ) {
 				<tr>
 					<th scope="row">'.$show_vacant_positions_label.'</th>
 					<td>
-						<label><input name="show_vacant_positions" type="checkbox" value="true" ';
+						<input name="show_vacant_positions" type="checkbox" value="true" ';
 							if (isset($options['show_vacant_positions']) && true === $options['show_vacant_positions']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$show_vacant_positions_desc.'</label>
+							$return .= ' />'.$show_vacant_positions_desc.'
 					</td>
 				</tr>
 				<tr>
 					<th scope="row">'.$enable_location_label.'</th>
 					<td>
-						<label><input name="enable_location" type="checkbox" value="true" ';
+						<input name="enable_location" type="checkbox" value="true" ';
 							if (isset($options['enable_location']) && true === $options['enable_location']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$enable_location_desc.'</label>
+							$return .= ' />'.$enable_location_desc.'
 					</td>
 				</tr>
 				<tr>
@@ -788,71 +787,71 @@ function pta_directory_options_form( $options=array() ) {
 				<tr>
 					<th scope="row">'.$show_contact_names_label.'</th>
 					<td>
-						<label><input name="show_contact_names" type="checkbox" value="true" ';
+						<input name="show_contact_names" type="checkbox" value="true" ';
 							if (isset($options['show_contact_names']) && true === $options['show_contact_names']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$show_contact_names_desc.'</label>
+							$return .= ' />'.$show_contact_names_desc.'
 					</td>
 				</tr>
 				<tr>
 					<th scope="row">'.$show_first_names_label.'</th>
 					<td>
-						<label><input name="show_first_names" type="checkbox" value="true" ';
+						<input name="show_first_names" type="checkbox" value="true" ';
 							if (isset($options['show_first_names']) && true === $options['show_first_names']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$show_first_names_desc.'</label>
+							$return .= ' />'.$show_first_names_desc.'
 					</td>
 				</tr>
 				<tr>
 					<th scope="row">'.$show_positions_label.'</th>
 					<td>
-						<label><input name="show_positions" type="checkbox" value="true" ';
+						<input name="show_positions" type="checkbox" value="true" ';
 							if (isset($options['show_positions']) && true === $options['show_positions']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$show_positions_desc.'</label>
+							$return .= ' />'.$show_positions_desc.'
 					</td>
 				</tr>
 				<tr>
 					<th scope="row">'.$show_locations_label.'</th>
 					<td>
-						<label><input name="show_locations" type="checkbox" value="true" ';
+						<input name="show_locations" type="checkbox" value="true" ';
 							if (isset($options['show_locations']) && true === $options['show_locations']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$show_locations_desc.'</label>
+							$return .= ' />'.$show_locations_desc.'
 					</td>
 				</tr>
 				<tr>
 					<th scope="row">'.$show_phone_label.'</th>
 					<td>
-						<label><input name="show_phone" type="checkbox" value="true" ';
+						<input name="show_phone" type="checkbox" value="true" ';
 							if (isset($options['show_phone']) && true === $options['show_phone']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$show_phone_desc.'</label>
+							$return .= ' />'.$show_phone_desc.'
 					</td>
 				</tr>
 				<tr>
 					<th scope="row">'.$format_phone_label.'</th>
 					<td>
-						<label><input name="format_phone" type="checkbox" value="true" ';
+						<input name="format_phone" type="checkbox" value="true" ';
 							if (isset($options['format_phone']) && true === $options['format_phone']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$format_phone_desc.'</label>
+							$return .= ' />'.$format_phone_desc.'
 					</td>
 				</tr>
 				<tr>
 					<th scope="row">'.$show_photo_label.'</th>
 					<td>
-						<label><input name="show_photo" type="checkbox" value="true" ';
+						<input name="show_photo" type="checkbox" value="true" ';
 							if (isset($options['show_photo']) && true === $options['show_photo']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$show_photo_desc.'</label>
+							$return .= ' />'.$show_photo_desc.'
 					</td>
 				</tr>
 				<tr>
@@ -874,21 +873,21 @@ function pta_directory_options_form( $options=array() ) {
 				<tr>
 					<th scope="row">'.$contact_form_label.'</th>
 					<td>
-						<label><input name="use_contact_form" type="checkbox" value="true" ';
+						<input name="use_contact_form" type="checkbox" value="true" ';
 							if (isset($options['use_contact_form']) && true === $options['use_contact_form']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$contact_form_desc.'</label>
+							$return .= ' />'.$contact_form_desc.'
 					</td>
 				</tr>
 				<tr>
 					<th scope="row">'.$public_label.'</th>
 					<td>
-						<label><input name="hide_from_public" type="checkbox" value="true" ';
+						<input name="hide_from_public" type="checkbox" value="true" ';
 							if (isset($options['hide_from_public']) && true === $options['hide_from_public']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$public_desc.'</label>
+							$return .= ' />'.$public_desc.'
 					</td>
 				</tr>
 				<tr>
@@ -922,13 +921,44 @@ function pta_directory_options_form( $options=array() ) {
 					</td>
 				</tr>
 				<tr>
+					<th scope="row">'.$force_table_borders_label.'</th>
+					<td>
+						<input name="force_table_borders" type="checkbox" value="true" ';
+							if (isset($options['force_table_borders']) && true === $options['force_table_borders']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$force_table_borders_desc.'
+					</td>
+				</tr>
+				<tr>
+					<th>'.$border_properties_label.'</th>
+					<td>'.$border_color_label.':&nbsp;&nbsp;
+						<input type="text" maxlength="7" size="7" class="pta_border_color" name="border_color" value="';
+						if (isset($options['border_color'])) {
+							$return .= esc_attr($options['border_color']);
+						}
+						$return .= '" /><br />'.$border_size_label.':&nbsp;
+						<input type="text" maxlength="3" size="3" name="border_size" value="';
+						if (isset($options['border_size'])) {
+							$return .= (int)($options['border_size']);
+						}
+						$return .= '" />&nbsp;&nbsp;'.$cell_padding_label.':&nbsp;
+						<input type="text" maxlength="3" size="3" name="cell_padding" value="';
+						if (isset($options['cell_padding'])) {
+							$return .= (int)($options['cell_padding']);
+						}
+						$return .= '" /><br/>
+						<em>'.$border_properties_desc.'</em>
+					</td>
+				</tr>
+				<tr>
 					<th scope="row">'.$enable_cfdb_label.'</th>
 					<td>
-						<label><input name="enable_cfdb" type="checkbox" value="true" ';
+						<input name="enable_cfdb" type="checkbox" value="true" ';
 							if (isset($options['enable_cfdb']) && true === $options['enable_cfdb']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$enable_cfdb_desc.'</label>
+							$return .= ' />'.$enable_cfdb_desc.'
 					</td>
 				</tr>
 				<tr>
@@ -956,21 +986,21 @@ function pta_directory_options_form( $options=array() ) {
 				<tr>
 					<th scope="row">'.$reset_options_label.'</th>
 					<td>
-						<label><input name="reset_options" type="checkbox" value="true" ';
+						<input name="reset_options" type="checkbox" value="true" ';
 							if (isset($options['reset_options']) && true === $options['reset_options']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$reset_options_desc.'</label>
+							$return .= ' />'.$reset_options_desc.'
 					</td>
 				</tr>
 				<tr>
 					<th scope="row">'.$hide_donation_button_label.'</th>
 					<td>
-						<label><input name="hide_donation_button" type="checkbox" value="true" ';
+						<input name="hide_donation_button" type="checkbox" value="true" ';
 							if (isset($options['hide_donation_button']) && true === $options['hide_donation_button']) { 
 								$return .= 'checked'; 
 							}
-							$return .= ' />'.$hide_donation_button_desc.'</label>
+							$return .= ' />'.$hide_donation_button_desc.'
 					</td>
 				</tr>
 			</table>
@@ -1005,6 +1035,8 @@ function pta_directory_options_form( $options=array() ) {
 function pta_directory_settings_page() {
 	$options = get_option( 'pta_directory_options' );
 	$messages = '';
+	$text_fields = array('capability', 'position_label', 'location_label', 'contact_display', 'form_title');
+	$numeric_fields = array('photo_size_x', 'photo_size_y', 'contact_page_id', 'border_size', 'cell_padding');
 	// Check if the options form was submitted
 	if ($submitted = isset($_POST['pta_directory_options_mode']) && 'submitted' == $_POST['pta_directory_options_mode']) {
 		if(!wp_verify_nonce($_POST['pta_directory_options_nonce'], 'pta_directory_options')) {
@@ -1013,12 +1045,19 @@ function pta_directory_settings_page() {
 			$messages = __('<div id="message" class="error">Update Cancelled</div>', 'pta-member-directory');
 		} elseif (isset($_POST['update']) && 'SUBMIT' == $_POST['update'] ) { // update the options
 			foreach ($options as $key => $value) {
-				if ('capability' == $key || 'position_label' == $key  || 'location_label' == $key || 'contact_display' == $key || 'form_title' == $key) {
-					$options[$key] = strip_tags($_POST[$key]);
-				} elseif ( 'photo_size_x' == $key || 'photo_size_y' == $key || 'contact_page_id' == $key ) {
+				if (in_array($key, $text_fields)) {
+					$options[$key] = sanitize_text_field($_POST[$key]);
+				} elseif ( in_array($key, $numeric_fields)) {
 					$options[$key] = (int)(strip_tags($_POST[$key])); // these need to be numbers
 				} elseif ( 'contact_message' == $key ){
 					$options[$key] = wp_kses_post( $_POST[$key] );
+				} elseif ('border_color' == $key) {
+					// Make sure it's a valid hex color code
+					if ( preg_match('/^#[a-f0-9]{6}$/i', $_POST[$key]) ) {
+			    		$options[$key] = $_POST[$key];
+			    	} else {
+			    		$options[$key] = '#000000';
+			    	}
 				} else {
 					if(isset($_POST[$key])) {
 						$options[$key] = true;
@@ -1119,12 +1158,11 @@ function pta_member_plugin_menu() {
 	$pta_directory_page = add_submenu_page( 'edit.php?post_type=member', 'settings',  'Options', 'manage_options', 'pta_member_settings', 'pta_directory_settings_page');
 	$pta_directory_sort_page = add_submenu_page( 'edit.php?post_type=member', 'sort',  'Sort Positions', 'manage_options', 'pta_member_sort', 'pta_directory_sort_page');
 	add_action('admin_print_styles-' . $pta_directory_sort_page, 'pta_member_directory_load_scripts');
+	add_action('admin_print_styles-' . $pta_directory_page, 'pta_member_directory_options_load_scripts');
 }
 add_action('admin_menu', 'pta_member_plugin_menu'); // Calls the function above to add the submenu when we are in the admin menu
 
 function pta_directory_custom_help() {
-	global $pta_directory_page;
-	global $pta_directory_sort_page;
 	$screen = get_current_screen();
 	if('member' != $screen->post_type)
 		return;
@@ -1138,6 +1176,7 @@ function pta_directory_custom_help() {
 	$shortcodes_help = pta_shortcodes_help_tab();
 	$custom_links_help = pta_custom_links_help_tab();
 	$sorting_help = pta_sort_positions_help_tab();
+	$styling_help = pta_styling_help_tab();
 
 	$screen->add_help_tab( array(
 	    'id'      => 'pta-members',
@@ -1173,6 +1212,11 @@ function pta_directory_custom_help() {
 		    'id'      => 'pta-sort',
 		    'title'   => __('Sorting Positions', 'pta-member-directory'),
 		    'content' => $sorting_help,
+	));	
+	$screen->add_help_tab( array(
+		    'id'      => 'pta-styling',
+		    'title'   => __('Styling/Appearance', 'pta-member-directory'),
+		    'content' => $styling_help,
 	));	
 }
 add_action('admin_head', 'pta_directory_custom_help');

@@ -4,7 +4,8 @@ function pta_display_directory($location='') {
 	if ('' != $location) {
 		$location = esc_html($location);
 	}
-	$categories = get_option( 'pta_member_categories' );  // Ordered list of categories to display
+	// Get our ordered category list, and allow other plugins to modify it.
+	$categories = apply_filters( 'pta_directory_ordered_categories', get_option( 'pta_member_categories' ) ); 
 	$options = get_option( 'pta_directory_options' ); // Display Options
 	// First, check to see if option is set to hide the display from the public
 	if (isset($options['hide_from_public']) && true === $options['hide_from_public']) {
@@ -38,7 +39,10 @@ function pta_display_directory($location='') {
 	$group_message = __('Send group a message', 'pta-member-directory');
 	$more_info = __('more info...', 'pta-member-directory');
 	$cols = 2;	 // used to determine colspan for vacant positions
-	$return = '';
+
+	// Allow other plugins to add content before the directory table
+	$return = apply_filters( 'pta_directory_before_table', '', $location );
+
 	if($options['enable_location'] && '' != $location) {
 		$args = array( 'hide_empty'=>false,  'slug' => $location  );
         $terms = get_terms( 'member_location', $args );
@@ -87,6 +91,8 @@ function pta_display_directory($location='') {
 	        if ('' != $location) {
 	        	$mypost['member_location'] = $location;
 	        }
+	        // Allow other plugins to modify the query
+	        $mypost = apply_filters( 'pta_directory_member_post_query', $mypost );
 	        $loop = new WP_Query( $mypost );
 	        $count = $loop->post_count;
 	        if ( 0 == $count) {
@@ -199,6 +205,7 @@ function pta_display_directory($location='') {
 	    </tbody>
 	</table>
 	';
+	$return = apply_filters( 'pta_directory_after_table', $return, $location );
 	return $return;
 }
 
@@ -323,6 +330,7 @@ function pta_directory_contact_form($id='', $location='') {
     $error_nonce = __("Invalid Referrer!", 'pta-member-directory');
     $error_bot = __("Spambot!", 'pta-member-directory');
     $error_recipient = __("No recipient selected.  Please select one.", 'pta-member-directory');
+    $error_spamcheck = __("Spamcheck Failed!", 'pta-member-directory');
     $result = '';
     $sent = false;
     $info = '';
@@ -347,7 +355,7 @@ function pta_directory_contact_form($id='', $location='') {
 	        if ( get_magic_quotes_gpc() ) {
 	            $value = stripslashes( $value );
 	        }
-	        $form_data[$field] = sanitize_text_field( strip_tags( $value ) ); // get rid of any bad stuff
+	        $form_data[$field] = stripslashes(sanitize_text_field( $value ) ); // get rid of any bad stuff
 	    }
 	 
 	    // if the required fields are empty, switch $error to TRUE and set the result text to the error message named 'error_empty'
@@ -362,11 +370,7 @@ function pta_directory_contact_form($id='', $location='') {
 	    // If no recipient was passed in, and/or no recipient selected, set the error
 	    if (!$selected) {
 	    	$error = true;
-	    	if (isset($email) && !is_email( $email)) {
-	    		$result =$error_email;
-	    	} else {
-	    		$result = $error_recipient;
-	    	}
+    		$result = $error_recipient;
 	    }
 	 
 	    // and if the e-mail is not valid, switch $error to TRUE and set the result text to the error message named 'error_noemail'
@@ -381,6 +385,16 @@ function pta_directory_contact_form($id='', $location='') {
 	        $result = $error_email;
 	    }
 
+	    // Allow other plugins to do a more thorough spam check on our data, only if no errors so far
+	    $spam_check = false;
+	    if (false === $error) {
+	    	$spam_check = apply_filters( 'pta_member_contact_spam_check', $spam_check, $form_data );
+	    	if (true == $spam_check) {
+	    		$error = true;
+	        	$result = $error_spamcheck;
+	    	}
+	    }
+	    
 	    // but if $error is still FALSE, put together the POSTed variables and send the e-mail!
 	    if ( $error == false ) {
 	        // get the website's name and puts it in front of the subject
@@ -423,7 +437,8 @@ function pta_directory_contact_form($id='', $location='') {
 			    // Call hook to submit data
 			    do_action_ref_array('cfdb_submit', array(&$data));
 			}
-	        
+			// Action hook to allow other plugins to use submitted form data
+	        do_action( 'pta_member_contact_message_sent', $form_data );
 	    }
 	}
 
@@ -432,7 +447,10 @@ function pta_directory_contact_form($id='', $location='') {
 	    $info = '<div class="info">' . $result . '</div>';
 	}
 	// Let's build the form!
-	$email_form = '';
+	// 
+	// First, allow others to add output before the form
+	$email_form = apply_filters( 'pta_member_before_contact_form', '', $id, $location );
+
 	if($options['enable_location'] && '' != $location) {
 		$args = array( 'hide_empty'=>false,  'slug' => $location  );
         $terms = get_terms( 'member_location', $args );
@@ -443,8 +461,11 @@ function pta_directory_contact_form($id='', $location='') {
         }
 	}
 	$email_form .= '<h3>'.esc_html($label_send_message).'</h3>
-	<form class="contact-form" method="post" action="' . get_permalink() . '">
-		<input type="hidden" name="form_title" value="'.esc_attr($options["form_title"]).'"/>
+	<form class="pta-contact-form" method="post" action="' . get_permalink() . '">
+		<input type="hidden" name="form_title" value="'.esc_attr($options["form_title"]).'"/>';
+		// Allow other plugins to add fields before the recipient
+		$email_form = apply_filters( 'pta_member_contact_form_before_recipient', $email_form, $id, $location );
+		$email_form .='
 		<div>
 			<label for="cf_recipient">'.esc_html($label_recipient).'</label>
 			<select name="recipient" id="cf_recipient">
@@ -457,6 +478,9 @@ function pta_directory_contact_form($id='', $location='') {
 				'post_type'			=>	'member',
 				'post_status'		=>	'publish' )
 			);
+			// Allow other plugins to change the members for the recipient list
+			$members = apply_filters( 'pta_member_contact_form_members', $members, $id, $location );
+
 			if( 'positions' == $options['contact_display'] || 'both' == $options['contact_display'] ) {
 				// Create list of positions/categories for multi-recipient mail
 				if ('both' == $options['contact_display']) {
@@ -584,7 +608,10 @@ function pta_directory_contact_form($id='', $location='') {
 			}
 	$email_form .='
 			</select>
-		</div>
+		</div>';
+	// Allow other plugins to add fields after recipient
+	$email_form = apply_filters( 'pta_member_contact_form_after_recipient', $email_form, $id, $location );
+	$email_form .='
 	    <div>
 	        <label for="cf_name">' . esc_html($label_name) . ':</label>
 	        <input type="text" name="your_name" id="cf_name" size="50" maxlength="50" value="' . 
@@ -607,7 +634,10 @@ function pta_directory_contact_form($id='', $location='') {
 	    </div>
 	    <div style="visibility:hidden"> 
 			<input name="contactbot" type="text"size="20"  >
-	    </div>
+	    </div>';
+    // Allow other plugins to add fields before submit button
+    $email_form = apply_filters( 'pta_member_contact_form_before_submit', $email_form, $id, $location );
+    $email_form .='
 	    <div>
 	    	'.wp_nonce_field("pta_directory_contact_form", "pta_directory_contact_form_nonce").'
 	    	<input type="hidden" name="contact_mode" value="submitted" />
@@ -616,7 +646,8 @@ function pta_directory_contact_form($id='', $location='') {
 	        <input type="hidden" value="'.esc_attr($location).'" name="location" />
 	    </div>
 	</form>';
-
+	// Allow other plugins to put content after the form
+	$email_form = apply_filters( 'pta_member_contact_form_after_form', $email_form, $id, $location );
 	if ( $sent == true ) {
 	    return $info;
 	} else {
@@ -629,6 +660,30 @@ add_action( 'wp_enqueue_scripts', 'pta_directory_add_my_stylesheet' );
 function pta_directory_add_my_stylesheet() {
 	wp_register_style( 'pta_directory-style', plugins_url('/css/pta-contact-form.css', __FILE__) );
     wp_enqueue_style( 'pta_directory-style' );
+    $options = get_option( 'pta_directory_options' );
+    if ( true === $options['force_table_borders'] ) {
+    	$color = esc_attr($options['border_color']);
+    	if ( !preg_match('/^#[a-f0-9]{6}$/i', $color) ) {
+    		$color = "#000000";
+    	}
+    	$size = esc_attr($options['border_size']);
+    	$padding = esc_attr($options['cell_padding']);
+    	// Force borders and some padding for themes that don't have borders by default and user doesn't want to edit CSS
+	    $custom_css = "
+	            .pta_directory_table table
+				{
+				border-collapse:collapse;
+				}
+				.pta_directory_table table, .pta_directory_table th, .pta_directory_table td
+				{
+				border: {$size}px solid {$color};
+				}
+				.pta_directory_table th, .pta_directory_table td
+				{
+				padding: {$padding}px;
+				}";
+	    wp_add_inline_style( 'pta_directory-style', $custom_css );
+    }
 }
 
 function pta_member_directory_shortcode($atts) {
