@@ -71,6 +71,8 @@ function pta_shortcodes_help_tab() {
 	$return = '<h4>' . __( 'PTA Member Directory &amp; Contact Form - Shortcodes Help' ,'pta-member-directory') . '</h4>';
 	$return .= '<p>' . __( "To display the directory on a page, use the shortcode: [pta_member_directory] ", 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( "To display the contact form on a separate page (instead of being dynamically generated from the directory page), use the shortcode: [pta_member_contact] ", 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( "To display a simple admin contact form, without the recipient select box, on a page, use the shortcode: [pta_admin_contact] <br/>
+		This Admin contact form will send the message to the site's admin email address.", 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( 'If you have locations enabled, you can show a member directory for a specific location by passing in a location argument in the shortcode. 
 		For example, if you have an office in Seattle, pass in the slug version of your Seattle location: [pta_member_directory location="seattle"]', 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( 'The location argument also works with the contact form (whether dynamically generated or on a separate page with the contact form shortcode). 

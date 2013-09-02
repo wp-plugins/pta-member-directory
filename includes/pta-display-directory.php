@@ -6,6 +6,10 @@ function pta_display_directory($location='') {
 	}
 	// Get our ordered category list, and allow other plugins to modify it.
 	$categories = apply_filters( 'pta_directory_ordered_categories', get_option( 'pta_member_categories' ) ); 
+	if(empty($categories)) {
+		$return = '<p>'.__('Sorry!  There is nothing to display yet.', 'pta-member-directory').'</p>';
+		return $return;
+	}
 	$options = get_option( 'pta_directory_options' ); // Display Options
 	// First, check to see if option is set to hide the display from the public
 	if (isset($options['hide_from_public']) && true === $options['hide_from_public']) {
@@ -29,6 +33,7 @@ function pta_display_directory($location='') {
 		$return = pta_directory_contact_form($id, $location);
 		return $return;
 	}
+	$members_shown = 0;
 	// Set up table text for translation
 	$column_position = $options['position_label']; // Get this from the options settings
 	$column_name = __('Name', 'pta-member-directory');
@@ -95,6 +100,8 @@ function pta_display_directory($location='') {
 	        $mypost = apply_filters( 'pta_directory_member_post_query', $mypost );
 	        $loop = new WP_Query( $mypost );
 	        $count = $loop->post_count;
+	        // Keep track of how many members we have shown
+	        $members_shown += $count;  
 	        if ( 0 == $count) {
 	        	if ('' != $location || !$options['show_vacant_positions']) {
 	        		// Don't show VACANT positions for specific locations, since not every location will have every position
@@ -206,6 +213,9 @@ function pta_display_directory($location='') {
 	</table>
 	';
 	$return = apply_filters( 'pta_directory_after_table', $return, $location );
+	if($members_shown == 0) {
+		$return = '<p>'.__('Sorry!  There is nothing to display yet.', 'pta-member-directory').'</p>';
+	} 
 	return $return;
 }
 
@@ -258,7 +268,12 @@ function pta_directory_contact_form($id='', $location='') {
 		} 
 		$id = false; // unset so can pass through the next check
 	}
-	if ($id && $post=get_post((int)$id)) { // Make sure there is an entry with the given id
+	if ('-1' == $id) {
+		// -1 is our admin contact form id
+		$email = esc_html( get_bloginfo( 'admin_email') );
+		$label_send_message = '';
+		$selected = true;
+	} elseif ($id && $post=get_post((int)$id)) { // Make sure there is an entry with the given id
 		// grab the name and email of the pta directory member we want to contact
 		$email = esc_html( get_post_meta( $id, '_pta_member_directory_email', true ) );
 		$name = $post->post_title;
@@ -331,6 +346,7 @@ function pta_directory_contact_form($id='', $location='') {
     $error_bot = __("Spambot!", 'pta-member-directory');
     $error_recipient = __("No recipient selected.  Please select one.", 'pta-member-directory');
     $error_spamcheck = __("Spamcheck Failed!", 'pta-member-directory');
+    $wp_mail_error = __("Wordpress Mail Error! Check server mail settings.", 'pta-member-directory');
     $result = '';
     $sent = false;
     $info = '';
@@ -385,6 +401,10 @@ function pta_directory_contact_form($id='', $location='') {
 	        $result = $error_email;
 	    }
 
+	    // Serialize and save the $_SERVER info for advanced spam checking via Akismet and others
+	    $form_data['server_array'] = serialize($_SERVER);
+	    $form_data['user_ip'] = pta_directory_get_the_ip();
+
 	    // Allow other plugins to do a more thorough spam check on our data, only if no errors so far
 	    $spam_check = false;
 	    if (false === $error) {
@@ -400,7 +420,7 @@ function pta_directory_contact_form($id='', $location='') {
 	        // get the website's name and puts it in front of the subject
 	        $email_subject = "[" . get_bloginfo( 'name' ) . "] " . $form_data['subject'];
 	        // get the message from the form and add the IP address of the user below it
-	        $email_message = $form_data['message'] . "\n\nIP: " . pta_directory_get_the_ip();
+	        $email_message = $form_data['message'] . "\n\nIP: " . $form_data['user_ip'];
 	        // set the e-mail headers with the user's name, e-mail address and character encoding
 	        $headers = array();
 	        $headers[]  = "From: " . $form_data['your_name'] . " <" . $form_data['email'] . ">";
@@ -412,31 +432,36 @@ function pta_directory_contact_form($id='', $location='') {
 	        		$headers[] = $cc;
 	        	}
 	        }
-	        // send the e-mail with the shortcode attribute named 'email' and the POSTed data
-	        wp_mail( $email, $email_subject, $email_message, $headers );
-	        // and set the result text to the success message set in the options
-	        $result = wp_kses_post(stripslashes($options['contact_message']));
-	        // ...and switch the $sent variable to TRUE
-	        $sent = true;
+	        // send the e-mail
+	        if ( $success =wp_mail( $email, $email_subject, $email_message, $headers ) ) {
+	        	// and set the result text to the success message set in the options
+		        $result = wp_kses_post(stripslashes($options['contact_message']));
+		        // ...and switch the $sent variable to TRUE
+		        $sent = true;
 
-	        // If enabled, post message to CFDB plugin
-	        ;
-			if (isset($options['enable_cfdb']) && true === $options['enable_cfdb']) {
-			 	$uploaded_files = array();
-			 	$title = $options['form_title'];
-			 	// If recipient is an individual (numeric ID), let's get the name for better CFDB display
-			 	if (is_numeric($form_data['recipient'])) {
-			 		$form_data['recipient'] = esc_attr(get_the_title($form_data['recipient']));
-			 	}
-			    // Prepare data structure for call to hook
-			    $data = (object) array(
-			        'title' => $title,
-			        'posted_data' => $form_data,
-			        'uploaded_files' => $uploaded_files);
-			 
-			    // Call hook to submit data
-			    do_action_ref_array('cfdb_submit', array(&$data));
-			}
+		        // If enabled, post message to CFDB plugin
+				if (isset($options['enable_cfdb']) && true === $options['enable_cfdb']) {
+				 	$uploaded_files = array();
+				 	$title = $options['form_title'];
+				 	// If recipient is an individual (numeric ID), let's get the name for better CFDB display
+				 	if (is_numeric($form_data['recipient'])) {
+				 		$form_data['recipient'] = esc_attr(get_the_title($form_data['recipient']));
+				 	}
+				    // Prepare data structure for call to hook
+				    $data = (object) array(
+				        'title' => $title,
+				        'posted_data' => $form_data,
+				        'uploaded_files' => $uploaded_files);
+				 
+				    // Call hook to submit data
+				    do_action_ref_array('cfdb_submit', array(&$data));
+				}
+	        } else {
+	        	// wp_mail returned false
+	        	$sent = false;
+	        	$result = $wp_mail_error;
+	        }
+	        
 			// Action hook to allow other plugins to use submitted form data
 	        do_action( 'pta_member_contact_message_sent', $form_data );
 	    }
@@ -465,150 +490,155 @@ function pta_directory_contact_form($id='', $location='') {
 		<input type="hidden" name="form_title" value="'.esc_attr($options["form_title"]).'"/>';
 		// Allow other plugins to add fields before the recipient
 		$email_form = apply_filters( 'pta_member_contact_form_before_recipient', $email_form, $id, $location );
-		$email_form .='
-		<div>
-			<label for="cf_recipient">'.esc_html($label_recipient).'</label>
-			<select name="recipient" id="cf_recipient">
-				<option value="">'.esc_html($label_option).'</option>';
-			$members = get_posts(  array(
-				'numberposts'		=> -1,
-				'orderby'			=>	'meta_value',
-				'order'				=>	'ASC',
-				'meta_key'			=>	'_pta_member_directory_lastname',
-				'post_type'			=>	'member',
-				'post_status'		=>	'publish' )
-			);
-			// Allow other plugins to change the members for the recipient list
-			$members = apply_filters( 'pta_member_contact_form_members', $members, $id, $location );
+		if ('-1' == $id) {
+			$email_form .= '<input type="hidden" name="recipient" value="-1"/>';
+		} else {
+			$email_form .='
+			<div>
+				<label for="cf_recipient">'.esc_html($label_recipient).'</label>
+				<select name="recipient" id="cf_recipient">
+					<option value="">'.esc_html($label_option).'</option>';
+				$members = get_posts(  array(
+					'numberposts'		=> -1,
+					'orderby'			=>	'meta_value',
+					'order'				=>	'ASC',
+					'meta_key'			=>	'_pta_member_directory_lastname',
+					'post_type'			=>	'member',
+					'post_status'		=>	'publish' )
+				);
+				// Allow other plugins to change the members for the recipient list
+				$members = apply_filters( 'pta_member_contact_form_members', $members, $id, $location );
 
-			if( 'positions' == $options['contact_display'] || 'both' == $options['contact_display'] ) {
-				// Create list of positions/categories for multi-recipient mail
-				if ('both' == $options['contact_display']) {
-					$email_form .= '<optgroup label="'. esc_attr($options['position_label']).'">';
-				}
-				foreach ($categories as $category) {
-					$args = array( 'hide_empty'=>true,  'slug' => $category  );
-			        $terms = get_terms( 'member_category', $args );
-			        if ($terms) {
-			            $term = array_shift($terms);
-			            $display_name = $term->name;
-			        } else {
-			        	continue;
-			        }
-			        // Get member names that hold position and make sure there is at least one valid email
-			        $email_exists = false; // will set this to true if we find at least one member in this position with valid email
-			        $display_names = ''; // Use this to create a list of names of people in each position
-			        $name_count = 0;
-			        foreach ($members as $member) {
-			        	if(has_term( $category, 'member_category', $member )) {
-			        		$member_email = get_post_meta( $member->ID, '_pta_member_directory_email', true );
-			        		if (!is_email($member_email)) continue; // Don't list the member if they have no valid email
-
-			        		// Only show members for the specific location, if enabled and set
-			        		if($options['enable_location'] && '' != $location) {
-			        			$locations = get_the_terms( $member->ID, 'member_location');
-						        if (is_array($locations)) {
-						            if(!has_term( $location, 'member_location', $member->ID )) continue;
-						        } else {
-						        	$member_location = esc_html(get_post_meta( $member->ID, 'member_location', true ));
-						        	if($location != $member_location) continue;
-						        }
-			        		}
-
-			        		$email_exists = true; // got an email
-			        		if(0 == $name_count) {
-			        			$display_names .= ' - '; // put a separator before the first name in the list
-			        		} else {
-			        			$display_names .= ' | '; // separate names with a pipe
-			        		}
-			        		// Check if we want full names or just first names
-			        		if ( true === $options['show_first_names']) {
-			        			$name_arr = explode(' ',trim($member->post_title));
-			        			$display_names .= esc_attr($name_arr[0]); // put just the first name in there
-			        		} else {
-			        			$display_names .= esc_attr($member->post_title);
-			        		}			        		
-			        		$name_count++;
-			        	}
-			        }
-			        if(!$email_exists) continue; // skip this position if we didn't find at least one member with an email
-					$email_form .= '
-					<option value="'.$category.'" ';
-					if(isset($group) && $category == $group) {
-						$email_form .= 'selected="selected"';
+				if( 'positions' == $options['contact_display'] || 'both' == $options['contact_display'] ) {
+					// Create list of positions/categories for multi-recipient mail
+					if ('both' == $options['contact_display']) {
+						$email_form .= '<optgroup label="'. esc_attr($options['position_label']).'">';
 					}
-					$email_form .= '>'.$display_name;
-
-					// Show names after position name if the option is set
-					if ($options['show_contact_names']) {
-						$email_form .= $display_names;
-					}
-			 		$email_form .= '</option>';
-				}
-				if ('both' == $options['contact_display']) {
-					$email_form .= '</optgroup>';
-				}
-			}
-			if( 'individuals' == $options['contact_display'] || 'both' == $options['contact_display'] ) {
-				// Individual Members Contact options
-				if ('both' == $options['contact_display']) {
-					$email_form .= '<optgroup label="'. __('Individuals', 'pta-member-directory') .'">';
-				}				
-				foreach ($members as $member) {
-					$positions = get_the_terms($member->ID, 'member_category');
-					if ($positions) {
-						foreach($positions as $key => $position) {
-			                $positions[$key] = $position->name;
-			            }
-			        	$positions = esc_html(implode(' | ',$positions));
-					}
-					$member_email = get_post_meta( $member->ID, '_pta_member_directory_email', true );
-					if (!is_email($member_email)) continue; // Don't list the member if they have no valid email
-					// Only show members for the specific location, if enabled and set
-	        		if($options['enable_location'] && '' != $location) {
-	        			$locations = get_the_terms( $member->ID, 'member_location');
-				        if (is_array($locations)) {
-				            if(!has_term( $location, 'member_location', $member->ID )) continue;
+					foreach ($categories as $category) {
+						$args = array( 'hide_empty'=>true,  'slug' => $category  );
+				        $terms = get_terms( 'member_category', $args );
+				        if ($terms) {
+				            $term = array_shift($terms);
+				            $display_name = $term->name;
 				        } else {
-				        	$member_location = esc_html(get_post_meta( $member->ID, 'member_location', true ));
-				        	if($location != $member_location) continue;
+				        	continue;
 				        }
-	        		}
-					$email_form .= '
-					<option value="'.$member->ID.'" ';
-					if(isset($id) && $member->ID == $id) {
-						$email_form .= 'selected="selected"';
+				        // Get member names that hold position and make sure there is at least one valid email
+				        $email_exists = false; // will set this to true if we find at least one member in this position with valid email
+				        $display_names = ''; // Use this to create a list of names of people in each position
+				        $name_count = 0;
+				        foreach ($members as $member) {
+				        	if(has_term( $category, 'member_category', $member )) {
+				        		$member_email = get_post_meta( $member->ID, '_pta_member_directory_email', true );
+				        		if (!is_email($member_email)) continue; // Don't list the member if they have no valid email
+
+				        		// Only show members for the specific location, if enabled and set
+				        		if($options['enable_location'] && '' != $location) {
+				        			$locations = get_the_terms( $member->ID, 'member_location');
+							        if (is_array($locations)) {
+							            if(!has_term( $location, 'member_location', $member->ID )) continue;
+							        } else {
+							        	$member_location = esc_html(get_post_meta( $member->ID, 'member_location', true ));
+							        	if($location != $member_location) continue;
+							        }
+				        		}
+
+				        		$email_exists = true; // got an email
+				        		if(0 == $name_count) {
+				        			$display_names .= ' - '; // put a separator before the first name in the list
+				        		} else {
+				        			$display_names .= ' | '; // separate names with a pipe
+				        		}
+				        		// Check if we want full names or just first names
+				        		if ( true === $options['show_first_names']) {
+				        			$name_arr = explode(' ',trim($member->post_title));
+				        			$display_names .= esc_attr($name_arr[0]); // put just the first name in there
+				        		} else {
+				        			$display_names .= esc_attr($member->post_title);
+				        		}			        		
+				        		$name_count++;
+				        	}
+				        }
+				        if(!$email_exists) continue; // skip this position if we didn't find at least one member with an email
+						$email_form .= '
+						<option value="'.$category.'" ';
+						if(isset($group) && $category == $group) {
+							$email_form .= 'selected="selected"';
+						}
+						$email_form .= '>'.$display_name;
+
+						// Show names after position name if the option is set
+						if ($options['show_contact_names']) {
+							$email_form .= $display_names;
+						}
+				 		$email_form .= '</option>';
 					}
-					$email_form .= '>'.$member->post_title;
-					if ($options['enable_location'] && $options['show_locations'] && '' == $location) {
-	        			// Show location after name, if enabled
-	        			$member_locations = wp_get_post_terms( $member->ID, 'member_location' );
-	        			if ($member_locations) {
-	        				$email_form .= ' (';
-	        				$count = count($member_locations);
-	        				$i = 0;
-	        				foreach ($member_locations as $mlocation) {
-	        					$email_form .= $mlocation->name;
-	        					$i++;
-	        					if ($i < $count) {
-	        						$email_form .= ', ';
-	        					}
-	        				}
-	        				$email_form .= ')';
-	        			}
-	        		}
-				 	if ( $positions && $options['show_positions'] ) {
-				 		$email_form .= ' - '.$positions;
-			 		}
-			 		$email_form .= '</option>';
+					if ('both' == $options['contact_display']) {
+						$email_form .= '</optgroup>';
+					}
 				}
-				if ('both' == $options['contact_display']) {
-					$email_form .= '</optgroup>';
+				if( 'individuals' == $options['contact_display'] || 'both' == $options['contact_display'] ) {
+					// Individual Members Contact options
+					if ('both' == $options['contact_display']) {
+						$email_form .= '<optgroup label="'. __('Individuals', 'pta-member-directory') .'">';
+					}				
+					foreach ($members as $member) {
+						$positions = get_the_terms($member->ID, 'member_category');
+						if ($positions) {
+							foreach($positions as $key => $position) {
+				                $positions[$key] = $position->name;
+				            }
+				        	$positions = esc_html(implode(' | ',$positions));
+						}
+						$member_email = get_post_meta( $member->ID, '_pta_member_directory_email', true );
+						if (!is_email($member_email)) continue; // Don't list the member if they have no valid email
+						// Only show members for the specific location, if enabled and set
+		        		if($options['enable_location'] && '' != $location) {
+		        			$locations = get_the_terms( $member->ID, 'member_location');
+					        if (is_array($locations)) {
+					            if(!has_term( $location, 'member_location', $member->ID )) continue;
+					        } else {
+					        	$member_location = esc_html(get_post_meta( $member->ID, 'member_location', true ));
+					        	if($location != $member_location) continue;
+					        }
+		        		}
+						$email_form .= '
+						<option value="'.$member->ID.'" ';
+						if(isset($id) && $member->ID == $id) {
+							$email_form .= 'selected="selected"';
+						}
+						$email_form .= '>'.$member->post_title;
+						if ($options['enable_location'] && $options['show_locations'] && '' == $location) {
+		        			// Show location after name, if enabled
+		        			$member_locations = wp_get_post_terms( $member->ID, 'member_location' );
+		        			if ($member_locations) {
+		        				$email_form .= ' (';
+		        				$count = count($member_locations);
+		        				$i = 0;
+		        				foreach ($member_locations as $mlocation) {
+		        					$email_form .= $mlocation->name;
+		        					$i++;
+		        					if ($i < $count) {
+		        						$email_form .= ', ';
+		        					}
+		        				}
+		        				$email_form .= ')';
+		        			}
+		        		}
+					 	if ( $positions && $options['show_positions'] ) {
+					 		$email_form .= ' - '.$positions;
+				 		}
+				 		$email_form .= '</option>';
+					}
+					if ('both' == $options['contact_display']) {
+						$email_form .= '</optgroup>';
+					}
 				}
-			}
-	$email_form .='
-			</select>
-		</div>';
+		$email_form .='
+				</select>
+			</div>';
+		}
+		
 	// Allow other plugins to add fields after recipient
 	$email_form = apply_filters( 'pta_member_contact_form_after_recipient', $email_form, $id, $location );
 	$email_form .='
@@ -713,6 +743,12 @@ function pta_member_contact_shortcode($atts) {
 	}
 	$id = ''; // won't be passing in contact form id from shortcode
 	return pta_directory_contact_form($id, $location);
+}
+
+function pta_admin_contact_shortcode() {
+	// Set id to -1 to flag for simple admin contact form
+	$id = '-1'; 
+	return pta_directory_contact_form($id);
 }
 
     /*EOF*/

@@ -3,8 +3,8 @@ Contributors: DBAR Productions
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7U6S4U46CKYPJ
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
-Tested up to: 3.5.1
-Stable tag: 1.1
+Tested up to: 3.6
+Stable tag: 1.2
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -47,6 +47,10 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 A help tab has been added to the Member Directory admin section. Click on the Help tab in the upper right to show the help tab. There are sections covering each Member Directory admin screen, as well as how to set up shortcodes and custom links for both the directory and the contact form.
 
+**I'm getting a Wordpress Mail Error when submitting the contact form, or emails are not getting delivered**
+
+This is a server issue and has nothing to do with the contact form or this plugin. Version 1.2 added the Wordpress Mail Error message to let you know that the built-in Wordpress mailer (wp\_mail) returned an error. This means that your server is not compatible with the built-in Wordpress mail function. You can use one of the many SMTP mail plugins, such as Easy WP SMTP, that change the Wordpress Mail function to use SMTP for sending emails. Since this plugin uses Wordpress Mail, any of those plugins that modify Wordpress Mail to use SMTP should work with this plugin to fix your mail errors.
+
 **How do I display the directory on a page?**
 
 Place the shortcode [pta\_member\_directory] on the page where you want the directory.
@@ -57,13 +61,15 @@ If you want to use the contact form instead of displaying emails in the director
 
 However, you can also use the shortcode [pta\_member\_contact] to put the Contact Form on its own separate page.  This will allow you to use the contact form independently of the directory.  If you then select the page with your contact form on the options page, when you click on "Send A Message" in the directory, the link will take the user to the contact form page with the recipient field already selected.
 
+There is also a new shortcode to create a simple admin contact form without the recipient select box. Just use the shortcode [pta\_admin\_contact] . All messages sent from that form will go to the site's admin email.
+
 **Is there any spam protection?  There is no captcha field?**
 
 I'm not a fan of captcha as I often can\'t even read them myself, and it makes setup a bit more complicated since you need to obtain and enter a key for a captcha service.  Instead, I used the honeypot method of spam protection.  There is a hidden spambot field that normal visitors won't see, but spambots will fill in.  Any form submission that has that spambot field filled in will be rejected.
 
 **How do I make a contact link for an individual or group on other pages of my site?**
 
-Just create a link to your contact form page (the page with the [pta\_member\_contact] shortcode), and include an argument for the id of the individual or group you want to be pre-selected on the contact form.  For example, to link to an individual number, you set the id equal to the member directory ID of the member, which you can see in your list of all members.  If the ID is 101, then your like should look like:
+Just create a link to your contact form page (the page with the [pta\_member\_contact] shortcode), and include an argument for the id of the individual or group you want to be pre-selected on the contact form.  For example, to link to an individual number, you set the id equal to the member directory ID of the member, which you can see in your list of all members.  If the ID is 101, then your link should look like:
 http://yoursite.com/your_contact_form/?id=101
 If you want to select a position to contact all members who hold that position, use the slug version of the position.  You can see the slug for each position from the list of Positions on the admin side.  For example, if you want the contact form to be pre-selected for the position of President (slug would be simply president), your link would look like:
 http://yoursite.com/your_contact_form/?id=president
@@ -83,6 +89,13 @@ http://yoursite.com/your_directory_page/?location=seattle
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.2**
+
+*	Added a new shortcode to generate a simple admin contact form. Use [pta\_admin\_contact] to generate a simple contact form without the recipient checkbox. This contact form will send an email to the site admin email address.
+*	Added error checking to wp_mail function for sending the contact form email. If you get a Wordpress Mail Error message, you will know that there is an issue with your server mail settings. If there is no error, but emails are still not being delivered (check junk/spam folders) you may want to install a plugin like Easy WP SMTP to allow Wordpress to send mail via SMTP instead of the PHP mail function.
+*	If there are no positions or members in the directory, output a message on the directory page instead of the table headers with an empty table
+*	Other minor code improvements
+
 **Version 1.1**
 
 *	New option to force table borders (plus a little padding) in the directory for themes that don't show borders by default (and for users who don't want to edit the theme CSS styles themselves). Border color and size, plus cell padding, can also be set.

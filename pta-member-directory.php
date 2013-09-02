@@ -12,7 +12,7 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.1
+Version: 1.2
 Author URI: http://dbar-productions.com
 */
 
@@ -156,6 +156,7 @@ function pta_member_directory_init() {
 
 	add_shortcode( 'pta_member_directory', 'pta_member_directory_shortcode' );
 	add_shortcode( 'pta_member_contact', 'pta_member_contact_shortcode' );
+	add_shortcode( 'pta_admin_contact', 'pta_admin_contact_shortcode');
 
 	register_deactivation_hook( __FILE__, 'pta_member_directory_deactivate' );
 
@@ -1229,9 +1230,12 @@ add_action('admin_head', 'pta_directory_custom_help');
 function pta_save_member_categories() {
 	$categories = get_option( 'pta_member_categories' );
 	$args = array( 'hide_empty' => false, );
-	if (!$term_objects = get_terms( 'member_category', $args )) {
+	$term_objects = get_terms( 'member_category', $args );
+	if(!is_array($term_objects) || empty($term_objects)) {
+		delete_option( 'pta_member_categories' );
 		return;
 	}
+
 	$terms = array();
 	// Get all the category slugs into an array
 	foreach ($term_objects as $object) {
@@ -1251,10 +1255,13 @@ function pta_save_member_categories() {
 		}
 	} 
 	update_option( 'pta_member_categories', $new_categories );
+	
 }
+
+
 add_action('edited_member_category', 'pta_save_member_categories', 10, 1); // Update our categories list option if anything is edited
 add_action('create_member_category', 'pta_save_member_categories', 10, 1); // Update our categories list option if anything is created
-add_action('delete_term', 'pta_save_member_categories', 10, 1); // Update our categories list option if anything is deleted
+add_action('delete_member_category', 'pta_save_member_categories', 10, 1); // Update our categories list option if anything is deleted
 
 
 /* EOF */
