@@ -41,7 +41,7 @@ function pta_display_directory($location='') {
 	$column_email = __('Email', 'pta-member-directory');
 	$vacant = __('VACANT', 'pta-member-directory');
 	$send_message = __('Send A Message', 'pta-member-directory');
-	$group_message = __('Send group a message', 'pta-member-directory');
+	$group_message = __('Send Group A Message', 'pta-member-directory');
 	$more_info = __('more info...', 'pta-member-directory');
 	$cols = 2;	 // used to determine colspan for vacant positions
 
@@ -125,13 +125,12 @@ function pta_display_directory($location='') {
 	            	}
 	            	$contact_url = add_query_arg( $args );
 	            }
-	            // Add group message link if there is more than one person for the position
+	            // Add group message link if there is more than one person for the position && the option is set
 	            $return .= '<tr><td rowspan="'.(int)$count.'" style="vertical-align: middle;"><strong>'.esc_html($category).'</strong>';
-	            if (1 == $count) {
-	                $return .= '</td>';
-	            } else {
-	                $return .= ' <br><br><a href="'.esc_url($contact_url).'">'.esc_html($group_message).'</a></td>';
+	            if (1 < $count && (isset($options['show_group_link']) && true === $options['show_group_link']) ) {
+	                $return .= ' <br/><a href="'.esc_url($contact_url).'">'.esc_html($group_message).'</a>';
 	            }
+	            $return .= '</td>';
 	        }
 	        $i=0;
 	        while ( $loop->have_posts() ) : $loop->the_post();
@@ -552,7 +551,8 @@ function pta_directory_contact_form($id='', $location='') {
 				        		// Check if we want full names or just first names
 				        		if ( true === $options['show_first_names']) {
 				        			$name_arr = explode(' ',trim($member->post_title));
-				        			$display_names .= esc_attr($name_arr[0]); // put just the first name in there
+				        			$name = str_replace(',', '', $name_arr[0]); // Get rid of any comma
+				        			$display_names .= esc_attr($name); // put just the first name (word) in there
 				        		} else {
 				        			$display_names .= esc_attr($member->post_title);
 				        		}			        		

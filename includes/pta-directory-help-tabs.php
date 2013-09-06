@@ -10,8 +10,13 @@ function pta_members_help_tab() {
 		must be in order to view the directory.', 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( 'Since members are a custom post type, you can use the standard post editor to create a bio or "about" page (post) for each member, along with a featured image which you can also choose to 
 		show in the directory listing.', 'pta-member-directory') . '</p>';
-	$return .= '<p>' . __( 'Each member can have multiple positions in the directory, as well as multiple locations. Locations are optional, and can be disabled for the plugin, but <strong>if a member doe not have 
+	$return .= '<p>' . __( 'Each member can have multiple positions in the directory, as well as multiple locations. Locations are optional, and can be disabled for the plugin, but <strong>if a member does not have 
 		at least one position, they will not show up in the directory.</strong>', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( "Within each position, the list of members is sorted by the program's best guess at a last name. As of version 1.3, some additional logic was added to ignore any characters after 
+		the first comma in the name. This will then more properly figure out the last name if you add a suffix, such as: John Doe, MD. It will also then work if you like to enter last name first, 
+		then first name after a comma, such as: Doe, John. <br/><strong>NOTE:</strong> In order for this to work for names with commas that were saved before version 1.3, you will need to edit and then resave each of those members. 
+		Last names are calculated whenever you save a member (and the value is store in a custom meta field for the member post). If you do use the last name first format, please also note that if you have the option selected to 
+		show only first names after positions in the contact form recipient select, it will actually show last names since it looks for the first word in the member name (all characters up to first space, ignoring commas).", 'pta-member-directory') . '</p>';
 	return $return;
 }
 
@@ -95,6 +100,8 @@ function pta_custom_links_help_tab() {
 	$return .= '<p>' . __( 'If you have your contact form shortcode set up on a page at "/contact" on your site, and you want to create a contact link for a member with ID 101, 
 		the link would be: <br/>
 		http://yoursite.com/contact/?id=101', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( 'You can also set the id to -1 to generate a simple admin contact form without the recipient select box. With that id, the message will get sent to the site admin email: <br/>
+		http://yoursite.com/contact/?id=-1', 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( 'If you are NOT using a separate contact form (dynamically generating the form from the directory page), you can still create a contact form link by 
 		also passing in the "action" argument, where the action is "contact".  So, if your directory is on page "/directory", the link would be:<br/> 
 		http://yoursite.com/directory/?action=contact&id=101', 'pta-member-directory') . '</p>';
@@ -120,9 +127,12 @@ function pta_sort_positions_help_tab() {
 	$return = '<h4>' . __( 'PTA Member Directory &amp; Contact Form - Sort Positions Help' ,'pta-member-directory') . '</h4>';
 	$return .= '<p>' . __( "The member directory is listed by position. To change the order in which positions appear, simply go to the Sort Positions page 
 		and drag and drop them in the order that you want them. The position order numbers will change the next time you refresh the page.", 'pta-member-directory') . '</p>';
-	$return .= '<p>' . __( "Within each position, members are sorted by Last Name. The program assumes that the last word in the member name is the last name of the member, 
-		and uses that for alphabetical sorting.", 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( '<strong>Note: Members will NOT show up in the directory if they do not have at least one position.</strong>', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( "Within each position, the list of members is sorted by the program's best guess at a last name. As of version 1.3, some additional logic was added to ignore any characters after 
+		the first comma in the name. This will then more properly figure out the last name if you add a suffix, such as: John Doe, MD. It will also then work if you like to enter last name first, 
+		then first name after a comma, such as: Doe, John. <br/><strong>NOTE:</strong> In order for this to work for names with commas that were saved before version 1.3, you will need to edit and then resave each of those members. 
+		Last names are calculated whenever you save a member (and the value is store in a custom meta field for the member post). If you do use the last name first format, please also note that if you have the option selected to 
+		show only first names after positions in the contact form recipient select, it will actually show last names since it looks for the first word in the member name (all characters up to first space, ignoring commas).", 'pta-member-directory') . '</p>';
 	return $return;
 }
 

@@ -12,7 +12,7 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.2
+Version: 1.3
 Author URI: http://dbar-productions.com
 */
 
@@ -95,6 +95,7 @@ function pta_member_directory_init() {
 	$defaults = array(
 				'format_phone' => true,
 				'show_vacant_positions' => true,
+				'show_group_link' => true,
 				'use_contact_form' => true,
 				'hide_from_public' => true,
 				'capability' => "read",
@@ -354,7 +355,10 @@ function pta_member_directory_save_post_meta ( $post_id, $post ) {
 
 	// Set the last name meta filed for easy sorting
 	$name = ( isset( $_POST['post_title'] ) ? sanitize_text_field( $_POST['post_title'] ) : '' );
-	$parts = explode(" ", $name);
+	// Try to remove any suffix (parts after comma), 
+	// should also work if they enter last name first and then first name after a comma
+	$no_suffix = substr($name, 0, strpos($name, ","));
+	$parts = explode(" ", $no_suffix);
 	$new_meta_value = array_pop($parts); // Grab the lastname
 	$meta_key = '_pta_member_directory_lastname';
 	$meta_value = get_post_meta( $post_id, $meta_key, true );
@@ -672,6 +676,8 @@ function pta_directory_options_form( $options=array() ) {
 		);
 	// Set up translation ready text for the form
 	$form_title = __('Member Directory Options', 'pta-member-directory');
+	$contact_section_title = __('Contact Form Options', 'pta-member-directory');
+	$other_options_title = __('Other Options', 'pta-member-directory');
 	$format_phone_label = __('Automatically format 7 or 10 digit phone numbers in US format?', 'pta-member-directory');
 	$format_phone_desc = __(" YES <em>(if checked, any new 7 or 10 digit inputs will be formatted as (555) 555-5555.<br />Existing entries won't be changed unless you update them.)</em>", 'pta-member-directory');
 	$show_phone_label = __('Show phone numbers in directory?', 'pta-member-directory');
@@ -689,7 +695,7 @@ function pta_directory_options_form( $options=array() ) {
 	$form_link_label = __('Contact form page: ', 'pta-member-directory');
 	$form_link_desc = __('Only use this if you have set up a page with the [pta_member_contact] contact form shortcode, or want to use a different contact form.<br />Otherwise, leave this set to None to generate the contact form dynamically from the directory page.', 'pta-member-directory');
 	$reset_options_label = __('Reset Options: ', 'pta-member-directory');
-	$reset_options_desc = __(' Resets the above options to default values upon deactivation and reactivation of the plugin.', 'pta-member-directory');
+	$reset_options_desc = __(' Resets ALL of the above options to default values upon deactivation and reactivation of the plugin.', 'pta-member-directory');
 	$position_label = __('Display name for Position: ', 'pta-member-directory');
 	$position_label_desc = __(' This is the label used for the "Position" table column header in the public directory.', 'pta-member-directory');
 	$enable_location_label = __('Enable Locations: ', 'pta-member-directory');
@@ -701,9 +707,11 @@ function pta_directory_options_form( $options=array() ) {
 	$show_contact_names_label = __('Show names after positions? ', 'pta-member-directory');
 	$show_contact_names_desc = __(' YES <em>(if checked, and showing positions (or both) on contact form, the names of members who hold that position will be listed after the position name.)</em>', 'pta-member-directory');
 	$show_first_names_label = __('Show only first names after positions? ', 'pta-member-directory');
-	$show_first_names_desc = __(' YES <em>(if checked, and showing names after positions (see above), only the first names will be shown. Useful if several people hold a position and the form is getting too wide.)</em>', 'pta-member-directory');
+	$show_first_names_desc = __(' YES <em>(if checked, and showing names after positions (see above), only the first names (i.e., first word in the member name) will be shown. Useful if several people hold a position and the form is getting too wide.)</em>', 'pta-member-directory');
 	$show_positions_label = __('Show positions after names? ', 'pta-member-directory');
 	$show_positions_desc = __(' YES <em>(if checked, and showing individuals (or both) on contact form, the positions a member holds will be listed after their name.)</em>', 'pta-member-directory');
+	$show_group_link_label = __('Show Group Message links? ', 'pta-member-directory');
+	$show_group_link_desc = __(' YES <em>(if checked, and if there is more than one member for a position, there will be a "Send Group A Message" link under the Position name to send everyone in that group a message.)</em>', 'pta-member-directory');
 	$show_vacant_positions_label = __('Show Vacant Positions? ', 'pta-member-directory');
 	$show_vacant_positions_desc = __(" YES <em>(if checked, any positions you have created that don't have assigned members will show in the directory list with VACANT listed in the name column.)</em>", 'pta-member-directory');
 	$show_locations_label = __('Show locations after names? ', 'pta-member-directory');
@@ -725,8 +733,8 @@ function pta_directory_options_form( $options=array() ) {
 	$hide_donation_button_label = __('Hide Donation Button: ', 'pta-member-directory');
 	$hide_donation_button_desc = __('Check this if you already donated, or just don\'t want to see the donation button any more.', 'pta-member-directory');
 	$return = '
-		<h3>'.$form_title.'</h3>
 		<form name="pta_directory_options" id="pta_directory_options" method="post" action="">
+		<h3>'.$form_title.'</h3>
 			<table class="form-table">
 				<tr>
 					<th scope="row">'.$position_label.'</th>
@@ -770,6 +778,122 @@ function pta_directory_options_form( $options=array() ) {
 						<em>'.$location_label_desc.'</em>
 					</td>
 				</tr>
+				<tr>
+					<th scope="row">'.$show_group_link_label.'</th>
+					<td>
+						<input name="show_group_link" type="checkbox" value="true" ';
+							if (isset($options['show_group_link']) && true === $options['show_group_link']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$show_group_link_desc.'
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$show_phone_label.'</th>
+					<td>
+						<input name="show_phone" type="checkbox" value="true" ';
+							if (isset($options['show_phone']) && true === $options['show_phone']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$show_phone_desc.'
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$format_phone_label.'</th>
+					<td>
+						<input name="format_phone" type="checkbox" value="true" ';
+							if (isset($options['format_phone']) && true === $options['format_phone']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$format_phone_desc.'
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$show_photo_label.'</th>
+					<td>
+						<input name="show_photo" type="checkbox" value="true" ';
+							if (isset($options['show_photo']) && true === $options['show_photo']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$show_photo_desc.'
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$photo_size_label.'</th>
+					<td>
+						X: <input type="text" maxlength="4" size="4" name="photo_size_x" value="';
+						if (isset($options['photo_size_x'])) {
+							$return .= esc_attr($options['photo_size_x']);
+						}
+						$return .= '" />
+						Y: <input type="text" maxlength="4" size="4" name="photo_size_y" value="';
+						if (isset($options['photo_size_y'])) {
+							$return .= esc_attr($options['photo_size_y']);
+						}
+						$return .= '" />
+						<em>'.$photo_size_desc.'</em>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$public_label.'</th>
+					<td>
+						<input name="hide_from_public" type="checkbox" value="true" ';
+							if (isset($options['hide_from_public']) && true === $options['hide_from_public']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$public_desc.'
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$user_level_label.'</th>
+					<td>
+						<select name="capability">';
+							foreach ($capabilities as $key => $value) {
+								$return .= '<option value="' . $value .'" ';
+								if(isset($options['capability']) && $value == $options['capability']) {
+									$return .= 'selected="selected"';
+								}
+								$return .= '>'.$key.'</option>';
+							}
+						$return .= '
+						</select>
+						<em>'.$user_level_desc.'</em>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$force_table_borders_label.'</th>
+					<td>
+						<input name="force_table_borders" type="checkbox" value="true" ';
+							if (isset($options['force_table_borders']) && true === $options['force_table_borders']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$force_table_borders_desc.'
+					</td>
+				</tr>
+				<tr>
+					<th>'.$border_properties_label.'</th>
+					<td>'.$border_color_label.':&nbsp;&nbsp;
+						<input type="text" maxlength="7" size="7" class="pta_border_color" name="border_color" value="';
+						if (isset($options['border_color'])) {
+							$return .= esc_attr($options['border_color']);
+						}
+						$return .= '" /><br />'.$border_size_label.':&nbsp;
+						<input type="text" maxlength="3" size="3" name="border_size" value="';
+						if (isset($options['border_size'])) {
+							$return .= (int)($options['border_size']);
+						}
+						$return .= '" />&nbsp;&nbsp;'.$cell_padding_label.':&nbsp;
+						<input type="text" maxlength="3" size="3" name="cell_padding" value="';
+						if (isset($options['cell_padding'])) {
+							$return .= (int)($options['cell_padding']);
+						}
+						$return .= '" /><br/>
+						<em>'.$border_properties_desc.'</em>
+					</td>
+				</tr>
+			</table>
+			<h3>'.$contact_section_title.'</h3>
+			<table class="form-table">
 				<tr>
 					<th scope="row">'.$contact_select_label.'</th>
 					<td>
@@ -824,53 +948,7 @@ function pta_directory_options_form( $options=array() ) {
 							}
 							$return .= ' />'.$show_locations_desc.'
 					</td>
-				</tr>
-				<tr>
-					<th scope="row">'.$show_phone_label.'</th>
-					<td>
-						<input name="show_phone" type="checkbox" value="true" ';
-							if (isset($options['show_phone']) && true === $options['show_phone']) { 
-								$return .= 'checked'; 
-							}
-							$return .= ' />'.$show_phone_desc.'
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">'.$format_phone_label.'</th>
-					<td>
-						<input name="format_phone" type="checkbox" value="true" ';
-							if (isset($options['format_phone']) && true === $options['format_phone']) { 
-								$return .= 'checked'; 
-							}
-							$return .= ' />'.$format_phone_desc.'
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">'.$show_photo_label.'</th>
-					<td>
-						<input name="show_photo" type="checkbox" value="true" ';
-							if (isset($options['show_photo']) && true === $options['show_photo']) { 
-								$return .= 'checked'; 
-							}
-							$return .= ' />'.$show_photo_desc.'
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">'.$photo_size_label.'</th>
-					<td>
-						X: <input type="text" maxlength="4" size="4" name="photo_size_x" value="';
-						if (isset($options['photo_size_x'])) {
-							$return .= esc_attr($options['photo_size_x']);
-						}
-						$return .= '" />
-						Y: <input type="text" maxlength="4" size="4" name="photo_size_y" value="';
-						if (isset($options['photo_size_y'])) {
-							$return .= esc_attr($options['photo_size_y']);
-						}
-						$return .= '" />
-						<em>'.$photo_size_desc.'</em>
-					</td>
-				</tr>
+				</tr>				
 				<tr>
 					<th scope="row">'.$contact_form_label.'</th>
 					<td>
@@ -879,32 +957,6 @@ function pta_directory_options_form( $options=array() ) {
 								$return .= 'checked'; 
 							}
 							$return .= ' />'.$contact_form_desc.'
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">'.$public_label.'</th>
-					<td>
-						<input name="hide_from_public" type="checkbox" value="true" ';
-							if (isset($options['hide_from_public']) && true === $options['hide_from_public']) { 
-								$return .= 'checked'; 
-							}
-							$return .= ' />'.$public_desc.'
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">'.$user_level_label.'</th>
-					<td>
-						<select name="capability">';
-							foreach ($capabilities as $key => $value) {
-								$return .= '<option value="' . $value .'" ';
-								if(isset($options['capability']) && $value == $options['capability']) {
-									$return .= 'selected="selected"';
-								}
-								$return .= '>'.$key.'</option>';
-							}
-						$return .= '
-						</select>
-						<em>'.$user_level_desc.'</em>
 					</td>
 				</tr>
 				<tr>
@@ -919,37 +971,6 @@ function pta_directory_options_form( $options=array() ) {
 						$return .= wp_dropdown_pages($args);
 						$return .= '<br />
 						<em>'.$form_link_desc.'</em>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">'.$force_table_borders_label.'</th>
-					<td>
-						<input name="force_table_borders" type="checkbox" value="true" ';
-							if (isset($options['force_table_borders']) && true === $options['force_table_borders']) { 
-								$return .= 'checked'; 
-							}
-							$return .= ' />'.$force_table_borders_desc.'
-					</td>
-				</tr>
-				<tr>
-					<th>'.$border_properties_label.'</th>
-					<td>'.$border_color_label.':&nbsp;&nbsp;
-						<input type="text" maxlength="7" size="7" class="pta_border_color" name="border_color" value="';
-						if (isset($options['border_color'])) {
-							$return .= esc_attr($options['border_color']);
-						}
-						$return .= '" /><br />'.$border_size_label.':&nbsp;
-						<input type="text" maxlength="3" size="3" name="border_size" value="';
-						if (isset($options['border_size'])) {
-							$return .= (int)($options['border_size']);
-						}
-						$return .= '" />&nbsp;&nbsp;'.$cell_padding_label.':&nbsp;
-						<input type="text" maxlength="3" size="3" name="cell_padding" value="';
-						if (isset($options['cell_padding'])) {
-							$return .= (int)($options['cell_padding']);
-						}
-						$return .= '" /><br/>
-						<em>'.$border_properties_desc.'</em>
 					</td>
 				</tr>
 				<tr>
@@ -984,6 +1005,9 @@ function pta_directory_options_form( $options=array() ) {
 						<em>'.$contact_message_desc.'</em>
 					</td>
 				</tr>
+			</table>
+			<h3>'.$other_options_title.'</h3>
+			<table class="form-table">
 				<tr>
 					<th scope="row">'.$reset_options_label.'</th>
 					<td>

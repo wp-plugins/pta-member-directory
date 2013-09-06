@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 1.2
+Stable tag: 1.3
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -12,7 +12,7 @@ Create and display a member/staff directory and contact form. Sortable list of s
 
 This plugin lets you create a custom member (or staff) directory, along with an associated contact form, for your organization.  Create as many positions and members (staff) as you like.  Each person can have multiple positions, and each position can have multiple members (staff).
 
-NEW in version 1.0, can also enable and add locations, allowing you to set up different directory listings and contact forms for multiple locations or offices. Members can belong to more than one location.  Locations can be set with either shortcode arguments or URL arguments from links.
+You can also enable and add locations, allowing you to set up different directory listings and contact forms for multiple locations or offices. Members can belong to more than one location.  Locations can be set with either shortcode arguments or URL arguments from links.
 
 The directory list is displayed by position, and positions can be sorted on the admin options page with a simple drag and drop interface.
 
@@ -61,7 +61,7 @@ If you want to use the contact form instead of displaying emails in the director
 
 However, you can also use the shortcode [pta\_member\_contact] to put the Contact Form on its own separate page.  This will allow you to use the contact form independently of the directory.  If you then select the page with your contact form on the options page, when you click on "Send A Message" in the directory, the link will take the user to the contact form page with the recipient field already selected.
 
-There is also a new shortcode to create a simple admin contact form without the recipient select box. Just use the shortcode [pta\_admin\_contact] . All messages sent from that form will go to the site's admin email.
+There is also a new shortcode to create a simple admin contact form without the recipient select box. Just use the shortcode [pta\_admin\_contact] . All messages sent from that form will go to the site\'s admin email. You can also force a simple admin contact form by passing in -1 as the id in a contact form link, such as: http://yoursite.com/your_contact_form/?id=-1
 
 **Is there any spam protection?  There is no captcha field?**
 
@@ -89,6 +89,12 @@ http://yoursite.com/your_directory_page/?location=seattle
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.3**
+
+*	Added a new option to show/hide the Send Group A Message text link on the directory.
+*	Added some additional logic to try to figure out the last name from the member name (post title) in the cases where people use a suffix after a comma, or even if you enter the last name first and then a comma and first name. It will now ignore any characters after the first comma it finds, and then pick the last word in the string from anything before that comma (assuming words are separated by spaces). See the Help dropdown from any Member Directory Admin page for more.
+*	Organized the options page better now that we have quite a few options
+
 **Version 1.2**
 
 *	Added a new shortcode to generate a simple admin contact form. Use [pta\_admin\_contact] to generate a simple contact form without the recipient checkbox. This contact form will send an email to the site admin email address.
