@@ -12,7 +12,7 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.3
+Version: 1.3.1
 Author URI: http://dbar-productions.com
 */
 
@@ -272,6 +272,7 @@ function pta_member_directory_show_contact_meta_box($post) {
 		    'type'  => 'tax_select'  
 		);
 	}
+	$custom_meta_fields = apply_filters( 'pta_member_directory_meta_fields', $custom_meta_fields, $prefix );
 	// Use nonce for verification  
 	echo '<input type="hidden" name="pta_member_directory_post_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';  	      
 	    // Begin the field table and loop  
@@ -354,14 +355,23 @@ function pta_member_directory_save_post_meta ( $post_id, $post ) {
 		return $post_id;
 
 	// Set the last name meta filed for easy sorting
-	$name = ( isset( $_POST['post_title'] ) ? sanitize_text_field( $_POST['post_title'] ) : '' );
+	if (isset( $_POST['post_title'])) {
+		$name = sanitize_text_field( $_POST['post_title'] );
+	} else {
+		$name = $post->post_title;
+	}
+
 	// Try to remove any suffix (parts after comma), 
 	// should also work if they enter last name first and then first name after a comma
 	$no_suffix = substr($name, 0, strpos($name, ","));
+	if ('' == $no_suffix) {
+		$no_suffix = $name;
+	}
 	$parts = explode(" ", $no_suffix);
 	$new_meta_value = array_pop($parts); // Grab the lastname
 	$meta_key = '_pta_member_directory_lastname';
 	$meta_value = get_post_meta( $post_id, $meta_key, true );
+	//wp_die($no_suffix);
 	/* If a new meta value was added and there was no previous value, add it. */
 	if ( $new_meta_value && '' == $meta_value )
 		add_post_meta( $post_id, $meta_key, $new_meta_value, true );
@@ -483,6 +493,9 @@ function pta_member_directory_save_post_meta ( $post_id, $post ) {
 		} 
 		wp_set_object_terms( $post_id, $locations, 'member_location' ); // Set the terms
 	}
+
+	// Provide an easy hook for other plugins to save any custom meta data they added
+	do_action( 'pta_directory_save_meta', $post_id, $post, $prefix );
 }
 
 
@@ -514,6 +527,9 @@ function pta_member_columns( $columns ) {
     if(isset($options['enable_location']) && true === $options['enable_location']) {
     	$columns['pta_member_directory_location'] = __('Location', 'pta-member-directory');
     }
+    // Allow other plug-ins to modify our columns
+    $columns = apply_filters( 'pta_member_directory_member_columns', $columns );
+    
     return $columns;
 }
 add_filter( 'manage_edit-member_columns', 'pta_member_columns' );  // registers the above function for the wp filter
@@ -731,9 +747,14 @@ function pta_directory_options_form( $options=array() ) {
 	$border_properties_desc = __('These table properties are only used if Force Table Borders is enabled.', 'pta-member-directory');
 	$donation_text = __('Please help support continued development of this plugin. Any donation amount is greatly appreciated!', 'pta-member-directory');
 	$hide_donation_button_label = __('Hide Donation Button: ', 'pta-member-directory');
-	$hide_donation_button_desc = __('Check this if you already donated, or just don\'t want to see the donation button any more.', 'pta-member-directory');
+	$hide_donation_button_desc = __(' Check this if you already donated, or just don\'t want to see the donation button any more.', 'pta-member-directory');
 	$return = '
-		<form name="pta_directory_options" id="pta_directory_options" method="post" action="">
+		<form name="pta_directory_options" id="pta_directory_options" method="post" action="">';
+
+		// Allow other plugins to add options
+		$return .= apply_filters('pta_directory_options_before_directory_section', '');
+
+		$return .= '
 		<h3>'.$form_title.'</h3>
 			<table class="form-table">
 				<tr>
@@ -891,7 +912,12 @@ function pta_directory_options_form( $options=array() ) {
 						<em>'.$border_properties_desc.'</em>
 					</td>
 				</tr>
-			</table>
+			</table>';
+
+			// Allow other plugins to add options
+			$return .= apply_filters('pta_directory_options_after_directory_section', '');
+
+			$return .='
 			<h3>'.$contact_section_title.'</h3>
 			<table class="form-table">
 				<tr>
@@ -1005,7 +1031,12 @@ function pta_directory_options_form( $options=array() ) {
 						<em>'.$contact_message_desc.'</em>
 					</td>
 				</tr>
-			</table>
+			</table>';
+
+			// Allow other plugins to add options
+			$return .= apply_filters('pta_directory_options_after_contact_form_section', '');
+
+			$return .= '
 			<h3>'.$other_options_title.'</h3>
 			<table class="form-table">
 				<tr>
@@ -1028,7 +1059,12 @@ function pta_directory_options_form( $options=array() ) {
 							$return .= ' />'.$hide_donation_button_desc.'
 					</td>
 				</tr>
-			</table>
+			</table>';
+
+			// Allow other plugins to add options
+			$return .= apply_filters('pta_directory_options_before_submit_button', '');
+
+			$return .= '
 			<p class="submit">'
             	.wp_nonce_field($action = "pta_directory_options", $name = "pta_directory_options_nonce").'
             	<input type="hidden" name="pta_directory_options_mode" value="submitted" />
@@ -1091,11 +1127,16 @@ function pta_directory_settings_page() {
 					}
 				}
 			}
+			// Allow other plugins to modify our standard options
+			apply_filters( 'pta_directory_before_saving_options', $options );
 			if(update_option( 'pta_directory_options', $options )) {
 				$messages = __('<div id="message" class="updated">Options Updated!</div>', 'pta-member-directory');
 			} else {
 				$messages = __('<div id="message" class="error">Error! Options not changed.</div>', 'pta-member-directory');
 			}
+			// Allow other plugins to update any options they added to our options page, and pass them the messages & main options
+			// They can get their posted options from the global $_POST
+			apply_filters( 'pta_directory_save_options', $messages, $options );
 		}
 	}
 	ob_start();  ?>

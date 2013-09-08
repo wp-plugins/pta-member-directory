@@ -43,7 +43,10 @@ function pta_display_directory($location='') {
 	$send_message = __('Send A Message', 'pta-member-directory');
 	$group_message = __('Send Group A Message', 'pta-member-directory');
 	$more_info = __('more info...', 'pta-member-directory');
-	$cols = 2;	 // used to determine colspan for vacant positions
+
+	// Allow other plugins to modify the starting column count if they are adding other columns
+	// This is used to determine colspan for vacant positions
+	$cols = (int)apply_filters( 'pta_directory_column_count', 2 );
 
 	// Allow other plugins to add content before the directory table
 	$return = apply_filters( 'pta_directory_before_table', '', $location );
@@ -63,6 +66,7 @@ function pta_display_directory($location='') {
 	            <tr>
 	                <th>'.esc_html($column_position).'</th>
 	                <th>'.esc_html($column_name).'</th>';
+                $return .= apply_filters( 'pta_directory_table_headers_after_name', '' );
                 if($options['show_phone']) {
                 	$return .= '<th>'.esc_html($column_phone).'</th>';
                 	$cols++; // add one to our colspan
@@ -70,6 +74,7 @@ function pta_display_directory($location='') {
               	$return .= '  
 	                <th>'.esc_html($column_email).'</th>
 	            </th>';
+	            $return .= apply_filters( 'pta_directory_table_headers_after_email', '' );
 	            if($options['enable_location'] && '' == $location) {
 	            	// Show the location for each member if a specific location was not passed in
 	            	$return .= '<th>'.esc_html($options['location_label']).'</th>';
@@ -79,6 +84,7 @@ function pta_display_directory($location='') {
                 	$return .= '<th>&nbsp;</th>';
                 	$cols++; // add one to our colspan
                 }
+                $return .= apply_filters( 'pta_directory_table_headers_after_last', '' );
               	$return .= '
 	        </thead>
 	        <tbody>
@@ -92,13 +98,13 @@ function pta_display_directory($location='') {
 	        } else {
 	            $category = '&nbsp;';
 	        }
-	        $mypost = array( 'post_type' => 'member', 'member_category' => $slug, 'meta_key' => '_pta_member_directory_lastname', 'orderby' => 'meta_value', 'order' => 'ASC' );
+	        $member_posts = array( 'post_type' => 'member', 'member_category' => $slug, 'meta_key' => '_pta_member_directory_lastname', 'orderby' => 'meta_value', 'order' => 'ASC' );
 	        if ('' != $location) {
-	        	$mypost['member_location'] = $location;
+	        	$member_posts['member_location'] = $location;
 	        }
 	        // Allow other plugins to modify the query
-	        $mypost = apply_filters( 'pta_directory_member_post_query', $mypost );
-	        $loop = new WP_Query( $mypost );
+	        $member_posts = apply_filters( 'pta_directory_member_post_query', $member_posts );
+	        $loop = new WP_Query( $member_posts );
 	        $count = $loop->post_count;
 	        // Keep track of how many members we have shown
 	        $members_shown += $count;  
@@ -166,11 +172,19 @@ function pta_display_directory($location='') {
 	            }
 	            $return .= '
 	                <td style="vertical-align: middle;">'. esc_html($name).'</td>';
+
+                // Allow other plugins to add content cell after name
+                $return .= apply_filters( 'pta_directory_table_content_after_name', '' );
+
 	            if($options['show_phone']) {
 	                $return .= '<td style="vertical-align: middle;">'. esc_html($phone) .'</td>';
 	            }
 	            $return .= '
 	                <td style="vertical-align: middle;">'. $email .'</td>';
+
+                // Allow other plugins to add content cell after name
+                $return .= apply_filters( 'pta_directory_table_content_after_email', '' );
+
                 if($options['enable_location'] && '' == $location) {
                 	$return .= '<td style="vertical-align: middle;">';
                 	$locations = get_the_terms( get_the_ID(), 'member_location');
@@ -202,6 +216,10 @@ function pta_display_directory($location='') {
 	            	}
 					$return .= '</td>';
 	            }
+
+	            // Allow other plugins to add content cell after name
+	            $return .= apply_filters( 'pta_directory_table_content_after_last', '' );
+
 	            $return .= '
 	            </tr>';
 	        	$i++;
@@ -211,7 +229,7 @@ function pta_display_directory($location='') {
 	    </tbody>
 	</table>
 	';
-	$return = apply_filters( 'pta_directory_after_table', $return, $location );
+	$return .= apply_filters( 'pta_directory_after_table', '', $location );
 	if($members_shown == 0) {
 		$return = '<p>'.__('Sorry!  There is nothing to display yet.', 'pta-member-directory').'</p>';
 	} 
@@ -417,7 +435,8 @@ function pta_directory_contact_form($id='', $location='') {
 	    // but if $error is still FALSE, put together the POSTed variables and send the e-mail!
 	    if ( $error == false ) {
 	        // get the website's name and puts it in front of the subject
-	        $email_subject = "[" . get_bloginfo( 'name' ) . "] " . $form_data['subject'];
+	        //$email_subject = "[" . get_bloginfo( 'name' ) . "] " . $form_data['subject'];
+	        $email_subject = $form_data['subject'];
 	        // get the message from the form and add the IP address of the user below it
 	        $email_message = $form_data['message'] . "\n\nIP: " . $form_data['user_ip'];
 	        // set the e-mail headers with the user's name, e-mail address and character encoding

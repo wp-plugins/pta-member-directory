@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -89,6 +89,9 @@ http://yoursite.com/your_directory_page/?location=seattle
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.3.1**
+*	Important fix for the new lastname logic. Found situations where the lastname meta field could get wiped out, and the member would not show at all in the directory. This patch fixes that, but you will need to edit each affected member and hit update (don't actually have to change anything) to force it to update the member post meta info.
+
 **Version 1.3**
 
 *	Added a new option to show/hide the Send Group A Message text link on the directory.
