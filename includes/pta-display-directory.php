@@ -98,7 +98,7 @@ function pta_display_directory($location='') {
 	        } else {
 	            $category = '&nbsp;';
 	        }
-	        $member_posts = array( 'post_type' => 'member', 'member_category' => $slug, 'meta_key' => '_pta_member_directory_lastname', 'orderby' => 'meta_value', 'order' => 'ASC' );
+	        $member_posts = array( 'post_type' => 'member', 'member_category' => $slug, 'meta_key' => '_pta_member_directory_lastname', 'orderby' => 'meta_value', 'order' => 'ASC', 'posts_per_page' => -1 );
 	        if ('' != $location) {
 	        	$member_posts['member_location'] = $location;
 	        }
@@ -434,11 +434,18 @@ function pta_directory_contact_form($id='', $location='') {
 	    
 	    // but if $error is still FALSE, put together the POSTed variables and send the e-mail!
 	    if ( $error == false ) {
-	        // get the website's name and puts it in front of the subject
-	        //$email_subject = "[" . get_bloginfo( 'name' ) . "] " . $form_data['subject'];
-	        $email_subject = $form_data['subject'];
-	        // get the message from the form and add the IP address of the user below it
-	        $email_message = $form_data['message'] . "\n\nIP: " . $form_data['user_ip'];
+	    	$email_subject = '';
+	    	if(true === $options['add_blog_title']) {
+	    		// get the website's name and puts it in front of the subject
+	        	$email_subject .= "[" . get_bloginfo( 'name' ) . "] ";
+	    	}
+	        
+	        $email_subject .= $form_data['subject'];
+	        // get the message from the form and add the sender info
+	        $email_message = "Sender Name: " . $form_data['your_name'] ."\r\n";
+	        $email_message .= "Sender email: " . $form_data['email'] ."\r\n";
+	        $email_message .= "Sender IP: " . $form_data['user_ip'] ."\r\n\r\n";
+	        $email_message .= $form_data['message'];
 	        // set the e-mail headers with the user's name, e-mail address and character encoding
 	        $headers = array();
 	        $headers[]  = "From: " . $form_data['your_name'] . " <" . $form_data['email'] . ">";
@@ -740,9 +747,9 @@ function pta_member_directory_shortcode($atts) {
 			'location' => '',
 		), $atts ) );
 	if ('' != $location) {
-		$location = esc_html($atts['location']);
+		$location = sanitize_title($atts['location']);
 	} elseif (isset($_GET['location']) && '' != $_GET['location']) {
-		$location = esc_html($_GET['location']);
+		$location = sanitize_title($_GET['location']);
 	} else {
 		$location = '';
 	}
@@ -754,9 +761,9 @@ function pta_member_contact_shortcode($atts) {
 			'location' => '',
 		), $atts ) );
 	if ('' != $location) {
-		$location = esc_html($atts['location']);
+		$location = sanitize_title($atts['location']);
 	} elseif (isset($_GET['location']) && '' != $_GET['location']) {
-		$location = esc_html($_GET['location']);
+		$location = sanitize_title($_GET['location']);
 	} else {
 		$location = '';
 	}

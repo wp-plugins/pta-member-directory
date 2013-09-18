@@ -12,14 +12,22 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.3.1
+Version: 1.3.2
 Author URI: http://dbar-productions.com
 */
+// Save version # in database for future upgrades
+if (!defined('PTA_MEMBER_DIRECTORY_VERSION_KEY'))
+    define('PTA_MEMBER_DIRECTORY_VERSION_KEY', 'pta_member_directory_version');
+
+if (!defined('PTA_MEMBER_DIRECTORY_VERSION_NUM'))
+    define('PTA_MEMBER_DIRECTORY_VERSION_NUM', '1.3.2');
+
+add_option(PTA_MEMBER_DIRECTORY_VERSION_KEY, PTA_MEMBER_DIRECTORY_VERSION_NUM);
 
 
 include(dirname(__FILE__).'/includes/scripts.php');
 include(dirname(__FILE__).'/includes/process-ajax.php');
-require_once(dirname(__FILE__).'/includes/pta-display-directory.php');
+include_once(dirname(__FILE__).'/includes/pta-display-directory.php');
 
 add_action( 'init', 'pta_member_directory_init' );
 
@@ -29,6 +37,7 @@ add_action( 'init', 'pta_member_directory_init' );
  * @return Nothing This function just registers the post type and taxonomy
  */
 function pta_member_directory_init() {
+
 	// Set up labels for all our custom post type fields
     $labels = array(
 		'name'                => _x( 'Members', 'Post Type General Name', 'pta-member-directory' ),
@@ -107,6 +116,7 @@ function pta_member_directory_init() {
 				'contact_display' => 'both',
 				'show_contact_names' => true,
 				'show_first_names'	=> true,
+				'add_blog_title'	=> true,
 				'show_positions' => true,
 				'show_locations' => false,
 				'show_phone' => true,
@@ -371,7 +381,7 @@ function pta_member_directory_save_post_meta ( $post_id, $post ) {
 	$new_meta_value = array_pop($parts); // Grab the lastname
 	$meta_key = '_pta_member_directory_lastname';
 	$meta_value = get_post_meta( $post_id, $meta_key, true );
-	//wp_die($no_suffix);
+
 	/* If a new meta value was added and there was no previous value, add it. */
 	if ( $new_meta_value && '' == $meta_value )
 		add_post_meta( $post_id, $meta_key, $new_meta_value, true );
@@ -736,6 +746,8 @@ function pta_directory_options_form( $options=array() ) {
 	$contact_message_desc = __(' The message to display on the screen after a message has been successfully sent.  HTML allowed.', 'pta-member-directory');
 	$enable_cfdb_label = __('Enable post to CFDB: ', 'pta-member-directory');
 	$enable_cfdb_desc = __('  YES <em>(If the Contact Form DB plugin is installed, check this to save contact form submissions to the database via CFDB.)</em>', 'pta-member-directory');
+	$add_blog_title_label = __('Add Blog Title to email Subject?: ', 'pta-member-directory');
+	$add_blog_title_desc = __('  YES <em>(adds your blog title to the beginning of the email subject to let you know the email came from your contact form)</em>.', 'pta-member-directory');
 	$form_title_label = __('Contact Form DB form title: ', 'pta-member-directory');
 	$form_title_desc = __('Sets the form title that results will be stored under with the Contact Form DB plugin. (hidden form field)', 'pta-member-directory');
 	$force_table_borders_label = __('Force Table Borders? ', 'pta-member-directory');
@@ -752,7 +764,7 @@ function pta_directory_options_form( $options=array() ) {
 		<form name="pta_directory_options" id="pta_directory_options" method="post" action="">';
 
 		// Allow other plugins to add options
-		$return .= apply_filters('pta_directory_options_before_directory_section', '');
+		//$return .= apply_filters('pta_directory_options_before_directory_section', '');
 
 		$return .= '
 		<h3>'.$form_title.'</h3>
@@ -915,7 +927,7 @@ function pta_directory_options_form( $options=array() ) {
 			</table>';
 
 			// Allow other plugins to add options
-			$return .= apply_filters('pta_directory_options_after_directory_section', '');
+			//$return .= apply_filters('pta_directory_options_after_directory_section', '');
 
 			$return .='
 			<h3>'.$contact_section_title.'</h3>
@@ -1000,6 +1012,16 @@ function pta_directory_options_form( $options=array() ) {
 					</td>
 				</tr>
 				<tr>
+					<th scope="row">'.$add_blog_title_label.'</th>
+					<td>
+						<input name="add_blog_title" type="checkbox" value="true" ';
+							if (isset($options['add_blog_title']) && true === $options['add_blog_title']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$add_blog_title_desc.'
+					</td>
+				</tr>
+				<tr>
 					<th scope="row">'.$enable_cfdb_label.'</th>
 					<td>
 						<input name="enable_cfdb" type="checkbox" value="true" ';
@@ -1034,7 +1056,7 @@ function pta_directory_options_form( $options=array() ) {
 			</table>';
 
 			// Allow other plugins to add options
-			$return .= apply_filters('pta_directory_options_after_contact_form_section', '');
+			//$return .= apply_filters('pta_directory_options_after_contact_form_section', '');
 
 			$return .= '
 			<h3>'.$other_options_title.'</h3>
@@ -1062,7 +1084,7 @@ function pta_directory_options_form( $options=array() ) {
 			</table>';
 
 			// Allow other plugins to add options
-			$return .= apply_filters('pta_directory_options_before_submit_button', '');
+			//$return .= apply_filters('pta_directory_options_before_submit_button', '');
 
 			$return .= '
 			<p class="submit">'
@@ -1128,15 +1150,17 @@ function pta_directory_settings_page() {
 				}
 			}
 			// Allow other plugins to modify our standard options
-			apply_filters( 'pta_directory_before_saving_options', $options );
+			//apply_filters( 'pta_directory_before_saving_options', $options );
 			if(update_option( 'pta_directory_options', $options )) {
-				$messages = __('<div id="message" class="updated">Options Updated!</div>', 'pta-member-directory');
+				$messages = '<div id="message" class="updated">' . __('Options Updated!', 'pta-member-directory') . '</div>';
+				$not_changed = false;
 			} else {
-				$messages = __('<div id="message" class="error">Error! Options not changed.</div>', 'pta-member-directory');
+				$messages = '<div id="message" class="error">' . __('Error! Options not changed.', 'pta-member-directory') . '</div>';
+				$not_changed = true;
 			}
 			// Allow other plugins to update any options they added to our options page, and pass them the messages & main options
 			// They can get their posted options from the global $_POST
-			apply_filters( 'pta_directory_save_options', $messages, $options );
+			//$messages = apply_filters( 'pta_directory_after_save_options', $messages, $not_changed );
 		}
 	}
 	ob_start();  ?>

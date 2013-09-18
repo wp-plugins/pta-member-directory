@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -65,7 +65,7 @@ There is also a new shortcode to create a simple admin contact form without the 
 
 **Is there any spam protection?  There is no captcha field?**
 
-I'm not a fan of captcha as I often can\'t even read them myself, and it makes setup a bit more complicated since you need to obtain and enter a key for a captcha service.  Instead, I used the honeypot method of spam protection.  There is a hidden spambot field that normal visitors won't see, but spambots will fill in.  Any form submission that has that spambot field filled in will be rejected.
+I'm not a fan of captcha as I often can't even read them myself, and it makes setup a bit more complicated since you need to obtain and enter a key for a captcha service.  Instead, I used the honeypot method of spam protection.  There is a hidden spambot field that normal visitors won't see, but spambots will fill in.  Any form submission that has that spambot field filled in will be rejected.
 
 **How do I make a contact link for an individual or group on other pages of my site?**
 
@@ -89,7 +89,16 @@ http://yoursite.com/your_directory_page/?location=seattle
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.3.2**
+
+*	Added on option to turn on or off adding the blog title to the subject line for the emails sent by the contact form.
+*	Added/improved hooks and filters for extension by other plugins
+*	Relaxed shortcode argument handling - can enter either the Title or slug for location arguments in shortcodes
+*	Added sender name, sender email, and sender IP info to contact form message body. Useful if you are using another SMTP mail plugin which might overwrite our header info, thus setting the from and reply-to address to your admin mail instead of the sender's name and email
+*	Fixed directory display issue where it was limiting the number of members shown for each position to the max number of posts you had set per page on the Wordpress Reading settings page.
+
 **Version 1.3.1**
+
 *	Important fix for the new lastname logic. Found situations where the lastname meta field could get wiped out, and the member would not show at all in the directory. This patch fixes that, but you will need to edit each affected member and hit update (don't actually have to change anything) to force it to update the member post meta info.
 
 **Version 1.3**
