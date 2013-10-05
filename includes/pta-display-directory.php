@@ -1,11 +1,22 @@
 <?php
 
-function pta_display_directory($location='') {
+function pta_display_directory($location='', $position='') {
 	if ('' != $location) {
 		$location = esc_html($location);
 	}
 	// Get our ordered category list, and allow other plugins to modify it.
-	$categories = apply_filters( 'pta_directory_ordered_categories', get_option( 'pta_member_categories' ) ); 
+	$categories = get_option( 'pta_member_categories' ); 
+	if ('' != $position) {
+		$position = strip_tags($position);
+		if (in_array($position, $categories)) { // Make sure it's one of our category slugs
+			// Make categories a one entry array with position
+			$categories = array($position);
+		} else {
+			$position = '';
+		}
+	}
+	$categories = apply_filters( 'pta_contact_form_categories', $categories );
+
 	if(empty($categories)) {
 		$return = '<p>'.__('Sorry!  There is nothing to display yet.', 'pta-member-directory').'</p>';
 		return $return;
@@ -60,11 +71,26 @@ function pta_display_directory($location='') {
             $return .= '<h3>'.esc_html($options['location_label']).': '.esc_html($show_location).'</h3>';
         }		
 	}
+	$show_positions = true;
+	if('' != $position) {
+		$args = array( 'hide_empty'=>false,  'slug' => $position  );
+        $terms = get_terms( 'member_category', $args );
+        if ($terms) {
+            $term = array_shift($terms);
+            $display_position = $term->name;
+            $return .= '<h3>'.__('Directory Listing for ', 'pta-member-directory') . esc_html($column_position).': '.esc_html($display_position).'</h3>';
+            $show_positions = false;
+            $cols--;
+        }		
+	}
 	$return .= '
 	<table class="pta_directory_table">
 	        <thead>
-	            <tr>
-	                <th>'.esc_html($column_position).'</th>
+	            <tr>';
+	            if($show_positions) {
+	            	$return .= '<th>'.esc_html($column_position).'</th>';
+	            } 
+	            $return .='   
 	                <th>'.esc_html($column_name).'</th>';
                 $return .= apply_filters( 'pta_directory_table_headers_after_name', '' );
                 if($options['show_phone']) {
@@ -114,7 +140,8 @@ function pta_display_directory($location='') {
 	        		// Perhaps update this in the future so positions can be linked to one or more locations (or all)
 	        		continue;
 	        	}
-	            $return .= '<tr><td><strong>'.esc_html($category).'</strong></td>';
+	            $return .= '<tr>';
+	            if($show_positions) $return .= '<td><strong>'.esc_html($category).'</strong></td>';
 	            $return .= '<td colspan="'.(int)$cols.'">'.esc_html($vacant).'</td></tr>';
 	        } else {
 	        	// Do we already have a contact page setup with the contact form shortcode?
@@ -124,19 +151,31 @@ function pta_display_directory($location='') {
 	            	if ($options['enable_location'] && '' != $location ) {
 	            		$contact_url .= '&location='.$location;
 	            	}
+	            	if ('' != $position ) {
+	            		$contact_url .= '&position='.$position;
+	            	}
 	            } else {
 	            	$args = array ('action' => 'contact', 'id' => $slug);
 	            	if ($options['enable_location'] && '' != $location) {
 	            		$args['location'] = $location;
 	            	}
+	            	if ('' != $position) {
+	            		$args['position'] = $position;
+	            	}
 	            	$contact_url = add_query_arg( $args );
 	            }
 	            // Add group message link if there is more than one person for the position && the option is set
-	            $return .= '<tr><td rowspan="'.(int)$count.'" style="vertical-align: middle;"><strong>'.esc_html($category).'</strong>';
+	            $return .= '<tr>';
 	            if (1 < $count && (isset($options['show_group_link']) && true === $options['show_group_link']) ) {
-	                $return .= ' <br/><a href="'.esc_url($contact_url).'">'.esc_html($group_message).'</a>';
+	            	$group_contact_link = '<a href="'.esc_url($contact_url).'">'.esc_html($group_message).'</a>';
+	            } else {
+	            	$group_contact_link = '';
 	            }
-	            $return .= '</td>';
+	            if($show_positions) {
+	            	$return .= '<td rowspan="'.(int)$count.'" style="vertical-align: middle;"><strong>'.esc_html($category).'</strong>';
+	                $return .= ' <br/>'. $group_contact_link;
+		            $return .= '</td>';
+	            } 
 	        }
 	        $i=0;
 	        while ( $loop->have_posts() ) : $loop->the_post();
@@ -230,6 +269,10 @@ function pta_display_directory($location='') {
 	</table>
 	';
 	$return .= apply_filters( 'pta_directory_after_table', '', $location );
+	if(!$show_positions) {
+		// If we aren't showing positions, add a group message link under the table
+		$return .= $group_contact_link;
+	}
 	if($members_shown == 0) {
 		$return = '<p>'.__('Sorry!  There is nothing to display yet.', 'pta-member-directory').'</p>';
 	} 
@@ -248,12 +291,27 @@ function pta_directory_get_the_ip() {
     }
 }
 
-function pta_directory_contact_form($id='', $location='') {
+function pta_directory_contact_form($id='', $location='', $position='') {
 	// check if they selected a recipient from the drop down select box, and update the id for proper name/email
 	$location = esc_html($location);
 	$selected = false;
 	$group = false;
-	$categories = get_option( 'pta_member_categories' ); // use this more than once, so put it up top
+
+	// Get our ordered category list, and allow other plugins to modify it.
+	$categories = get_option( 'pta_member_categories' ); 
+	if ('' != $position) {
+		$position = strip_tags($position);
+		if (in_array($position, $categories)) { // Make sure it's one of our category slugs
+			// Make categories a one entry array with position
+			$categories = array($position);
+			$id = $position; // Set the selected group to the position
+		} else {
+			// If not a valid position, just reset it to not trigger a pre-selected group recipient that doesn't exist
+			$position = '';
+		}
+	}
+	$categories = apply_filters( 'pta_contact_form_categories', $categories );
+
 	$options = get_option( 'pta_directory_options' ); // Display Options
 	$cc_mail = array(); // reset our CC mail list
 	if(isset($_POST['location']) && '' != $_POST['location']) {
@@ -265,6 +323,9 @@ function pta_directory_contact_form($id='', $location='') {
 		} else { // if it's not a number, they selected a position/role to send to
 			$id = false; // make sure this is unset
 			$group = sanitize_text_field( $_POST['recipient'] ); // set group to the position category slug
+			if(isset($_POST['position'])) {
+				$position = strip_tags($_POST['position']);
+			}
 		}		
 	} elseif (isset($_GET['id']) && '' != $_GET['id'] && !$id) {
 		// check if we got a member id or a group name(slug) passed in
@@ -517,6 +578,9 @@ function pta_directory_contact_form($id='', $location='') {
 		$email_form = apply_filters( 'pta_member_contact_form_before_recipient', $email_form, $id, $location );
 		if ('-1' == $id) {
 			$email_form .= '<input type="hidden" name="recipient" value="-1"/>';
+		} elseif ( '' != $position && $selected ) {
+			$email_form .= '<input type="hidden" name="recipient" value="'.esc_attr($group).'"/>';
+			$email_form .= '<input type="hidden" name="position" value="'.esc_attr($group).'"/>';
 		} else {
 			$email_form .='
 			<div>
@@ -745,6 +809,7 @@ function pta_directory_add_my_stylesheet() {
 function pta_member_directory_shortcode($atts) {
 	extract( shortcode_atts( array(
 			'location' => '',
+			'position'	=> '',
 		), $atts ) );
 	if ('' != $location) {
 		$location = sanitize_title($atts['location']);
@@ -753,12 +818,20 @@ function pta_member_directory_shortcode($atts) {
 	} else {
 		$location = '';
 	}
-	return pta_display_directory($location);
+	if ('' != $position) {
+		$position = sanitize_title($atts['position']);
+	} elseif (isset($_GET['position']) && '' != $_GET['position']) {
+		$position = sanitize_title($_GET['position']);
+	} else {
+		$position = '';
+	}
+	return pta_display_directory($location, $position);
 }
 
 function pta_member_contact_shortcode($atts) {
 	extract( shortcode_atts( array(
 			'location' => '',
+			'position'	=> '',
 		), $atts ) );
 	if ('' != $location) {
 		$location = sanitize_title($atts['location']);
@@ -767,8 +840,15 @@ function pta_member_contact_shortcode($atts) {
 	} else {
 		$location = '';
 	}
+	if ('' != $position) {
+		$position = sanitize_title($atts['position']);
+	} elseif (isset($_GET['position']) && '' != $_GET['position']) {
+		$position = sanitize_title($_GET['position']);
+	} else {
+		$position = '';
+	}
 	$id = ''; // won't be passing in contact form id from shortcode
-	return pta_directory_contact_form($id, $location);
+	return pta_directory_contact_form($id, $location, $position);
 }
 
 function pta_admin_contact_shortcode() {

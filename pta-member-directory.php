@@ -12,15 +12,15 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.3.2
-Author URI: http://dbar-productions.com
+Version: 1.3.3
+Author URI: http://stephensherrardplugins.com
 */
 // Save version # in database for future upgrades
 if (!defined('PTA_MEMBER_DIRECTORY_VERSION_KEY'))
     define('PTA_MEMBER_DIRECTORY_VERSION_KEY', 'pta_member_directory_version');
 
 if (!defined('PTA_MEMBER_DIRECTORY_VERSION_NUM'))
-    define('PTA_MEMBER_DIRECTORY_VERSION_NUM', '1.3.2');
+    define('PTA_MEMBER_DIRECTORY_VERSION_NUM', '1.3.3');
 
 add_option(PTA_MEMBER_DIRECTORY_VERSION_KEY, PTA_MEMBER_DIRECTORY_VERSION_NUM);
 
@@ -255,13 +255,13 @@ function pta_member_directory_show_contact_meta_box($post) {
 	$prefix = '_pta_member_directory_';  
 	$custom_meta_fields = array(  
 	    array(  
-	        'label'=> __('Contact Phone:', 'pta-member-directory'),  
+	        'label'	=> __('Contact Phone:', 'pta-member-directory'),  
 	        'desc'  => __('contact phone #', 'pta-member-directory'),  
 	        'id'    => $prefix.'phone',  
 	        'type'  => 'text'  
 	    ), 
 	    array(  
-	        'label'=> __('Contact Email:', 'pta-member-directory'),  
+	        'label'	=> __('Contact Email:', 'pta-member-directory'),  
 	        'desc'  => __('contact email address', 'pta-member-directory'),  
 	        'id'    => $prefix.'email',  
 	        'type'  => 'text'  
@@ -282,7 +282,10 @@ function pta_member_directory_show_contact_meta_box($post) {
 		    'type'  => 'tax_select'  
 		);
 	}
+	// Other plugins may add their own custom meta fields
+	// Use the above format and append new fields to the $custom_meta_fields array
 	$custom_meta_fields = apply_filters( 'pta_member_directory_meta_fields', $custom_meta_fields, $prefix );
+
 	// Use nonce for verification  
 	echo '<input type="hidden" name="pta_member_directory_post_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';  	      
 	    // Begin the field table and loop  
@@ -317,6 +320,12 @@ function pta_member_directory_show_contact_meta_box($post) {
 						    echo '<p>'.$field['desc'].'</p>';
 						    echo '<input type="text" name="new_'.$field['id'].'" id="new_'.$field['id'].'" value="" size="30" />';
 						break;
+						default:
+							// If your plugin is using a field type other than 'text' or 'tax_select'
+							// hook your input field here. Make sure to check for $field['type']
+							// your hook should echo the input form field for your field type
+							do_action( 'pta_member_directory_other_field_types', $field );
+							
 	                } //end switch  
 	        echo '</td></tr>';  
 	    } // end foreach  

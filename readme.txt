@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -49,7 +49,7 @@ A help tab has been added to the Member Directory admin section. Click on the He
 
 **I'm getting a Wordpress Mail Error when submitting the contact form, or emails are not getting delivered**
 
-This is a server issue and has nothing to do with the contact form or this plugin. Version 1.2 added the Wordpress Mail Error message to let you know that the built-in Wordpress mailer (wp\_mail) returned an error. This means that your server is not compatible with the built-in Wordpress mail function. You can use one of the many SMTP mail plugins, such as Easy WP SMTP, that change the Wordpress Mail function to use SMTP for sending emails. Since this plugin uses Wordpress Mail, any of those plugins that modify Wordpress Mail to use SMTP should work with this plugin to fix your mail errors.
+This is a server issue and has nothing to do with the contact form or this plugin. Version 1.2 added the Wordpress Mail Error message to let you know that the built-in Wordpress mailer (wp\_mail) returned an error. This means that your server is not compatible with the built-in Wordpress mail function. You can use one of the many SMTP mail plugins, that change the Wordpress Mail function to use SMTP for sending emails. Since this plugin uses Wordpress Mail, any of those plugins that modify Wordpress Mail to use SMTP should work with this plugin to fix your mail errors. Note that some of those SMTP plugins will change the reply-to address to equal the from address instead of the address of the person filling out the contact form. I have created my own PTA SMTP Mailer plugin which is a modified version of Easy WP SMTP that does not change the reply-to address, and also has improved settings and built-in help tabs.
 
 **How do I display the directory on a page?**
 
@@ -89,6 +89,12 @@ http://yoursite.com/your_directory_page/?location=seattle
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.3.3**
+
+*	Added shortcode argument for position for both directory and contact form shortcodes. Allows you to show a directory list for only the specified position, or a contact form that only sends email to the position as a group recipient
+*	Small fix for compatibility with Wordpress versions older than 3.5 (still need at least 3.3, though).
+*	Additional hooks and filters for plugin extensions
+
 **Version 1.3.2**
 
 *	Added on option to turn on or off adding the blog title to the subject line for the emails sent by the contact form.

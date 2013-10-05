@@ -74,20 +74,29 @@ function pta_options_help_tab() {
 
 function pta_shortcodes_help_tab() {
 	$return = '<h4>' . __( 'PTA Member Directory &amp; Contact Form - Shortcodes Help' ,'pta-member-directory') . '</h4>';
-	$return .= '<p>' . __( "To display the directory on a page, use the shortcode: [pta_member_directory] ", 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( "To display the directory on a page, use the shortcode:<br/>[pta_member_directory] ", 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( "To display the contact form on a separate page (instead of being dynamically generated from the directory page), use the shortcode: [pta_member_contact] ", 'pta-member-directory') . '</p>';
-	$return .= '<p>' . __( "To display a simple admin contact form, without the recipient select box, on a page, use the shortcode: [pta_admin_contact] <br/>
+	$return .= '<p>' . __( "To display a simple admin contact form, without the recipient select box, on a page, use the shortcode:<br/>[pta_admin_contact] <br/>
 		This Admin contact form will send the message to the site's admin email address.", 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( 'If you have locations enabled, you can show a member directory for a specific location by passing in a location argument in the shortcode. 
-		For example, if you have an office in Seattle, pass in the slug version of your Seattle location: [pta_member_directory location="seattle"]', 'pta-member-directory') . '</p>';
+		For example, if you have an office in Seattle, pass in the slug version of your Seattle location: <br/>[pta_member_directory location="seattle"]', 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( 'The location argument also works with the contact form (whether dynamically generated or on a separate page with the contact form shortcode). 
 		If you have locations enabled, and you have a directory set up for a specific location, when you click on a contact link, the location will be passed to the contact form 
 		as well, and the contact form will only show other members from that location. However, you can also use the argument within the contact form shortcode 
-		in case you want a separate contact form that only shows members from a specific location. The argument is the same: [pta_member_contact location="seattle"]', 'pta-member-directory') . '</p>';
+		in case you want a separate contact form that only shows members from a specific location. The argument is the same: <br/>[pta_member_contact location="seattle"]', 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( 'Make sure you use the <strong>slug</strong> for the location argument! Go to the Locations page and view the list of all locations to see the slug for each location.', 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( 'When you set a location with a shortcode argument, the location will be shown at the top of the directory or contact form, using 
 		whatever display name you set in the options for "location".', 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( 'Locations can also be passed in as arguments in links instead of hard-coded into a shortcode. See the custom links section for help on creating those links.', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( 'You may also generate a directory for a specific position by passing in a position argument in the shortcode. 
+		For example, if you have a position called Management, pass in the slug version of the position: <br/>[pta_member_directory position="management"]', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( 'If the position argument is used, either in the directory shortcode or via an argument in a link, the position will be displayed above the directory list table,  
+		and the position column will be removed from the table. A link to send the whole group a message will appear below the table. 
+		Clicking on the group message link in this case will also pass the position argument on to the contact form, which will send a message only to that group (the recipient select box will not show).', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( 'The position argument also works with the contact form shortcode. If you specify a position in the contact form shortcode arguments, or if it is passed in via a url argument (such as described above), 
+		then the contact form will act as a contact for for only that position, and no recipient select box will be shown. This way you can set up different contact forms for specific positions without letting the user select an alternate receipient.', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( 'Make sure you use the <strong>slug</strong> for the position argument! Go to the Positions page and view the list of all positions to see the slug for each position.', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( 'Positions can also be passed in as arguments in links instead of hard-coded into a shortcode. See the custom links section for help on creating those links.', 'pta-member-directory') . '</p>';
 	return $return;
 }
 
@@ -112,9 +121,13 @@ function pta_custom_links_help_tab() {
 	$return .= '<p>' . __( 'Similarly, you can pass in a location with a link using the "location" argument, and the slug name of the location you want to show. 
 		So, to create a link to the directory for only Seattle members, the link would be: <br/>
 		http://yoursite.com/directory/?location=seattle', 'pta-member-directory') . '</p>';
-	$return .= '<p>' . __( 'All three arguments can be combined in one link. So, if you want to contact all members who are President in the Seattle location, but you are not using the 
+	$return .= '<p>' . __( 'There is also an argument for "position" which will show a directory listing of only members that hold that position. 
+		For example, to create a link to the directory that shows only members who hold the position "Management", the link would be: <br/>
+		http://yoursite.com/directory/?position=Management', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( 'Arguments can be combined in one link. So, if you want to contact all members who are President in the Seattle location, but you are not using the 
 		separate contact form, the link would be: <br/>
 		http://yoursite.com/directory/?action=contact&id=president&location=seattle', 'pta-member-directory') . '</p>';
+	$return .= '<p>' . __( 'Note that if you pass a position argument and an id argument to the contact form, the position argument will override the id, and make the contact form send to only members who hold that position (without a recipient select box to choose a different recipient).', 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( 'The order of the arguments does not matter.', 'pta-member-directory') . '</p>';
 	$return .= '<p>' . __( 'If you are using the contact form on a separate page with the shortcode, you can still combine the id and location arguments, such as: <br/> 
 		http://yoursite.com/contact/?id=president&location=seattle', 'pta-member-directory') . '</p>';
