@@ -12,7 +12,7 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.3.3
+Version: 1.3.4
 Author URI: http://stephensherrardplugins.com
 */
 // Save version # in database for future upgrades

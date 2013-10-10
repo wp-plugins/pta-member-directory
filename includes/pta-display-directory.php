@@ -351,7 +351,7 @@ function pta_directory_contact_form($id='', $location='', $position='') {
 		$email = esc_html( get_bloginfo( 'admin_email') );
 		$label_send_message = '';
 		$selected = true;
-	} elseif ($id && $post=get_post((int)$id)) { // Make sure there is an entry with the given id
+	} elseif ($id && $post=get_post($id)) { // Make sure there is an entry with the given id
 		// grab the name and email of the pta directory member we want to contact
 		$email = esc_html( get_post_meta( $id, '_pta_member_directory_email', true ) );
 		$name = $post->post_title;
