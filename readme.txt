@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -89,6 +89,12 @@ http://yoursite.com/your_directory_page/?location=seattle
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.3.5**
+
+*	Fixes for translation
+*	Fix to not display warning on contact form if no positions have been created yet and Debug is on
+*	Includes French translation by Dan bp-fr.net
+
 **Version 1.3.4**
 
 *	Bug fix for compatibility with Wordpress versions older than 3.5 (still need at least 3.3, though). Only affects Wordpress versions before 3.5 (you really should upgrade!).

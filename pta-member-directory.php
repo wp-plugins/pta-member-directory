@@ -12,15 +12,17 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.3.4
+Version: 1.3.5
 Author URI: http://stephensherrardplugins.com
+Text Domain: pta-member-directory
+Domain Path: /languages
 */
 // Save version # in database for future upgrades
 if (!defined('PTA_MEMBER_DIRECTORY_VERSION_KEY'))
     define('PTA_MEMBER_DIRECTORY_VERSION_KEY', 'pta_member_directory_version');
 
 if (!defined('PTA_MEMBER_DIRECTORY_VERSION_NUM'))
-    define('PTA_MEMBER_DIRECTORY_VERSION_NUM', '1.3.3');
+    define('PTA_MEMBER_DIRECTORY_VERSION_NUM', '1.3.5');
 
 add_option(PTA_MEMBER_DIRECTORY_VERSION_KEY, PTA_MEMBER_DIRECTORY_VERSION_NUM);
 
@@ -37,6 +39,8 @@ add_action( 'init', 'pta_member_directory_init' );
  * @return Nothing This function just registers the post type and taxonomy
  */
 function pta_member_directory_init() {
+
+	load_plugin_textdomain( 'pta-member-directory', false, dirname(plugin_basename( __FILE__ )) . '/languages/' );
 
 	// Set up labels for all our custom post type fields
     $labels = array(
@@ -110,9 +114,9 @@ function pta_member_directory_init() {
 				'capability' => "read",
 				'contact_page_id' => 0,
 				'reset_options' => false,
-				'position_label' => 'Position',
+				'position_label' => __('Position','pta-member-directory'),
 				'enable_location' => false,
-				'location_label' => 'Location',
+				'location_label' => __('Location','pta-member-directory'),
 				'contact_display' => 'both',
 				'show_contact_names' => true,
 				'show_first_names'	=> true,
@@ -123,14 +127,14 @@ function pta_member_directory_init() {
 				'show_photo' => true,
 				'photo_size_x' => 100,
 				'photo_size_y' => 100,
-				'contact_message' => "Thanks for your message! We'll get back to you as soon as we can.",
+				'contact_message' => __('Thanks for your message! We\'ll get back to you as soon as we can.','pta-member-directory'),
 				'force_table_borders' => false,
 				'border_color' => '#000000',
 				'border_size' => '1',
 				'cell_padding' => '5',
 				'enable_cfdb' => false,
-				'form_title' => 'PTA Member Directory Contact Form',
-				'hide_donation_button' => false,
+				'form_title' => __('PTA Member Directory Contact Form','pta-member-directory'),
+				'hide_donation_button' => false
 				);
 	$options = get_option( 'pta_directory_options', $defaults );
 	// Make sure each option is set -- this helps if new options have been added during plugin upgrades
@@ -170,8 +174,6 @@ function pta_member_directory_init() {
 	add_shortcode( 'pta_admin_contact', 'pta_admin_contact_shortcode');
 
 	register_deactivation_hook( __FILE__, 'pta_member_directory_deactivate' );
-
-	load_plugin_textdomain( 'pta-member-directory', false, dirname(plugin_basename( __FILE__ )) . '/languages/' );
 
 	// Make sure the theme allows thumbnails for our custom post type
 	if ( ! current_theme_supports( 'post-thumbnails', 'member' ) ) {
@@ -697,7 +699,7 @@ function pta_title_text_input( $title ){
 	}
 	$screen = get_current_screen();
 	if ( $screen->post_type == 'member' ) {
-		$title = 'Enter Member Name';
+		$title = __('Enter Member Name', 'pta-member-directory');
 		return $title;
 	}
     return $title;
@@ -706,8 +708,8 @@ add_filter( 'enter_title_here', 'pta_title_text_input' ); // Hook for the above 
 
 function pta_directory_options_form( $options=array() ) {
 	$capabilities = array(
-			'Subscriber' => 'read',
-			'Contributor' => 'edit_posts',
+			__('Subscriber', 'pta-member-directory') => 'read',
+			__('Contributor', 'pta-member-directory') => 'edit_posts',
 		);
 	// Set up translation ready text for the form
 	$form_title = __('Member Directory Options', 'pta-member-directory');
@@ -945,7 +947,7 @@ function pta_directory_options_form( $options=array() ) {
 					<th scope="row">'.$contact_select_label.'</th>
 					<td>
 						<select name="contact_display">';
-						$choices = array('positions', 'individuals', 'both');
+						$choices = array(__('positions', 'pta-member-directory'), __('individuals', 'pta-member-directory'), __('both', 'pta-member-directory'));
 						foreach ($choices as $choice) {
 							$return .= '<option value="'.$choice.'" ';
 							if ( isset($options['contact_display']) && $choice == $options['contact_display'] ) {
@@ -1010,7 +1012,7 @@ function pta_directory_options_form( $options=array() ) {
 					<th scope="row">'.$form_link_label.'</th>
 					<td>';
 						$args = array(
-				    		"show_option_none" => "None",
+				    		"show_option_none" => __('None', 'pta-member-directory'),
 				    		"selected" => (int)$options['contact_page_id'],
 				    		"name" => "contact_page_id",
 				    		"echo" => 0,
@@ -1099,8 +1101,8 @@ function pta_directory_options_form( $options=array() ) {
 			<p class="submit">'
             	.wp_nonce_field($action = "pta_directory_options", $name = "pta_directory_options_nonce").'
             	<input type="hidden" name="pta_directory_options_mode" value="submitted" />
-            	<input type="submit" name="update" class="button-primary" value="SUBMIT" />
-            	<input type="submit" name="cancel" class="button-secondary" value="CANCEL" />
+            	<input type="submit" name="update" class="button-primary" value="'.__("SUBMIT", "pta-member-directory").'" />
+            	<input type="submit" name="cancel" class="button-secondary" value="'.__("CANCEL", "pta-member-directory").'" />
             </p>
 		</form>
 		';
@@ -1133,7 +1135,7 @@ function pta_directory_settings_page() {
 	if ($submitted = isset($_POST['pta_directory_options_mode']) && 'submitted' == $_POST['pta_directory_options_mode']) {
 		if(!wp_verify_nonce($_POST['pta_directory_options_nonce'], 'pta_directory_options')) {
 			$messages = __( '<div id="message" class="error">Invalid Referrer!</div>', 'pta-member-directory' );
-		} elseif (isset($_POST['cancel']) && 'CANCEL' == $_POST['cancel']) {
+		} elseif ( isset($_POST['cancel']) ) {
 			$messages = __('<div id="message" class="error">Update Cancelled</div>', 'pta-member-directory');
 		} elseif (isset($_POST['update']) && 'SUBMIT' == $_POST['update'] ) { // update the options
 			foreach ($options as $key => $value) {
@@ -1176,7 +1178,7 @@ function pta_directory_settings_page() {
 	<div class="wrap">
 	<div id="icon-users" class="icon32"><br/></div>
 	<h2><?php _e('PTA Member Directory - Options', 'pta-member-directory'); ?></h2>
-	<p><strong><?php _e('Click on the Help tab in the upper right for detailed help.', 'pta_member_directory'); ?> <br />
+	<p><strong><?php _e('Click on the Help tab in the upper right for detailed help.', 'pta-member-directory'); ?> <br />
 	</strong></p>
 		<?php 
 		echo $messages; // show any messages
@@ -1204,14 +1206,13 @@ function pta_directory_sort_page() {
 	<div id="icon-users" class="icon32"><br/></div>
 	<h2><?php _e('PTA Member Directory - Sort Position Display Order', 'pta-member-directory'); ?></h2>
 		<?php 
-		if (!$pta_categories) {
-			_e('<h2>No Positions to display</h2>
-				<p>Positions can be added from the Positions submenu, or when adding a new member.</p>', 'pta-member-directory');
+		if (!$pta_categories) { ?>
+		<h2><?php _e('No Positions to display.<br/>Positions can be added from the Positions submenu, or when adding a new member.','pta-member-directory'); ?></h2>
+		<?php
 			return;
 		} ?>
 		<hr />
-		<h4><?php _e('Drag and Drop the Positions below to change the display order on the public page.<br />
-							(Order numbers will change after you refresh the page)', 'pta-member-directory'); ?></h4>
+		<h4><?php _e('Drag and Drop the Positions below to change the display order on the public page.<br />(Order numbers will change after you refresh the page)', 'pta-member-directory'); ?></h4>
 		<table class="wp-list-table widefat fixed posts pta-categories">
 			<thead>
 				<tr>
@@ -1254,8 +1255,8 @@ function pta_directory_sort_page() {
 function pta_member_plugin_menu() {
 	global $pta_directory_page;
 	global $pta_directory_sort_page;	
-	$pta_directory_page = add_submenu_page( 'edit.php?post_type=member', 'settings',  'Options', 'manage_options', 'pta_member_settings', 'pta_directory_settings_page');
-	$pta_directory_sort_page = add_submenu_page( 'edit.php?post_type=member', 'sort',  'Sort Positions', 'manage_options', 'pta_member_sort', 'pta_directory_sort_page');
+	$pta_directory_page = add_submenu_page( 'edit.php?post_type=member', 'settings',  __('Options','pta-member-directory'), 'manage_options', 'pta_member_settings', 'pta_directory_settings_page');
+	$pta_directory_sort_page = add_submenu_page( 'edit.php?post_type=member', 'sort',  __('Sort Positions','pta-member-directory'), 'manage_options', 'pta_member_sort', 'pta_directory_sort_page');
 	add_action('admin_print_styles-' . $pta_directory_sort_page, 'pta_member_directory_load_scripts');
 	add_action('admin_print_styles-' . $pta_directory_page, 'pta_member_directory_options_load_scripts');
 }

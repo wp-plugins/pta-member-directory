@@ -356,7 +356,7 @@ function pta_directory_contact_form($id='', $location='', $position='') {
 		$email = esc_html( get_post_meta( $id, '_pta_member_directory_email', true ) );
 		$name = $post->post_title;
 		$label_send_message = __('Send a message to: ', 'pta-member-directory') . $name;
-		$label_recipient = __('Or, select a different recipient:', 'pta-member-directory');
+		$label_recipient = __('Or select a different recipient:', 'pta-member-directory');
 		$selected = true; // recipient selected
 	} else {
 		if ($group) { // $group recipient selected, so get posts with that taxonomy
@@ -598,7 +598,7 @@ function pta_directory_contact_form($id='', $location='', $position='') {
 				// Allow other plugins to change the members for the recipient list
 				$members = apply_filters( 'pta_member_contact_form_members', $members, $id, $location );
 
-				if( 'positions' == $options['contact_display'] || 'both' == $options['contact_display'] ) {
+				if( ('positions' == $options['contact_display'] || 'both' == $options['contact_display']) && !empty($categories) ) {
 					// Create list of positions/categories for multi-recipient mail
 					if ('both' == $options['contact_display']) {
 						$email_form .= '<optgroup label="'. esc_attr($options['position_label']).'">';
