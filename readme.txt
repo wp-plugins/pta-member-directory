@@ -3,8 +3,8 @@ Contributors: DBAR Productions
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7U6S4U46CKYPJ
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
-Tested up to: 3.6
-Stable tag: 1.3.5
+Tested up to: 3.8
+Stable tag: 1.3.6
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -67,6 +67,10 @@ There is also a new shortcode to create a simple admin contact form without the 
 
 I'm not a fan of captcha as I often can't even read them myself, and it makes setup a bit more complicated since you need to obtain and enter a key for a captcha service.  Instead, I used the honeypot method of spam protection.  There is a hidden spambot field that normal visitors won't see, but spambots will fill in.  Any form submission that has that spambot field filled in will be rejected.
 
+**How can I change the text that appears in the member directory or contact form?**
+
+As of version 1.3.6 a filter hook has been added for almost all text that is output to the public side of the member directory and contact form. There is some information in the help tab in the admin section on how to use this, and there are now 2 files in the main directory of this plugin, output-filters.php and output-filters.txt, that provide all the information and sample code needed to modify any of the text strings.  If you are not comfortable with PHP or adding code to your theme\'s functions.php file, there is a very simple Customizer add-on extension plug-in available at http://stephensherrardplugins.com
+
 **How do I make a contact link for an individual or group on other pages of my site?**
 
 Just create a link to your contact form page (the page with the [pta\_member\_contact] shortcode), and include an argument for the id of the individual or group you want to be pre-selected on the contact form.  For example, to link to an individual number, you set the id equal to the member directory ID of the member, which you can see in your list of all members.  If the ID is 101, then your link should look like:
@@ -89,6 +93,14 @@ http://yoursite.com/your_directory_page/?location=seattle
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.3.6**
+
+*	Added option to show/hide "more info..." link in photo column for members with post content
+*	Added option to link member name to member post page if member has post content
+*	Added filter hooks for all text that is output to the public side for the Directory and Contact Form, to make it easy to modify displayed text without using a translation plugin or editing the plugin files.  See FAQ or Help Tabs for details.  Customizer add-on to make modification of text super simple is coming soon!
+*	Help tab update
+*	Include translation file that was missing from last update
+
 **Version 1.3.5**
 
 *	Fixes for translation

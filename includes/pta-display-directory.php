@@ -18,7 +18,7 @@ function pta_display_directory($location='', $position='') {
 	$categories = apply_filters( 'pta_contact_form_categories', $categories );
 
 	if(empty($categories)) {
-		$return = '<p>'.__('Sorry!  There is nothing to display yet.', 'pta-member-directory').'</p>';
+		$return = '<p>'.apply_filters( 'pta_md_output', __('Sorry!  There is nothing to display yet.', 'pta-member-directory'), 'no_positions' ) .'</p>';
 		return $return;
 	}
 	$options = get_option( 'pta_directory_options' ); // Display Options
@@ -26,10 +26,10 @@ function pta_display_directory($location='', $position='') {
 	if (isset($options['hide_from_public']) && true === $options['hide_from_public']) {
 		// If not logged in, then return with a message
 		if (!is_user_logged_in()) {
-			$return = '<p><strong>'.__('Sorry!  You must be logged in to view the directory.', 'pta-member-directory').'</strong></p>';
+			$return = '<p><strong>'.apply_filters( 'pta_md_output', __('Sorry!  You must be logged in to view the directory.', 'pta-member-directory'), 'not_logged_in' ).'</strong></p>';
 			return $return;
 		} elseif (!current_user_can( $options['capability'] )) {
-			$return = '<p><strong>' . __("Sorry!  You don't have the proper user level to view the directory.", 'pta-member-directory') .'</strong></p>';
+			$return = '<p><strong>' . apply_filters( 'pta_md_output', __("Sorry!  You don't have the proper user level to view the directory.", 'pta-member-directory'), 'not_authorized') .'</strong></p>';
 		}
 	}
 	if ( isset($_POST['contact_mode']) && 'submitted' == $_POST['contact_mode'] ) {
@@ -47,13 +47,13 @@ function pta_display_directory($location='', $position='') {
 	$members_shown = 0;
 	// Set up table text for translation
 	$column_position = $options['position_label']; // Get this from the options settings
-	$column_name = __('Name', 'pta-member-directory');
-	$column_phone = __('Phone', 'pta-member-directory');
-	$column_email = __('Email', 'pta-member-directory');
-	$vacant = __('VACANT', 'pta-member-directory');
-	$send_message = __('Send A Message', 'pta-member-directory');
-	$group_message = __('Send Group A Message', 'pta-member-directory');
-	$more_info = __('more info...', 'pta-member-directory');
+	$column_name = apply_filters( 'pta_md_output', __('Name', 'pta-member-directory'), 'name_column_header' );
+	$column_phone = apply_filters( 'pta_md_output', __('Phone', 'pta-member-directory'), 'phone_column_header' );
+	$column_email = apply_filters( 'pta_md_output', __('Email', 'pta-member-directory'), 'email_column_header' );
+	$vacant = apply_filters( 'pta_md_output', __('VACANT', 'pta-member-directory'), 'vacant_position' );
+	$send_message = apply_filters( 'pta_md_output', __('Send A Message', 'pta-member-directory'), 'send_message' );
+	$group_message = apply_filters( 'pta_md_output', __('Send Group A Message', 'pta-member-directory'), 'send_group_message' );
+	$more_info = apply_filters( 'pta_md_output', __('more info...', 'pta-member-directory'), 'more_info' );
 
 	// Allow other plugins to modify the starting column count if they are adding other columns
 	// This is used to determine colspan for vacant positions
@@ -68,7 +68,7 @@ function pta_display_directory($location='', $position='') {
         if ($terms) {
             $term = array_shift($terms);
             $show_location = $term->name;
-            $return .= '<h3>'.esc_html($options['location_label']).': '.esc_html($show_location).'</h3>';
+            $return .= '<h3>'.apply_filters( 'pta_md_output', esc_html($options['location_label']).': '.esc_html($show_location), 'location_header', $show_location).'</h3>';
         }		
 	}
 	$show_positions = true;
@@ -78,7 +78,7 @@ function pta_display_directory($location='', $position='') {
         if ($terms) {
             $term = array_shift($terms);
             $display_position = $term->name;
-            $return .= '<h3>'.__('Directory Listing for ', 'pta-member-directory') . esc_html($column_position).': '.esc_html($display_position).'</h3>';
+            $return .= '<h3>'. apply_filters( 'pta_md_output', __('Directory Listing for ', 'pta-member-directory') . esc_html($column_position).': '.esc_html($display_position), 'position_header', $display_position ) . '</h3>';
             $show_positions = false;
             $cols--;
         }		
@@ -205,12 +205,17 @@ function pta_display_directory($location='', $position='') {
 		        	$email = ''; // if they don't have an email, don't show anything
 				}
 		        $name = get_the_title(get_the_ID());
+		        if (true == $options['link_name'] && '' != get_the_content() ) {
+		        	$display_name = '<a href="'.esc_url($link ).'">'.esc_html($name).'</a>';
+		        } else {
+		        	$display_name = esc_html($name);
+		        }
 		        $phone = get_post_meta( get_the_ID(), '_pta_member_directory_phone', true );
 	            if($i>0) {
 	                $return .= '<tr>';
 	            }
 	            $return .= '
-	                <td style="vertical-align: middle;">'. esc_html($name).'</td>';
+	                <td style="vertical-align: middle;">'. $display_name .'</td>';
 
                 // Allow other plugins to add content cell after name
                 $return .= apply_filters( 'pta_directory_table_content_after_name', '' );
@@ -249,10 +254,10 @@ function pta_display_directory($location='', $position='') {
 	            		$return .= '&nbsp;';
 	            	}
 
-	            	$cc = get_the_content();
-	            	if($cc != '') {
-	            	     $return .= '<br><a href="'.esc_url($link).'">'.esc_html($more_info).'</a>';
+	            	if ( true == $options['more_info'] && '' != get_the_content() ) {
+	            	    $return .= '<br /><a href="'.esc_url($link).'">'.esc_html($more_info).'</a>';
 	            	}
+	            	
 					$return .= '</td>';
 	            }
 
@@ -274,7 +279,7 @@ function pta_display_directory($location='', $position='') {
 		$return .= $group_contact_link;
 	}
 	if($members_shown == 0) {
-		$return = '<p>'.__('Sorry!  There is nothing to display yet.', 'pta-member-directory').'</p>';
+		$return = '<p>'. apply_filters( 'pta_md_output', __('Sorry!  There is nothing to display yet.', 'pta-member-directory'), 'no_members_shown') .'</p>';
 	} 
 	return $return;
 }
@@ -355,8 +360,8 @@ function pta_directory_contact_form($id='', $location='', $position='') {
 		// grab the name and email of the pta directory member we want to contact
 		$email = esc_html( get_post_meta( $id, '_pta_member_directory_email', true ) );
 		$name = $post->post_title;
-		$label_send_message = __('Send a message to: ', 'pta-member-directory') . $name;
-		$label_recipient = __('Or select a different recipient:', 'pta-member-directory');
+		$label_send_message = apply_filters( 'pta_md_output', __('Send a message to: ', 'pta-member-directory') . $name, 'send_message_label', $name );
+		$label_recipient = apply_filters( 'pta_md_output', __('Or select a different recipient:', 'pta-member-directory'), 'select_different_recipient' );
 		$selected = true; // recipient selected
 	} else {
 		if ($group) { // $group recipient selected, so get posts with that taxonomy
@@ -389,42 +394,42 @@ function pta_directory_contact_form($id='', $location='', $position='') {
 	        } else {
 	        	$display_name = '';
 	        }
-			$label_recipient = __('Or select a different recipient:', 'pta-member-directory');
-			$label_send_message = __('Send a message to: ', 'pta-member-directory') . $display_name;
+			$label_recipient = apply_filters( 'pta_md_output', __('Or select a different recipient:', 'pta-member-directory'), 'select_different_recipient' );
+			$label_send_message = apply_filters( 'pta_md_output', __('Send a message to: ', 'pta-member-directory') . $display_name, 'send_message_label', $display_name );
 			if (is_email( $email )) {
 				$selected = true; // only set to true if we have a valid email
 			} else {
 				// Nobody in the group has a valid email, so let's change the message shown above the form
-				$label_recipient = __('Please select a different recipient:', 'pta-member-directory');
-				$label_send_message = __('There are currently no contact emails for group: ', 'pta-member-directory') . $display_name;
+				$label_recipient = apply_filters( 'pta_md_output', __('Please select a different recipient:', 'pta-member-directory'), 'please_select_different_recipient' );
+				$label_send_message = apply_filters( 'pta_md_output', __('There are currently no contact emails for group: ', 'pta-member-directory') . $display_name, 'no_group_contact_emails', $display_name );
 			}
 			
 		} else {
 			// if no $id or $group given, set the message to ask them to select a recipient, set flag to false
 			$email = '';
 			$name = '';
-			$label_recipient = __('Please select a recipient:', 'pta-member-directory');
-			$label_send_message = __('Send a message: ', 'pta-member-directory');
+			$label_recipient = apply_filters( 'pta_md_output', __('Please select a recipient:', 'pta-member-directory'), 'select_recipient_no_recipient_label' );
+			$label_send_message = apply_filters( 'pta_md_output', __('Send a message: ', 'pta-member-directory'), 'send_message_no_recipient_label' );
 			$selected = false; // no recipient selected yet
 		}
 	}	
     $subject = "";
-    $label_name = __("Your Name", 'pta-member-directory');
-    $label_email = __("Your E-mail Address", 'pta-member-directory');
-    $label_subject = __("Subject", 'pta-member-directory');
-    $label_message = __("Your Message", 'pta-member-directory');
-    $label_submit = __("Submit", 'pta-member-directory');
-    $label_option = __('Select a recipient', 'pta-member-directory');
+    $label_name =   apply_filters( 'pta_md_output', __("Your Name", 'pta-member-directory'), 'contact_label_name' );
+    $label_email = apply_filters( 'pta_md_output', __("Your E-mail Address", 'pta-member-directory'), 'contact_label_email' );
+    $label_subject = apply_filters( 'pta_md_output', __("Subject", 'pta-member-directory'), 'contact_label_subject' );
+    $label_message = apply_filters( 'pta_md_output', __("Your Message", 'pta-member-directory'), 'contact_label_message' );
+    $label_submit = apply_filters( 'pta_md_output', __("Submit", 'pta-member-directory'), 'contact_label_submit' );
+    $label_option = apply_filters( 'pta_md_output', __('Select a recipient', 'pta-member-directory'), 'contact_label_option' );
     // the error message when at least one of the required fields are empty:
-    $error_empty = __("Please fill in all the required fields.", 'pta-member-directory');
+    $error_empty = apply_filters( 'pta_md_output', __("Please fill in all the required fields.", 'pta-member-directory'), 'contact_error_empty' );
     // the error message when the e-mail address is not valid:
-    $error_noemail = __("Please enter a valid e-mail address.", 'pta-member-directory');
-    $error_email = __("That recipient doesn't currently have a valid email address.  Please choose another recipient.", 'pta-member-directory');
-    $error_nonce = __("Invalid Referrer!", 'pta-member-directory');
-    $error_bot = __("Spambot!", 'pta-member-directory');
-    $error_recipient = __("No recipient selected.  Please select one.", 'pta-member-directory');
-    $error_spamcheck = __("Spamcheck Failed!", 'pta-member-directory');
-    $wp_mail_error = __("Wordpress Mail Error! Check server mail settings.", 'pta-member-directory');
+    $error_noemail = apply_filters( 'pta_md_output', __("Please enter a valid e-mail address.", 'pta-member-directory'), 'contact_error_noemail' );
+    $error_email = apply_filters( 'pta_md_output', __("That recipient doesn't currently have a valid email address.  Please choose another recipient.", 'pta-member-directory'), 'contact_error_recipient_noemail' );
+    $error_nonce = apply_filters( 'pta_md_output', __("Invalid Referrer!", 'pta-member-directory'), 'contact_error_nonce' );
+    $error_bot = apply_filters( 'pta_md_output', __("Spambot!", 'pta-member-directory'), 'contact_error_bot' );
+    $error_recipient = apply_filters( 'pta_md_output', __("No recipient selected.  Please select one.", 'pta-member-directory'), 'contact_error_recipient' );
+    $error_spamcheck = apply_filters( 'pta_md_output', __("Spamcheck Failed!", 'pta-member-directory'), 'contact_error_spamcheck' );
+    $wp_mail_error = apply_filters( 'pta_md_output', __("Wordpress Mail Error! Check server mail settings.", 'pta-member-directory'), 'contact_error_wp_mail' );
     $result = '';
     $sent = false;
     $info = '';
@@ -503,9 +508,9 @@ function pta_directory_contact_form($id='', $location='', $position='') {
 	        
 	        $email_subject .= $form_data['subject'];
 	        // get the message from the form and add the sender info
-	        $email_message = "Sender Name: " . $form_data['your_name'] ."\r\n";
-	        $email_message .= "Sender email: " . $form_data['email'] ."\r\n";
-	        $email_message .= "Sender IP: " . $form_data['user_ip'] ."\r\n\r\n";
+	        $email_message = __("Sender Name: ", 'pta-member-directory') . $form_data['your_name'] ."\r\n";
+	        $email_message .= __("Sender email: ", 'pta-member-directory') . $form_data['email'] ."\r\n";
+	        $email_message .= __("Sender IP: ", 'pta-member-directory') . $form_data['user_ip'] ."\r\n\r\n";
 	        $email_message .= $form_data['message'];
 	        // set the e-mail headers with the user's name, e-mail address and character encoding
 	        $headers = array();

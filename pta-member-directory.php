@@ -12,7 +12,7 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.3.5
+Version: 1.3.6
 Author URI: http://stephensherrardplugins.com
 Text Domain: pta-member-directory
 Domain Path: /languages
@@ -22,7 +22,7 @@ if (!defined('PTA_MEMBER_DIRECTORY_VERSION_KEY'))
     define('PTA_MEMBER_DIRECTORY_VERSION_KEY', 'pta_member_directory_version');
 
 if (!defined('PTA_MEMBER_DIRECTORY_VERSION_NUM'))
-    define('PTA_MEMBER_DIRECTORY_VERSION_NUM', '1.3.5');
+    define('PTA_MEMBER_DIRECTORY_VERSION_NUM', '1.3.6');
 
 add_option(PTA_MEMBER_DIRECTORY_VERSION_KEY, PTA_MEMBER_DIRECTORY_VERSION_NUM);
 
@@ -106,6 +106,7 @@ function pta_member_directory_init() {
 
 	// If options haven't previously been setup, create the default member directory options
 	$defaults = array(
+				'link_name' => false,
 				'format_phone' => true,
 				'show_vacant_positions' => true,
 				'show_group_link' => true,
@@ -127,6 +128,7 @@ function pta_member_directory_init() {
 				'show_photo' => true,
 				'photo_size_x' => 100,
 				'photo_size_y' => 100,
+				'more_info' => true,
 				'contact_message' => __('Thanks for your message! We\'ll get back to you as soon as we can.','pta-member-directory'),
 				'force_table_borders' => false,
 				'border_color' => '#000000',
@@ -504,7 +506,7 @@ function pta_member_directory_save_post_meta ( $post_id, $post ) {
 				}
 			}
 		}
-		// Now Process the positions entered or cleared by checkboxes
+		// Now Process the locations entered or cleared by checkboxes
 		$args = array( 'hide_empty' => false, );
 		$terms = get_terms( 'member_location', $args );
 		foreach ($terms as $term) {
@@ -771,11 +773,13 @@ function pta_directory_options_form( $options=array() ) {
 	$donation_text = __('Please help support continued development of this plugin. Any donation amount is greatly appreciated!', 'pta-member-directory');
 	$hide_donation_button_label = __('Hide Donation Button: ', 'pta-member-directory');
 	$hide_donation_button_desc = __(' Check this if you already donated, or just don\'t want to see the donation button any more.', 'pta-member-directory');
+	$link_name_label = __('Link name to member page?', 'pta-member-directory');
+	$link_name_desc = __(" YES <em>(if checked, and if the member has post content, a link will be created for the member name which will take the viewer to the member's bio/info page.)</em>", 'pta-member-directory');
+	$more_info_label = __('Show "more info..." link?', 'pta-member-directory');
+	$more_info_desc = __(' YES <em>(if checked, if the member has post content, and you have enabled photos, a "more info..." link will appear in the photo column that links to the member bio/info page.)</em>', 'pta-member-directory');
+	
 	$return = '
 		<form name="pta_directory_options" id="pta_directory_options" method="post" action="">';
-
-		// Allow other plugins to add options
-		//$return .= apply_filters('pta_directory_options_before_directory_section', '');
 
 		$return .= '
 		<h3>'.$form_title.'</h3>
@@ -789,6 +793,16 @@ function pta_directory_options_form( $options=array() ) {
 						}
 						$return .= '" /><br />
 						<em>'.$position_label_desc.'</em>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">'.$link_name_label.'</th>
+					<td>
+						<input name="link_name" type="checkbox" value="true" ';
+							if (isset($options['link_name']) && true === $options['link_name']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$link_name_desc.'
 					</td>
 				</tr>
 				<tr>
@@ -879,6 +893,16 @@ function pta_directory_options_form( $options=array() ) {
 					</td>
 				</tr>
 				<tr>
+					<th scope="row">'.$more_info_label.'</th>
+					<td>
+						<input name="more_info" type="checkbox" value="true" ';
+							if (isset($options['more_info']) && true === $options['more_info']) { 
+								$return .= 'checked'; 
+							}
+							$return .= ' />'.$more_info_desc.'
+					</td>
+				</tr>
+				<tr>
 					<th scope="row">'.$public_label.'</th>
 					<td>
 						<input name="hide_from_public" type="checkbox" value="true" ';
@@ -936,9 +960,6 @@ function pta_directory_options_form( $options=array() ) {
 					</td>
 				</tr>
 			</table>';
-
-			// Allow other plugins to add options
-			//$return .= apply_filters('pta_directory_options_after_directory_section', '');
 
 			$return .='
 			<h3>'.$contact_section_title.'</h3>
@@ -1066,9 +1087,6 @@ function pta_directory_options_form( $options=array() ) {
 				</tr>
 			</table>';
 
-			// Allow other plugins to add options
-			//$return .= apply_filters('pta_directory_options_after_contact_form_section', '');
-
 			$return .= '
 			<h3>'.$other_options_title.'</h3>
 			<table class="form-table">
@@ -1093,9 +1111,6 @@ function pta_directory_options_form( $options=array() ) {
 					</td>
 				</tr>
 			</table>';
-
-			// Allow other plugins to add options
-			//$return .= apply_filters('pta_directory_options_before_submit_button', '');
 
 			$return .= '
 			<p class="submit">'
@@ -1134,10 +1149,10 @@ function pta_directory_settings_page() {
 	// Check if the options form was submitted
 	if ($submitted = isset($_POST['pta_directory_options_mode']) && 'submitted' == $_POST['pta_directory_options_mode']) {
 		if(!wp_verify_nonce($_POST['pta_directory_options_nonce'], 'pta_directory_options')) {
-			$messages = __( '<div id="message" class="error">Invalid Referrer!</div>', 'pta-member-directory' );
+			$messages = '<div id="message" class="error">' . __( 'Invalid Referrer!', 'pta-member-directory' ) . '</div>';
 		} elseif ( isset($_POST['cancel']) ) {
-			$messages = __('<div id="message" class="error">Update Cancelled</div>', 'pta-member-directory');
-		} elseif (isset($_POST['update']) && 'SUBMIT' == $_POST['update'] ) { // update the options
+			$messages = '<div id="message" class="error">' . __('Update Cancelled', 'pta-member-directory') . '</div>';
+		} elseif (isset($_POST['update']) ) { // update the options
 			foreach ($options as $key => $value) {
 				if (in_array($key, $text_fields)) {
 					$options[$key] = sanitize_text_field($_POST[$key]);
@@ -1277,6 +1292,7 @@ function pta_directory_custom_help() {
 	$custom_links_help = pta_custom_links_help_tab();
 	$sorting_help = pta_sort_positions_help_tab();
 	$styling_help = pta_styling_help_tab();
+	$modify_output_help = pta_modify_output_help_tab();
 
 	$screen->add_help_tab( array(
 	    'id'      => 'pta-members',
@@ -1317,6 +1333,11 @@ function pta_directory_custom_help() {
 		    'id'      => 'pta-styling',
 		    'title'   => __('Styling/Appearance', 'pta-member-directory'),
 		    'content' => $styling_help,
+	));	
+	$screen->add_help_tab( array(
+		    'id'      => 'pta-modify',
+		    'title'   => __('Modifying Output Text', 'pta-member-directory'),
+		    'content' => $modify_output_help,
 	));	
 }
 add_action('admin_head', 'pta_directory_custom_help');

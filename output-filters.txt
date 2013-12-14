@@ -1,0 +1,51 @@
+Below is a list of identifiers for all modifiable text output for the public side of the Member Directory and Contact Form, as well as a brief description of each and whether or not that output uses a variable.
+
+The output filter is: 'pta_md_output'
+It has three arguments:
+	$text -- the output text to be filtered
+	$id -- the text identifier string
+	$variable -- Not always used (so set default to ''). This would be a variable that is shown in the output, such as location, position, or individual/group name.
+
+See output-filters.php for example code on how to modify the output text.
+
+DIRECTORY OUTPUT FILTER IDENTIFIERS:
+'no_positions' -- Message if no positions/categories have been set up yet
+'not_logged_in' -- Message shown if user is not logged in and option is set to hide directory from public
+'not_authorized' -- If directory is hidden from public, and user doesn't have the proper role to view
+'name_column_header' -- Header for Name column of directory
+'phone_column_header' -- Header for Phone column of directory
+'email_column_header' -- Header for email column of directory
+'vacant_position' -- Text to show for vacant positions
+'send_message' -- Text for send a message link when hiding email and using contact form
+'send_group_message' -- Text for sending a message to all members who hold a position
+'more_info' -- Text for link below photo going to individual member post if they have content
+'location_header' -- Header text for directory when only a specific location is shown (via shortcode or link argument), this filter also passes the location variable
+'position_header' -- Header text for directory when only a specific position is shown (via shortcode or link argument), this filter also passes the position variable
+'no_members_shown' -- Message shown in directory when there are no members to show
+
+CONTACT FORM OUTPUT FILTER IDENTIFIERS:
+'send_message_label' -- Header of contact form when a recipient is pre-selected. This filter also passes the name of the recipient
+'select_different_recipient' -- header above drop down box to allow them to select a different recipient
+'please_select_different_recipient' -- Shown when nobody in the group has a valid email, asking them to select a different recipient
+'no_group_contact_emails' -- The error messasge shown when there are no contact emails for the group.  Group (position) display name is passed as a variable for this
+'select_recipient_no_recipient_label' -- Message to select a recipient when no individual or group was passed to the form
+'send_message_no_recipient_label' -- The Send message label when no individual or group was passed to the form
+'contact_label_name' -- Label for name text input field
+'contact_label_email' -- Label for email text input field
+'contact_label_subject' -- Subject field label
+'contact_label_message' -- Message area label
+'contact_label_submit' -- Submit button text
+'contact_label_option' -- Label for default option in recipient drop down select box
+'contact_error_empty' -- Error message if a required field is left blank
+'contact_error_noemail' -- If their email is not a valid format email
+'contact_error_recipient_noemail' -- error message if the recipient doesn't have a valid email
+'contact_error_nonce' -- Error message if nonce is invalid (bad referrer)
+'contact_error_bot' -- Error message if the hidden bot field was filled in
+'contact_error_recipient' -- Error message if no recipient was selected
+'contact_error_spamcheck' -- Error message is external spam check reports spam (only if have extension for this)
+'contact_error_wp_mail' -- Error message if the wp_mail function returns an error after trying to send the mail
+
+
+If you aren't comfortable with PHP, or just want an easier way to modify any of the output text, check out the PTA Member Directory Customizer at:
+http://stephensherrardplugins.com
+The PTA Member Directory Customizer gives you a simple, single page form, where you can see all the customizable text and what the defaults are, and you can quickly enter any text you want to modify, along with simple placeholder text for where you want any variables to appear within your text string.
