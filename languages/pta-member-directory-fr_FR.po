@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PTA Member Directory 1.3.6\n"
-"POT-Creation-Date: 2013-12-06 12:32+0100\n"
-"PO-Revision-Date: 2013-12-06 13:22+0100\n"
+"Project-Id-Version: PTA Member Directory 1.3.7\n"
+"POT-Creation-Date: 2013-12-20 21:34-0800\n"
+"PO-Revision-Date: 2013-12-22 17:30+0100\n"
 "Last-Translator: dan <danco38@gmail.com>\n"
 "Language-Team: Dan <http://bp-fr.net>\n"
 "Language: French\n"
@@ -819,6 +819,14 @@ msgstr "Style/Apparence"
 #: ../pta-member-directory.php:1339
 msgid "Modifying Output Text"
 msgstr "Modifier le texte à afficher"
+
+#: ../pta-member-directory.php:1391
+msgid "Extensions"
+msgstr "Extensions"
+
+#: ../pta-member-directory.php:1393
+msgid "Settings"
+msgstr "Paramètres"
 
 #: ../includes/pta-directory-help-tabs.php:4
 msgid "PTA Member Directory &amp; Contact Form - Members Help"
@@ -1729,22 +1737,3 @@ msgstr "IP de l&#expéditeur: "
 #: ../includes/pta-display-directory.php:678
 msgid "Individuals"
 msgstr "Contact individuel"
-
-#~ msgid "<div id=\"message\" class=\"error\">Invalid Referrer!</div>"
-#~ msgstr "<div id=\"message\" class=\"error\">Réferant invalide !</div>"
-
-#~ msgid "<div id=\"message\" class=\"error\">Update Cancelled</div>"
-#~ msgstr "<div id=\"message\" class=\"error\">Mise à jour annulée !</div>"
-
-#~ msgid ""
-#~ "Since members are a custom post type, you can use the standard post "
-#~ "editor to create a bio or \"about\" page (post) for each member, along "
-#~ "with a featured image which you can also choose to show in the directory "
-#~ "listing."
-#~ msgstr ""
-#~ "Puisque les contacts sont des CPT, vous pouvez utiliser l'éditeur de "
-#~ "texte standard pour ajouter des images, une <i>Bio</i> ou une page <i>à "
-#~ "propos</i> pour chaque contact qui apparaitra sur l'annuaire."
-
-#~ msgid "Or, select a different recipient:"
-#~ msgstr "Ou, sélectionnez un autre destinataire:"

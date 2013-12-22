@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.8
-Stable tag: 1.3.6
+Stable tag: 1.3.7
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -49,11 +49,13 @@ A help tab has been added to the Member Directory admin section. Click on the He
 
 **I'm getting a Wordpress Mail Error when submitting the contact form, or emails are not getting delivered**
 
-This is a server issue and has nothing to do with the contact form or this plugin. Version 1.2 added the Wordpress Mail Error message to let you know that the built-in Wordpress mailer (wp\_mail) returned an error. This means that your server is not compatible with the built-in Wordpress mail function. You can use one of the many SMTP mail plugins, that change the Wordpress Mail function to use SMTP for sending emails. Since this plugin uses Wordpress Mail, any of those plugins that modify Wordpress Mail to use SMTP should work with this plugin to fix your mail errors. Note that some of those SMTP plugins will change the reply-to address to equal the from address instead of the address of the person filling out the contact form. I have created my own PTA SMTP Mailer plugin which is a modified version of Easy WP SMTP that does not change the reply-to address, and also has improved settings and built-in help tabs.
+This is a server issue and has nothing to do with the contact form or this plugin. Version 1.2 added the Wordpress Mail Error message to let you know that the built-in Wordpress mailer (wp\_mail) returned an error. This means that your server is not compatible with the built-in Wordpress mail function. You can use one of the many SMTP mail plugins, that change the Wordpress Mail function to use SMTP for sending emails. Since this plugin uses Wordpress Mail, any of those plugins that modify Wordpress Mail to use SMTP should work with this plugin to fix your mail errors. Note that some of those SMTP plugins will change the reply-to address to equal the from address instead of the address of the person filling out the contact form. I have created my own PTA SMTP Mailer plugin which is a modified version of Easy WP SMTP that does not change the reply-to address, and also has improved settings and built-in help tabs. You can download the PTA SMTP Mailer plugin for free at:
+http://stephensherrardplugins.com
 
 **How do I display the directory on a page?**
 
-Place the shortcode [pta\_member\_directory] on the page where you want the directory.
+Place the shortcode [pta\_member\_directory] on the page where you want the directory. You can use shortcode arguments to specify a location or position. You can download a free extension to automatically generate the shortcodes for the directory and contact form, along with properly formatted arguments for location or position, from my plugins site at:
+http://stephensherrardplugins.com
 
 **How do I use the contact form?**
 
@@ -62,6 +64,9 @@ If you want to use the contact form instead of displaying emails in the director
 However, you can also use the shortcode [pta\_member\_contact] to put the Contact Form on its own separate page.  This will allow you to use the contact form independently of the directory.  If you then select the page with your contact form on the options page, when you click on "Send A Message" in the directory, the link will take the user to the contact form page with the recipient field already selected.
 
 There is also a new shortcode to create a simple admin contact form without the recipient select box. Just use the shortcode [pta\_admin\_contact] . All messages sent from that form will go to the site\'s admin email. You can also force a simple admin contact form by passing in -1 as the id in a contact form link, such as: http://yoursite.com/your_contact_form/?id=-1
+
+Simplify the shortcode generation by downloading the free extension, PTA Zilla Shortcodes, from my plugin site at:
+http://stephensherrardplugins.com
 
 **Is there any spam protection?  There is no captcha field?**
 
@@ -85,6 +90,11 @@ If you want a directory for a specific location on its own page, add the locatio
 If you want a single directory page that you can use to show all locations, but also can show a specific location, use the regular directory shortcode without the location argument. If someone goes directly to that page, they will see the full directory for all locations. But, if you set up links to that page with location arguments in the URLs, you can show a specific location. You could, for example, set up navigation menu items for each location, all going to the same directory page, but with different location argument. For example, if you want to show a directory for Seattle, the link would be something like:
 http://yoursite.com/your_directory_page/?location=seattle
 
+**Can I add custom fields to the directory?**
+
+Hooks and filters are in place to allow the creation of custom fields. This requires a significant amount of programming and knowledge of how to create inputs and save data from custom meta boxes on the admin post editor page for the custom post type.  I have created an add-on Custom Fields plugin extension for this that allows you to create any number of custom fields, with 4 different field types (text, link, file, textarea), and 3 output locations for these fields (after name, after email, and after the last column).  You can have more than one custom field in each location as well, so you are only limited by how many fields you want to try to fit into the directory table.  This plugin extension is available at my new site: 
+http://stephensherrardplugins.com
+
 == Screenshots ==
 
 1. Add New Member - Admin
@@ -93,11 +103,16 @@ http://yoursite.com/your_directory_page/?location=seattle
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.3.7**
+
+*	Minor Action/Filter hook updates for extensions ( extension available at http://stephensherrardplugins.com )
+*	Added Dutch translation by Remco Spil
+
 **Version 1.3.6**
 
 *	Added option to show/hide "more info..." link in photo column for members with post content
 *	Added option to link member name to member post page if member has post content
-*	Added filter hooks for all text that is output to the public side for the Directory and Contact Form, to make it easy to modify displayed text without using a translation plugin or editing the plugin files.  See FAQ or Help Tabs for details.  Customizer add-on to make modification of text super simple is coming soon!
+*	Added filter hooks for all text that is output to the public side for the Directory and Contact Form, to make it easy to modify displayed text without using a translation plugin or editing the plugin files.  See FAQ or Help Tabs for details.  Customizer add-on to make modification of text super simple is available as an extension!
 *	Help tab update
 *	Include translation file that was missing from last update
 

@@ -2,224 +2,227 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PTA Member Directory 1.3.6\n"
 "POT-Creation-Date: 2013-12-20 21:34-0800\n"
-"PO-Revision-Date: 2013-12-20 21:35-0800\n"
-"Last-Translator: Stephen Sherrard <stephen@dbar-productions.com>\n"
+"PO-Revision-Date: 2013-12-21 20:33+0100\n"
+"Last-Translator: Remco Spil <remcospil@gmail.com>\n"
 "Language-Team: \n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;__ngettext_noop:1,2;_n_noop:1,2;"
 "_x:1,2c;_nx:4c,1,2;_n:1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;"
 "esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"Language: Dutch\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../pta-member-directory.php:47
 msgctxt "Post Type General Name"
 msgid "Members"
-msgstr ""
+msgstr "Leden"
 
 #: ../pta-member-directory.php:48
 msgctxt "Post Type Singular Name"
 msgid "Member"
-msgstr ""
+msgstr "Lid"
 
 #: ../pta-member-directory.php:49
 msgid "Member Directory"
-msgstr ""
+msgstr "Ledenlijst"
 
 #: ../pta-member-directory.php:51
 msgid "All Members"
-msgstr ""
+msgstr "Alle leden"
 
 #: ../pta-member-directory.php:52
 msgid "View Member"
-msgstr ""
+msgstr "Lid bekijken"
 
 #: ../pta-member-directory.php:53
 msgid "Add New Member"
-msgstr ""
+msgstr "Nieuw lid toevoegen"
 
 #: ../pta-member-directory.php:54
 msgid "New Member"
-msgstr ""
+msgstr "Nieuw lid"
 
 #: ../pta-member-directory.php:55
 msgid "Edit Member"
-msgstr ""
+msgstr "Lid bewerken"
 
 #: ../pta-member-directory.php:56
 msgid "Update Member"
-msgstr ""
+msgstr "Lid bijwerken"
 
 #: ../pta-member-directory.php:57
 msgid "Search members"
-msgstr ""
+msgstr "Leden zoeken"
 
 #: ../pta-member-directory.php:58
 msgid "No members found"
-msgstr ""
+msgstr "Geen leden gevonden"
 
 #: ../pta-member-directory.php:59
 msgid "No members found in Trash"
-msgstr ""
+msgstr "Geen leden gevonden in de prullenbak"
 
 #: ../pta-member-directory.php:63
 msgid "member"
-msgstr ""
+msgstr "lid"
 
 #: ../pta-member-directory.php:64
 msgid "PTA Board Members and Chairs"
-msgstr ""
+msgstr "PTA Bestuursleden en Voorzitters"
 
 #: ../pta-member-directory.php:85
 msgctxt "taxonomy general name"
 msgid "Positions"
-msgstr ""
+msgstr "Posities"
 
 #: ../pta-member-directory.php:86
 msgctxt "taxonomy singular name"
 msgid "Position"
-msgstr ""
+msgstr "Positie"
 
 #: ../pta-member-directory.php:87
 msgid "Search Positions"
-msgstr ""
+msgstr "Doorzoek posities"
 
 #: ../pta-member-directory.php:88
 msgid "All Positions"
-msgstr ""
+msgstr "Alle posities"
 
 #: ../pta-member-directory.php:89
 msgid "Parent Category"
-msgstr ""
+msgstr "Bovenliggede categorie"
 
 #: ../pta-member-directory.php:90
 msgid "Parent Category:"
-msgstr ""
+msgstr "Bovenliggende categorie:"
 
 #: ../pta-member-directory.php:91
 msgid "Edit Position"
-msgstr ""
+msgstr "Positie bewerken"
 
 #: ../pta-member-directory.php:92
 msgid "Update Position"
-msgstr ""
+msgstr "Postitie bijwerken"
 
 #: ../pta-member-directory.php:93
 msgid "Add New Position"
-msgstr ""
+msgstr "Nieuwe positie toevoegen"
 
 #: ../pta-member-directory.php:94
 msgid "New Position"
-msgstr ""
+msgstr "Nieuw positie"
 
 #: ../pta-member-directory.php:95
 msgid "Positions"
-msgstr ""
+msgstr "Posities"
 
 #: ../pta-member-directory.php:118 ../pta-member-directory.php:544
 #: ../pta-member-directory.php:1234 ../pta-member-directory.php:1258
 msgid "Position"
-msgstr ""
+msgstr "Positie"
 
 #: ../pta-member-directory.php:120 ../pta-member-directory.php:551
 msgid "Location"
-msgstr ""
+msgstr "Locatie"
 
 #: ../pta-member-directory.php:132
 msgid "Thanks for your message! We'll get back to you as soon as we can."
 msgstr ""
+"Bedankt voor uw bericht! Wij zullen zo spoedig mogelijk reageren op uw "
+"bericht."
 
 #: ../pta-member-directory.php:138
 msgid "PTA Member Directory Contact Form"
-msgstr ""
+msgstr "PTA Ledenlijst contactformulier"
 
 #: ../pta-member-directory.php:153
 msgctxt "taxonomy general name"
 msgid "Locations"
-msgstr ""
+msgstr "Locaties"
 
 #: ../pta-member-directory.php:154
 msgctxt "taxonomy singular name"
 msgid "Location"
-msgstr ""
+msgstr "Locatie"
 
 #: ../pta-member-directory.php:155
 msgid "Search Locations"
-msgstr ""
+msgstr "Doorzoek alle locaties"
 
 #: ../pta-member-directory.php:156
 msgid "All Locations"
-msgstr ""
+msgstr "Alle locaties"
 
 #: ../pta-member-directory.php:157
 msgid "Parent Location"
-msgstr ""
+msgstr "Bovenliggende locatie"
 
 #: ../pta-member-directory.php:158
 msgid "Parent Location:"
-msgstr ""
+msgstr "Bovenliggende locatie:"
 
 #: ../pta-member-directory.php:159
 msgid "Edit Location"
-msgstr ""
+msgstr "Locatie bewerken"
 
 #: ../pta-member-directory.php:160
 msgid "Update Location"
-msgstr ""
+msgstr "Locatie bijwerken"
 
 #: ../pta-member-directory.php:161
 msgid "Add New Location"
-msgstr ""
+msgstr "Nieuwe locatie toevoegen"
 
 #: ../pta-member-directory.php:162
 msgid "New Location"
-msgstr ""
+msgstr "Nieuwe locatie"
 
 #: ../pta-member-directory.php:163
 msgid "Locations"
-msgstr ""
+msgstr "Locaties"
 
 #: ../pta-member-directory.php:234
 #, php-format
 msgid "Member updated. <a href=\"%s\">View Member</a>"
-msgstr ""
+msgstr "Lid bijgewerkt. <a href=\"%s\">Bekijk lid</a>"
 
 #: ../pta-member-directory.php:235
 msgid "Custom field updated."
-msgstr ""
+msgstr "Aangepast veld bijgewerkt."
 
 #: ../pta-member-directory.php:236
 msgid "Custom field deleted."
-msgstr ""
+msgstr "Bijgewerkt veld verwijderd."
 
 #: ../pta-member-directory.php:237
 msgid "Member updated."
-msgstr ""
+msgstr "Lid bijgewerkt"
 
 #: ../pta-member-directory.php:238
 #, php-format
 msgid "Member restored to revision from %s"
-msgstr ""
+msgstr "Lid terug gezet naar versie van %s"
 
 #: ../pta-member-directory.php:239
 #, php-format
 msgid "Member published. <a href=\"%s\">View Member</a>"
-msgstr ""
+msgstr "Lid gepubliceerd. <a href=\"%s\">Bekijken lid</a>"
 
 #: ../pta-member-directory.php:240
 msgid "Member saved."
-msgstr ""
+msgstr "Lid is opgeslagen."
 
 #: ../pta-member-directory.php:241
 #, php-format
 msgid "Member submitted. <a target=\"_blank\" href=\"%s\">Preview Member</a>"
 msgstr ""
+"Lid is toegevoegd. <a target=\"_blank\" href=\"%s\">Voorbeeld van lid</a>"
 
 #: ../pta-member-directory.php:242
 #, php-format
@@ -227,106 +230,114 @@ msgid ""
 "Member scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
 "\">Preview Member</a>"
 msgstr ""
+"Lid is in gepland voor: <strong>%1$s</strong>. <a target=\"_blank\" href="
+"\"%2$s\">Voorbeeld van lid bekijken</a>"
 
 #: ../pta-member-directory.php:242
 msgid "M j, Y @ G:i"
-msgstr ""
+msgstr "M j, Y @ G:i"
 
 #: ../pta-member-directory.php:243
 #, php-format
 msgid ""
 "Member draft updated. <a target=\"_blank\" href=\"%s\">Preview Member</a>"
 msgstr ""
+"Concept lid bijgewerkt. <a target=\"_blank\" href=\"%s\">Voorbeeld van lid "
+"bekijken</a>"
 
 #: ../pta-member-directory.php:262
 msgid "Contact Phone:"
-msgstr ""
+msgstr "Telefoonnummer:"
 
 #: ../pta-member-directory.php:263
 msgid "contact phone #"
-msgstr ""
+msgstr "telefoonnummer #"
 
 #: ../pta-member-directory.php:268
 msgid "Contact Email:"
-msgstr ""
+msgstr "Email adres:"
 
 #: ../pta-member-directory.php:269
 msgid "contact email address"
-msgstr ""
+msgstr "email adres"
 
 #: ../pta-member-directory.php:274
 msgid "Positions: "
-msgstr ""
+msgstr "Posities:"
 
 #: ../pta-member-directory.php:275
 msgid ""
 "Select one or more positions, or use the box below to add a new position."
 msgstr ""
+"Selecteer één of meer posities, of gebruik het veld hieronder voor het "
+"toevoegen van een nieuwe positie"
 
 #: ../pta-member-directory.php:283
 msgid "Locations: "
-msgstr ""
+msgstr "Locaties:"
 
 #: ../pta-member-directory.php:284
 msgid ""
 "Select one or more locations, or use the box below to add a new location."
 msgstr ""
+"Selecteer  één of meer locaties, of gebruik het veld hieronder voor het "
+"toevoegen van een nieuwe locatie"
 
 #: ../pta-member-directory.php:348
 msgid "Member Info"
-msgstr ""
+msgstr "Informatie van een lid"
 
 #: ../pta-member-directory.php:542
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../pta-member-directory.php:543
 msgid "Member Name"
-msgstr ""
+msgstr "Lid naame"
 
 #: ../pta-member-directory.php:545 ../includes/pta-display-directory.php:51
 msgid "Phone"
-msgstr ""
+msgstr "Telefoonnummer"
 
 #: ../pta-member-directory.php:546 ../includes/pta-display-directory.php:52
 msgid "Email"
-msgstr ""
+msgstr "Email adres"
 
 #: ../pta-member-directory.php:615
 msgid "Show All Positions"
-msgstr ""
+msgstr "Toon alle posities"
 
 #: ../pta-member-directory.php:628
 msgid "Show All Locations"
-msgstr ""
+msgstr "Toon alle lolcaties"
 
 #: ../pta-member-directory.php:704
 msgid "Enter Member Name"
-msgstr ""
+msgstr "Voer lid naam in"
 
 #: ../pta-member-directory.php:713
 msgid "Subscriber"
-msgstr ""
+msgstr "Abonnee"
 
 #: ../pta-member-directory.php:714
 msgid "Contributor"
-msgstr ""
+msgstr "Inzender"
 
 #: ../pta-member-directory.php:717
 msgid "Member Directory Options"
-msgstr ""
+msgstr "Instellingen ledenlijst"
 
 #: ../pta-member-directory.php:718
 msgid "Contact Form Options"
-msgstr ""
+msgstr "Instellingen contactformulier"
 
 #: ../pta-member-directory.php:719
 msgid "Other Options"
-msgstr ""
+msgstr "Overige instellingen"
 
 #: ../pta-member-directory.php:720
 msgid "Automatically format 7 or 10 digit phone numbers in US format?"
-msgstr ""
+msgstr "Formateer een 7- of 10 cijferig telefoonnummer in het US formaat?"
 
 #: ../pta-member-directory.php:721
 msgid ""
@@ -334,66 +345,79 @@ msgid ""
 "(555) 555-5555.<br />Existing entries won't be changed unless you update "
 "them.)</em>"
 msgstr ""
+"JA <em> (indien aangevinkt, wordt elk 7- of 10 cijferige invoer als volgt "
+"geformateerd: (555) 555-5555.<br />Bestaande gegevens wordt niet aangepast, "
+"tenzij deze worden gewijzigd.)</em>"
 
 #: ../pta-member-directory.php:722
 msgid "Show phone numbers in directory?"
-msgstr ""
+msgstr "Moeten de telefoonnummers in de lijst worden getoond?"
 
 #: ../pta-member-directory.php:723
 msgid ""
 " YES <em>(if checked, member contact phone numbers will be shown if they are "
 "set for that member.)</em>"
 msgstr ""
+" JA <em> (indien aangevinkt worden de telefoonnummers, indien gevuld, "
+"getoond voor het betreffende lid.)</em>"
 
 #: ../pta-member-directory.php:724
 msgid "Show photos in directory?"
-msgstr ""
+msgstr "Foto's tonen in de ledenlijst?"
 
 #: ../pta-member-directory.php:725
 msgid ""
 " YES <em>(if checked, member photos will be shown if one exists for that "
 "member.  They will be linked to that members post page.)</em>"
 msgstr ""
+"JA <em> (Indien aangevinkt worden foto's bij de leden getoond.  Deze worden "
+"ook gekoppeld aan leden pagina.)</em>"
 
 #: ../pta-member-directory.php:726
 msgid "Directory Photo Size?"
-msgstr ""
+msgstr "Formaat van de foto in ledenlijst?"
 
 #: ../pta-member-directory.php:727
 msgid " Size of member photos to display in directory listing."
 msgstr ""
+"Formaat van de ledenfoto's zoals die worden weergegeven in de ledenlijst."
 
 #: ../pta-member-directory.php:728
 msgid "Use Contact Form?"
-msgstr ""
+msgstr "Contact formulier gebruiken?"
 
 #: ../pta-member-directory.php:729
 msgid ""
 " YES <em>(if checked, email will be hidden and replaced with a contact form "
 "link)</em>"
 msgstr ""
+" JA <em>(Indien aangevinkt wordt het emailadres verborgen en vervangen door "
+"een contactformulier)</em>"
 
 #: ../pta-member-directory.php:730
 msgid "Hide From Public?"
-msgstr ""
+msgstr "Verbergen voor het publiek?"
 
 #: ../pta-member-directory.php:731
 msgid ""
 " YES <em>(if checked, member directory will only be displayed to logged in "
 "members)</em>"
 msgstr ""
+" JA <em>(Indien aangevinkt wordt de ledenlijst alleen getoond voor ingelogde "
+"leden)</em>"
 
 #: ../pta-member-directory.php:732
 msgid "Minimum user level to view:"
-msgstr ""
+msgstr "Minimaal gebruikers niveau om te bekijken?"
 
 #: ../pta-member-directory.php:733
 msgid "(only applies if Hide From Public is checked)"
 msgstr ""
+"(Is alleen van toepassing indien 'Verbergen voor het publiek' is aangevinkt)"
 
 #: ../pta-member-directory.php:734
 msgid "Contact form page: "
-msgstr ""
+msgstr "Contactformulier pagina:"
 
 #: ../pta-member-directory.php:735
 msgid ""
@@ -402,30 +426,38 @@ msgid ""
 ">Otherwise, leave this set to None to generate the contact form dynamically "
 "from the directory page."
 msgstr ""
+"Gebruik dit alleen indien een pagina is aangemaakt met de "
+"[pta_member_contact] contactfomulier code, of als u een ander "
+"contactformulier wilt gebruiken.<br/>Anders deze optie op 'Geen' laten staan "
+"zodat dynamisch een contactformulier gegenereerd wordt op basis van de "
+"ledenlijst."
 
 #: ../pta-member-directory.php:736
 msgid "Reset Options: "
-msgstr ""
+msgstr "Alle instellingen terugzetten"
 
 #: ../pta-member-directory.php:737
 msgid ""
 " Resets ALL of the above options to default values upon deactivation and "
 "reactivation of the plugin."
 msgstr ""
+"Zet ALLE bovenstaande instellingen terug naar de standaardwaarden zoals deze "
+"waren bij het activeren of reactiveren van de plugin."
 
 #: ../pta-member-directory.php:738
 msgid "Display name for Position: "
-msgstr ""
+msgstr "Weegavenaam voor positie:"
 
 #: ../pta-member-directory.php:739
 msgid ""
 " This is the label used for the \"Position\" table column header in the "
 "public directory."
 msgstr ""
+"Dit label wordt gebruikt voor \"Positie\" kolomkop in de publieke ledenlijst"
 
 #: ../pta-member-directory.php:740
 msgid "Enable Locations: "
-msgstr ""
+msgstr "Locaties inschakelen:"
 
 #: ../pta-member-directory.php:741
 msgid ""
@@ -433,30 +465,38 @@ msgid ""
 "displayed in the main member directory, or add a location to the shortcode "
 "to show a directory for a specific location/office.)</em>"
 msgstr ""
+"JA <em> (Vink deze optie aan om locaties/kantoren te tonen in de ledenlijst. "
+"Locaties worden getoond in de hoofd ledenlijst, of voeg een locatie toe aan "
+"de  shortcode om een ledenlijst te tonen van een specifieke locatie/kantoor)"
+"</em>"
 
 #: ../pta-member-directory.php:742
 msgid "Display name for location: "
-msgstr ""
+msgstr "Weergavenaam voor de locatie:"
 
 #: ../pta-member-directory.php:743
 msgid ""
 " If locations are enabled, this is the label used for the \"Location\" table "
 "column header in the public directory."
 msgstr ""
+"Indien locaties zijn aangezet, wordt dit label gebruikt voor de \"Locatie\" "
+"kolomkop in de publieke ledenlijst"
 
 #: ../pta-member-directory.php:744
 msgid "Contact form dropdown shows: "
-msgstr ""
+msgstr "Contactformulier keuzelijst toont:"
 
 #: ../pta-member-directory.php:745
 msgid ""
 " Select if you want to show positions, individuals, or both on the contact "
 "form recipient drop down select box."
 msgstr ""
+"Selecteer indien u de postities, individuele personen of beide wilt laten "
+"zien in de keuzelijst op het contactformulier."
 
 #: ../pta-member-directory.php:746
 msgid "Show names after positions? "
-msgstr ""
+msgstr "Moeten de namen na de posties getoond worden?"
 
 #: ../pta-member-directory.php:747
 msgid ""
@@ -464,10 +504,13 @@ msgid ""
 "names of members who hold that position will be listed after the position "
 "name.)</em>"
 msgstr ""
+"JA <em>(Indien aangevinkt en de posities (of beide) worden getoond op het "
+"contactformulier, de namen van de leden die de positie hebben worden getoond "
+"achter de positienaam.)</em>"
 
 #: ../pta-member-directory.php:748
 msgid "Show only first names after positions? "
-msgstr ""
+msgstr "Alleen de voornaam na de posities tonen?"
 
 #: ../pta-member-directory.php:749
 msgid ""
@@ -475,20 +518,27 @@ msgid ""
 "the first names (i.e., first word in the member name) will be shown. Useful "
 "if several people hold a position and the form is getting too wide.)</em>"
 msgstr ""
+"JA <em>(Indien aangevinkt en de namen moeten na de postities getoond worden "
+"(zie boven), dan worden alleen de voornamen (het eerste woordt in het lid "
+"naam veld) getoond. Dit is handig indien meerder persoonen een positie "
+"hebben en het formulier te breedt wordt.)</em>"
 
 #: ../pta-member-directory.php:750
 msgid "Show positions after names? "
-msgstr ""
+msgstr "Posities na de namen tonen?"
 
 #: ../pta-member-directory.php:751
 msgid ""
 " YES <em>(if checked, and showing individuals (or both) on contact form, the "
 "positions a member holds will be listed after their name.)</em>"
 msgstr ""
+"JA <em>(Indien aangevinkt en de individuele leden moeten worden getoond op "
+"het contactformulier, de positie die een lidt bekleed wordt na hun naan "
+"getoond.)</em>"
 
 #: ../pta-member-directory.php:752
 msgid "Show Group Message links? "
-msgstr ""
+msgstr "Link naar groepsberichten tonen?"
 
 #: ../pta-member-directory.php:753
 msgid ""
@@ -496,10 +546,13 @@ msgid ""
 "there will be a \"Send Group A Message\" link under the Position name to "
 "send everyone in that group a message.)</em>"
 msgstr ""
+"JA <em>(Indien aangevinkt en de er zijn meerdere leden met die positie, dan "
+"wordt een \"Groepsbericht verzenden\" link onder de Positienaam getoond om "
+"zo een bericht te versturen naar de groep.)</em>"
 
 #: ../pta-member-directory.php:754
 msgid "Show Vacant Positions? "
-msgstr ""
+msgstr "Posities die vacant zijn tonen?"
 
 #: ../pta-member-directory.php:755
 msgid ""
@@ -507,10 +560,12 @@ msgid ""
 "assigned members will show in the directory list with VACANT listed in the "
 "name column.)</em>"
 msgstr ""
+"JA <em>(Indien aangevinkt worden bij de postities waarvoor geen leden zijn "
+"\"VACANT\" getoond i.p.v. de naam ></em>"
 
 #: ../pta-member-directory.php:756
 msgid "Show locations after names? "
-msgstr ""
+msgstr "Locaties na de namen tonen?"
 
 #: ../pta-member-directory.php:757
 msgid ""
@@ -518,50 +573,61 @@ msgid ""
 "will be shown in parenthesis after their name for individual contacts (not "
 "position groups).)</em>"
 msgstr ""
+"JA <em>(Indien aangevinkt en de locatie zijn aangezet, dan worden de "
+"locaties van een individueel lid tussen haakjes getoond (niet voor groepem).)"
+"</em>"
 
 #: ../pta-member-directory.php:758
 msgid "Contact form message: "
-msgstr ""
+msgstr "Contactformulier bericht:"
 
 #: ../pta-member-directory.php:759
 msgid ""
 " The message to display on the screen after a message has been successfully "
 "sent.  HTML allowed."
 msgstr ""
+"Het bericht dat wordt getoond nadat het bericht succesvol is verzonden. HTML "
+"is toegestaan."
 
 #: ../pta-member-directory.php:760
 msgid "Enable post to CFDB: "
-msgstr ""
+msgstr "Versturen naar CFDB toestaan:"
 
 #: ../pta-member-directory.php:761
 msgid ""
 "  YES <em>(If the Contact Form DB plugin is installed, check this to save "
 "contact form submissions to the database via CFDB.)</em>"
 msgstr ""
+"JA <em>(Indien de \"Contact Form DB\" plugin is geinstalleerd kan deze optie "
+"worden aangevinkt om de verstuurde berichten op te slaan via CFDB.)</em>"
 
 #: ../pta-member-directory.php:762
 msgid "Add Blog Title to email Subject?: "
-msgstr ""
+msgstr "Moet de blogtitel worden toegevoed aan het onderwerp?:"
 
 #: ../pta-member-directory.php:763
 msgid ""
 "  YES <em>(adds your blog title to the beginning of the email subject to let "
 "you know the email came from your contact form)</em>."
 msgstr ""
+"JA <em>(De blogtitel wordt toegevoegd aan het onderwerp van de email zodat u "
+"kunt zien dat het bericht is ontvangen van het contact formulier </em>."
 
 #: ../pta-member-directory.php:764
 msgid "Contact Form DB form title: "
-msgstr ""
+msgstr "Titel contactformulier in Contact Form DB:"
 
 #: ../pta-member-directory.php:765
 msgid ""
 "Sets the form title that results will be stored under with the Contact Form "
 "DB plugin. (hidden form field)"
 msgstr ""
+"Stelt de titel in waaronder resultaten op worden opgeslagen in de Contact "
+"Form DB plugin (verborgen veld in formulier)"
 
 #: ../pta-member-directory.php:766
 msgid "Force Table Borders? "
-msgstr ""
+msgstr "Foceeer het gebruik van kaders in tabellen?"
 
 #: ../pta-member-directory.php:767
 msgid ""
@@ -569,46 +635,55 @@ msgid ""
 "borders, plus a bit of padding, for themes that don't use borders on tables "
 "by default (and for those who don't want to edit CSS).</em>"
 msgstr ""
+"JA <em> Voeg wat stijlgegevens toe aan een ledenlijst pagina om er voor te "
+"zorgen dat kader, marges e.d worden getoond op thema's die geen kaders "
+"ondersteunen (en voor de mensen die geen CSS willen aanpassen.</em>"
 
 #: ../pta-member-directory.php:768
 msgid "Table Properties: "
-msgstr ""
+msgstr "Tabel eigenschappen:"
 
 #: ../pta-member-directory.php:769
 msgid "Border Color"
-msgstr ""
+msgstr "Kader kleur:"
 
 #: ../pta-member-directory.php:770
 msgid "Border Size (pixels)"
-msgstr ""
+msgstr "Kader grootte (pixels)"
 
 #: ../pta-member-directory.php:771
 msgid "Cell padding (pixels)"
-msgstr ""
+msgstr "Cel marges (pixels)"
 
 #: ../pta-member-directory.php:772
 msgid "These table properties are only used if Force Table Borders is enabled."
 msgstr ""
+"Deze tabel eigenschappen kunnen alleen gebruikt worden indien Forceer kaders "
+"in tabellen is aangezet."
 
 #: ../pta-member-directory.php:773
 msgid ""
 "Please help support continued development of this plugin. Any donation "
 "amount is greatly appreciated!"
 msgstr ""
+"Help bij de verdere ontwikkeling van deze plugin. Elk donatiebedrag is "
+"welkom!"
 
 #: ../pta-member-directory.php:774
 msgid "Hide Donation Button: "
-msgstr ""
+msgstr "Verberg de donatie button:"
 
 #: ../pta-member-directory.php:775
 msgid ""
 " Check this if you already donated, or just don't want to see the donation "
 "button any more."
 msgstr ""
+"Vink deze aan indien u al een donatie heeft gedaan of de button gewoon niet "
+"meer wil zien."
 
 #: ../pta-member-directory.php:776
 msgid "Link name to member page?"
-msgstr ""
+msgstr "Moet de naam aan de lid pagina gekoppeld worden?"
 
 #: ../pta-member-directory.php:777
 msgid ""
@@ -616,10 +691,13 @@ msgid ""
 "created for the member name which will take the viewer to the member's bio/"
 "info page.)</em>"
 msgstr ""
+"JA <em> (Indien aangevinkt en het lid heeft een bericht gepost, dan wordt "
+"een link aangemaakt bij de naam van het lid waarmee de bio/informatie pagina "
+"van het lid geopend kan worden.)</em>"
 
 #: ../pta-member-directory.php:778
 msgid "Show \"more info...\" link?"
-msgstr ""
+msgstr "Toon \" meer informatie...\" link?"
 
 #: ../pta-member-directory.php:779
 msgid ""
@@ -627,136 +705,147 @@ msgid ""
 "photos, a \"more info...\" link will appear in the photo column that links "
 "to the member bio/info page.)</em>"
 msgstr ""
+"JA <em> (Indien aangevinkt, het lid heeft een bericht gepost en het tonen "
+"van foto's zijn ingeschakeld dan wordt een \"meer informatie...\" link "
+"getoond in de foto kolom dat gekoppeld is aan de bio/info pagina.)</em> "
 
 #: ../pta-member-directory.php:971
 msgid "positions"
-msgstr ""
+msgstr "posities"
 
 #: ../pta-member-directory.php:971
 msgid "individuals"
-msgstr ""
+msgstr "individuen"
 
 #: ../pta-member-directory.php:971
 msgid "both"
-msgstr ""
+msgstr "beide"
 
 #: ../pta-member-directory.php:1036
 msgid "None"
-msgstr ""
+msgstr "Geen"
 
 #: ../pta-member-directory.php:1119
 msgid "SUBMIT"
-msgstr ""
+msgstr "VERSTUUR"
 
 #: ../pta-member-directory.php:1120
 msgid "CANCEL"
-msgstr ""
+msgstr "ANNULEREN"
 
 #: ../pta-member-directory.php:1152 ../includes/pta-display-directory.php:428
 msgid "Invalid Referrer!"
-msgstr ""
+msgstr "Foute referentie!"
 
 #: ../pta-member-directory.php:1154
 msgid "Update Cancelled"
-msgstr ""
+msgstr "Bijwerken geannulleerd"
 
 #: ../pta-member-directory.php:1181
 msgid "Options Updated!"
-msgstr ""
+msgstr "Instellingen bijgewerkt!"
 
 #: ../pta-member-directory.php:1184
 msgid "Error! Options not changed."
-msgstr ""
+msgstr "Fout! Instellingen niet bijgewerkt"
 
 #: ../pta-member-directory.php:1195
 msgid "PTA Member Directory - Options"
-msgstr ""
+msgstr "PTA Ledenlijst - Instellingen"
 
 #: ../pta-member-directory.php:1196
 msgid "Click on the Help tab in the upper right for detailed help."
-msgstr ""
+msgstr "Klik op de Help tab in de rechter bovenhoek voor gedetaileerde hulp."
 
 #: ../pta-member-directory.php:1222
 msgid "PTA Member Directory - Sort Position Display Order"
-msgstr ""
+msgstr "PTA Ledenlijst - Sorteer Postitie weergave volgorde"
 
 #: ../pta-member-directory.php:1225
 msgid ""
 "No Positions to display.<br/>Positions can be added from the Positions "
 "submenu, or when adding a new member."
 msgstr ""
+"Geen posities om weer te geven.<br/>Postities kunnen worden toegevoegd via "
+"het Postities submenu, of bij het toevoegen van een nieuw lid."
 
 #: ../pta-member-directory.php:1230
 msgid ""
 "Drag and Drop the Positions below to change the display order on the public "
 "page.<br />(Order numbers will change after you refresh the page)"
 msgstr ""
+"Versleep hier onder de Posities om de weergave volgorde op de publieke "
+"pagina te wijzigen.<br/>(De volgorder wordt gewijzd na het verversen van de "
+"pagina)"
 
 #: ../pta-member-directory.php:1235 ../pta-member-directory.php:1259
 msgid "Order"
-msgstr ""
+msgstr "Volgorde"
 
 #: ../pta-member-directory.php:1273
 msgid "Options"
-msgstr ""
+msgstr "Instellingen"
 
 #: ../pta-member-directory.php:1274
 msgid "Sort Positions"
-msgstr ""
+msgstr "Sorteer postities"
 
 #: ../pta-member-directory.php:1299
 msgid "Members Help"
-msgstr ""
+msgstr "Hulp over leden"
 
 #: ../pta-member-directory.php:1304
 msgid "Positions Help"
-msgstr ""
+msgstr "Hulp over posities"
 
 #: ../pta-member-directory.php:1309
 msgid "Locations Help"
-msgstr ""
+msgstr "Hulp over locaties"
 
 #: ../pta-member-directory.php:1314
 msgid "Options Help"
-msgstr ""
+msgstr "Hulp over instellingen"
 
 #: ../pta-member-directory.php:1319
 msgid "Shortcodes Help"
-msgstr ""
+msgstr "Hulp over verkorte codes"
 
 #: ../pta-member-directory.php:1324
 msgid "Custom links"
-msgstr ""
+msgstr "Aangepaste verwijzingen"
 
 #: ../pta-member-directory.php:1329
 msgid "Sorting Positions"
-msgstr ""
+msgstr "Sorteer postities"
 
 #: ../pta-member-directory.php:1334
 msgid "Styling/Appearance"
-msgstr ""
+msgstr "Stijl/Uiterlijk"
 
 #: ../pta-member-directory.php:1339
 msgid "Modifying Output Text"
-msgstr ""
+msgstr "Aanpassen uitvoer tekst"
 
 #: ../pta-member-directory.php:1391
 msgid "Extensions"
-msgstr ""
+msgstr "Extensies"
 
 #: ../pta-member-directory.php:1393
 msgid "Settings"
-msgstr ""
+msgstr "Instellingen"
 
 #: ../includes/pta-directory-help-tabs.php:4
 msgid "PTA Member Directory &amp; Contact Form - Members Help"
-msgstr ""
+msgstr "PTA ledenlijst contactformulier - Hulp over leden"
 
 #: ../includes/pta-directory-help-tabs.php:5
 msgid ""
 "The Member Directory lets you display a directory of organization members, "
 "or staff, sorted by positions (such as President, Secretary, etc.)."
 msgstr ""
+"De ledenlijst biedt de mogelijkheid om lijst te tonen van alle leden van een "
+"organistatie of leiding, gesorteerd op positie (bijv. voorzitter, of "
+"secretaris, e.d.)."
 
 #: ../includes/pta-directory-help-tabs.php:6
 msgid ""
@@ -765,6 +854,10 @@ msgid ""
 "contact info, and select which position (or positions) they hold (or enter a "
 "new position if it does not exist yet)."
 msgstr ""
+"Deze plugin creeerd een aangepast verstuur type \"lid\" genaamd. Vul de "
+"volledige lidnaam (voor- en achternaam) als lid verstuur titel, vul de "
+"contactinformatie in, en selecteer welke postitie (of posities) zij bekleden "
+"(of voeg een nieuwe positie toe als deze nog niet bestaat)."
 
 #: ../includes/pta-directory-help-tabs.php:7
 msgid ""
@@ -772,6 +865,9 @@ msgid ""
 "needs to be a valid email for a member before they will show up in the "
 "contact form recipient select box."
 msgstr ""
+"Email en telefoonnummer zijn optioneel, maar als deze gebruikt worden in het "
+"contactformulier moeten deze gevuld zijn met een geldig emailadres voordat "
+"het lid getoond wordt in de ontvangers keuzelijst op het contactformulier"
 
 #: ../includes/pta-directory-help-tabs.php:8
 msgid ""
@@ -779,6 +875,10 @@ msgid ""
 "in the directory. You can also hide the directory from the public and choose "
 "the level a user must be in order to view the directory."
 msgstr ""
+"Email en/of telefoonnummer kunnen verborgen worden voor het publiek (zie "
+"opties) of worden getoond in de lijst. Het is ook mogelijk om de lijst te "
+"verbergen voor het publiek, selecteer hiervoor het niveau dat een gebruiker "
+"moet hebben voordat de lijst getoond wordt."
 
 #: ../includes/pta-directory-help-tabs.php:9
 msgid ""
@@ -791,6 +891,9 @@ msgid ""
 "link will appear in the photo column (if there is content to show for that "
 "member)."
 msgstr ""
+"De ledenlijst biedt de mogelijkheid om via een standaard nieuwe editor een "
+"biografie of \"Over\" pagina (nieuwstartikel) te maken voor elk lid, samen "
+"met een foto die gekozen kan worden uit de ledenlijst."
 
 #: ../includes/pta-directory-help-tabs.php:10
 msgid ""
@@ -799,6 +902,11 @@ msgid ""
 "plugin, but <strong>if a member does not have at least one position, they "
 "will not show up in the directory.</strong>"
 msgstr ""
+"Elk lid kan meerdere postities bekleden in de lijst, net zoals dat deze "
+"gekoppeld kan zijn aan meerdere locaties. Locaties zijn optioneel en kunnen "
+"uitgeschakeld worden voor de plugin, maar <strong>op het moment dat een lid "
+"niet minstens één postitie heeft, wordt deze niet getoond in de ledenlijst.</"
+"strong>"
 
 #: ../includes/pta-directory-help-tabs.php:11
 #: ../includes/pta-directory-help-tabs.php:81
@@ -818,37 +926,58 @@ msgid ""
 "show last names since it looks for the first word in the member name (all "
 "characters up to first space, ignoring commas)."
 msgstr ""
+"Binnen elke postitie wordt de lijst met leden gesorteerd op de achternaam. "
+"Vanaf versie 1.3 is logica toegevoegd om karakters na de eerste komma in de "
+"naam uit te sluiten van sortering. Deze methode zorgt er voor dat de "
+"achternaam beter bepaald kan worden op het moment dat achtervoegsels "
+"gebruikt worden zoals: Jan Jansen, Msc. Hierdoor is het ook mogelijk om de "
+"voornaam met een komma achter de achternaam op te nemen, bijvoorbeeld "
+"Jansen, Jan. <br/><strong>OPMERKING:</strong> Om dit alles te laten werken "
+"moeten namen die zijn opgeslagen met een versie van plugin van voor 1.3 "
+"opnieuw worden opgeslagen. Bij het opslaan wordt de achternaam opnieuw "
+"berekend (en opgeslagen in de metadata). Wanneer het achternaam eerst "
+"formaat wordt gebruikt en de optie alleen voornamen tonen is geselecteerd, "
+"dan wordt in het contactformulier automatisch de acternaam getoond omdat "
+"hierbij gekeken wordt naar het eerst woord in het naam (alle karakters tot "
+"aan de eerste spatie, met uitzondering van kommas)."
 
 #: ../includes/pta-directory-help-tabs.php:16
 msgid "PTA Member Directory &amp; Contact Form - Positions Help"
-msgstr ""
+msgstr "PTA Ledenlijst Contactformulier - Hulp bij posities"
 
 #: ../includes/pta-directory-help-tabs.php:17
 msgid ""
 "You can create new positions on the positions page, or from the add/edit "
 "member page. Each member can have more than one position."
 msgstr ""
+"U kunt een nieuwe positie toevoegen op de postitie pagina, of bij het "
+"toevoegen/wijzen van een lid. Elk lid kan meerdere posities hebben."
 
 #: ../includes/pta-directory-help-tabs.php:18
 msgid ""
 "Members must be assigned at least one position to show up in the member "
 "directory."
 msgstr ""
+"Leden moeten aan tenminste één positie zijn gekoppeld om op de ledenlijst "
+"getoond te worden."
 
 #: ../includes/pta-directory-help-tabs.php:18
 msgid ""
 "The directory is listed by position, and you can arrange positions in the "
 "order that you want them displayed on the Sort Positions page."
 msgstr ""
+"De ledenlijst wordt getoond op basis van de positie, de volgorde hiervan kan "
+"worden aangepast op de Sorteer posities pagina."
 
 #: ../includes/pta-directory-help-tabs.php:19
 msgid ""
 "You can change the directory heading for \"Position\" on the options page."
 msgstr ""
+"U kunt de kolomkop voor \"Positie\" aanpassen op de instellingen pagina."
 
 #: ../includes/pta-directory-help-tabs.php:24
 msgid "PTA Member Directory &amp; Contact Form - Locations Help"
-msgstr ""
+msgstr "PTA ledenlijst contactformulier - Hulp over locaties"
 
 #: ../includes/pta-directory-help-tabs.php:25
 msgid ""
@@ -856,6 +985,10 @@ msgid ""
 "locations to members. Once Locations are enabled, you will see a Locations "
 "page in the Members Directory menu (after you refresh the page)."
 msgstr ""
+"U moet eerst de locaties aanzetten op de instellingen-pagina indien u een "
+"lpcatie aan een lid wil koppelen. Vanaf het moment dat de locaties zijn "
+"ingeschakeld zijn de locaties zichtbaar in het menu van de ledenlijst (hier "
+"voor moet de pagina herladen worden)."
 
 #: ../includes/pta-directory-help-tabs.php:26
 msgid ""
@@ -863,6 +996,9 @@ msgid ""
 "directory for a specific location, only members that have that location "
 "assigned will show up."
 msgstr ""
+"Het is niet nodig dat een locatie aan een lid is gekoppeld, maar als u een "
+"lijst toont van een specifieke locatie worden alleen leden getoond die aan "
+"de betreffende locatie zijn gekoppeld."
 
 #: ../includes/pta-directory-help-tabs.php:27
 msgid ""
@@ -870,16 +1006,21 @@ msgid ""
 "in via a link URL. See the Shortcodes help and Custom Links help pages for "
 "details."
 msgstr ""
+"Locaties worden gespecificeerd via een verkorte code of verstuurd via een "
+"url. Zie hulp verkorte codes en Aangepast links hulp pagina voor details."
 
 #: ../includes/pta-directory-help-tabs.php:32
 msgid "PTA Member Directory &amp; Contact Form - Options Help"
-msgstr ""
+msgstr "PTA Ledenlijst Contact formulier - Hulp bij opties"
 
 #: ../includes/pta-directory-help-tabs.php:33
 msgid ""
 "Most of these options should be fairly obvious. If you're not sure, change "
 "the settings and view the results on the directory and/or contact page."
 msgstr ""
+"De meeste instelling zijn vanzelfsprekend. Bent u niet helemaal zeker, pas "
+"de instellingen aan en bekijk de resultaten in de ledenlijst en/of "
+"contactformulier"
 
 #: ../includes/pta-directory-help-tabs.php:34
 msgid ""
@@ -888,6 +1029,11 @@ msgid ""
 "form, then the contact form is generated dynamically on the same page as the "
 "directory."
 msgstr ""
+"Indien emailadressen verborgen moeten blijven moet de optie Gebruik "
+"Contactformulier aan staan. Indien deze optie aanstaat, maar niet gekozen is "
+"voor een aparte pagina voor het contactformulier, dan wordt het "
+"contactformulier dynamisch gegenereerd op dezelfde pagina waarop de "
+"ledenlijst staat."
 
 #: ../includes/pta-directory-help-tabs.php:35
 msgid ""
@@ -903,6 +1049,14 @@ msgid ""
 "members and positions you created. You can choose to show a list of "
 "individual members, or positions, or both."
 msgstr ""
+"Indien u het contactformulier op een losse pagina wilt gebruiken moet u de "
+"verkorte code van de contactpagina op de pagina waar het contactformulier "
+"getoond moet worden. Daarna selecteert u de pagina in de keuzelijst "
+"Contactformulier pagina. Wanneer alles goed is ingesteld en Gebruik "
+"contactformulier is ingeschakeld, wordt een contactformulier getoond van het "
+"geselecteerde lid in de ledenlijst. Wanneer het verkorte code van het "
+"contactformulier op een eigen pagina wordt gezet, krijgt de gebruiker een "
+"keuzelijst met alle leden die zijn opgenomen in de ledenlijst."
 
 #: ../includes/pta-directory-help-tabs.php:36
 msgid ""
@@ -914,6 +1068,14 @@ msgid ""
 "this plugin. There is nothing else you need to do other than install CFDB "
 "and check the box here to enable posting to CFDB. Integration is built in."
 msgstr ""
+"Indien u alle contactmomenten wilt opslaan kunt u gebruik maken van de "
+"Contact Form DB plugin. Installeer de pluging, vink de optie 'Versturen naar "
+"CFDB toestaan' aan en geef een titel voor het contactformulier op (alleen "
+"voor tonen in CFDB). Het is niet nodig om de 'Contact Form 7'plugin te "
+"installeeren omd CFDB plug te kunnen gebruiken, in de praktijk zorgt dit "
+"meestal voor conflicten tussen de plugins. Uw hoeft niet meer te doen dan de "
+"CFDB plugin te installeen en versturen naar CFDB toe te staan, de integratie "
+"is ingebouwd."
 
 #: ../includes/pta-directory-help-tabs.php:37
 msgid ""
@@ -925,6 +1087,14 @@ msgid ""
 "shortcodes, or passed in as arguments in a link. See the Shortcodes Help and "
 "Custom Links sections for more details on how to set those up."
 msgstr ""
+"Het gebruik van locaties is optioneel en u moet de optie 'Locaties "
+"inschakelen' niet aanvinken indien locaties niet gebruikt gaan worden. "
+"Wanneer het gebruik van locaties is ingeschakeld wordt na het herladen van "
+"de admin pagina wordt in de ledenlijst de locaties pagina getoond. Op deze "
+"pagina kunt u alle locaties opnemen. Locaties kunenn als parameters in de "
+"verkorte code gebruikt worden of als parameter in een link worden opgenomen. "
+"Meer uitleg over het gebruik hiervan vindt u in de Verkorte code Help en "
+"Aangepast verwijzingen Help."
 
 #: ../includes/pta-directory-help-tabs.php:38
 msgid ""
@@ -938,6 +1108,15 @@ msgid ""
 "show Vacant for a position that is actually filled, but just not at that "
 "location."
 msgstr ""
+"De ledenlijst wordt gesorteerd op positie. Gebruik de verkorte postitie "
+"pagina om de volgorde waarin de postities getoond worden aan te passen. In "
+"de volledige lijst is het mogelijk om ook de vacantie posties te tonen. "
+"Indien u een ledenlijst maakt voor een specifieke locatie via een verkorte "
+"code parameter of een parameter in een link worden de vacantie posities "
+"nooit getoond, ongeacht hoe de opties zijn ingesteld.Dit komt omdat "
+"postities niet aan een bepaalde locatie zijn gekoppeld en we willen niet "
+"tonen een postitie als vacant tonen die al wel vervuld is alleen niet voor "
+"die specifieke locatie."
 
 #: ../includes/pta-directory-help-tabs.php:39
 msgid ""
@@ -949,22 +1128,34 @@ msgid ""
 "up on your system, enter the hex code for the border color in the format: "
 "#000000"
 msgstr ""
+"Indien het door u gebruikte thema geen randen bij een tabel toont en geen "
+"zin hebt om de CSS stijl aan te passen gebruikt u de Forceer randen voor "
+"tabellen optie voor het toevoegen van randen aan de ledenlijst. Dit maakt "
+"het lezen van de lijst eenvoudiger. U kunt ook de gebruikte kleuren en "
+"diktes van de randen en de marges instellen (alleen als forceer randen voor "
+"tabellen is ingeschakeld). Indien de kleurkiezer niet wordt getoond kunt u "
+"de hexadecimale kleurencode invullen, gebruik hier voor het formaat: #000000"
 
 #: ../includes/pta-directory-help-tabs.php:44
 msgid "PTA Member Directory &amp; Contact Form - Shortcodes Help"
-msgstr ""
+msgstr "PTA Ledenlijst Contact Formulier - Hulp bij Verkorte codes"
 
 #: ../includes/pta-directory-help-tabs.php:45
 msgid ""
-"To display the directory on a page, use the shortcode:<br/"
-">[pta_member_directory] "
+"To display the directory on a page, use the shortcode:<br/>"
+"[pta_member_directory] "
 msgstr ""
+"Om de ledenlijst op een pagina te tonen kunt u de volgende verkorte code "
+"gebruiken: <br/>[pta_member_directory]"
 
 #: ../includes/pta-directory-help-tabs.php:45
 msgid ""
 "To display the contact form on a separate page (instead of being dynamically "
 "generated from the directory page), use the shortcode: [pta_member_contact] "
 msgstr ""
+"Om het contactformulier op een aparte pagina te gebruiken i.p.v. dynamisch "
+"gegenereerd op de ledenlijst pagina kunt u de volgende verkorte code "
+"gebruiken: [pta_member_contact]"
 
 #: ../includes/pta-directory-help-tabs.php:46
 msgid ""
@@ -972,6 +1163,10 @@ msgid ""
 "a page, use the shortcode:<br/>[pta_admin_contact] <br/> This Admin contact "
 "form will send the message to the site's admin email address."
 msgstr ""
+"Voor het tonen van een eenvoudig contact formulier van de beheerder, zonder "
+"een selectie van de ontvanger, is het plaatsen van de verkorte code <br/>"
+"[pta_admin_contact]<br/> voldoende. Dit contactformulier verstuurd de "
+"berichten naar het emailadres van de beheerder van deze website. "
 
 #: ../includes/pta-directory-help-tabs.php:47
 msgid ""
@@ -980,6 +1175,11 @@ msgid ""
 "example, if you have an office in Seattle, pass in the slug version of your "
 "Seattle location: <br/>[pta_member_directory location=\"seattle\"]"
 msgstr ""
+"Indien het gebruik van locaties zijn ingeschakeld kunt u de ledenlijst voor "
+"een specifieke locaties weergeven door een locatie argument mee te geven in "
+"de verkorte code. U heeft bijvoorbeeld een locatie in Amsterdam, dan kunt u "
+"met de volgende verkorte code een ledenlijst voor amsterdam tonen: <br/>"
+"[pta_member_directory location=\"amsterdam\"]"
 
 #: ../includes/pta-directory-help-tabs.php:48
 msgid ""
@@ -990,9 +1190,19 @@ msgid ""
 "the contact form as well, and the contact form will only show other members "
 "from that location. However, you can also use the argument within the "
 "contact form shortcode in case you want a separate contact form that only "
-"shows members from a specific location. The argument is the same: <br/"
-">[pta_member_contact location=\"seattle\"]"
+"shows members from a specific location. The argument is the same: <br/>"
+"[pta_member_contact location=\"seattle\"]"
 msgstr ""
+"De locatie parameter werkt ook met het contactformulier of deze nu dynamisch "
+"gegenereerd wordt of op een aparte pagina is opgenomen met een verkorte "
+"code. Indien de locaties zijn ingeschakeld en de ledenlijst is ingesteld "
+"voor een specifieke locatie en je klikt op een contact link, dan wordt de "
+"locatie ook doorgegeven aan het contactformulier en het deze toont dan "
+"alleen de leden van die locatie. Het is ook mogelijk om de locatie op te "
+"geven in de verkorte code van het contact formulier indien u een "
+"contactformulier wilt maken die alleen de leden van een specifieke locatie "
+"toont. De parameter voor de locatie blijft hetzelfde: <br/>"
+"[pta_member_contact location=\"amsterdam\"]"
 
 #: ../includes/pta-directory-help-tabs.php:49
 msgid ""
@@ -1000,6 +1210,9 @@ msgid ""
 "the Locations page and view the list of all locations to see the slug for "
 "each location."
 msgstr ""
+"Zorg ervoor dat u de <strong>verwijzing</strong> gebruikt voor de locatie "
+"parameter! Ga naar de locaties pagina en bekijk de lijst met locaties voor "
+"alle verwijzingen."
 
 #: ../includes/pta-directory-help-tabs.php:50
 msgid ""
@@ -1007,6 +1220,10 @@ msgid ""
 "shown at the top of the directory or contact form, using whatever display "
 "name you set in the options for \"location\"."
 msgstr ""
+"Wanneer een locatie parameter gebruikt wordt in een verkorte code wordt de "
+"locatie altijd bovenaan de ledenlijst of contactformulier getoond, hiervoor "
+"wordt de weergave naam gebruikt die is ingesteld in de instellingen voor "
+"\"locatie\"."
 
 #: ../includes/pta-directory-help-tabs.php:50
 msgid ""
@@ -1014,14 +1231,21 @@ msgid ""
 "into a shortcode. See the custom links section for help on creating those "
 "links."
 msgstr ""
+"Locaties kunnen ook worden door gegeven als parameter in een link i.p.v. op "
+"te geven in een verkorte code. Zie het onderdeel Aangepast verwijzingen voor "
+"hulp bij het maken van deze links."
 
 #: ../includes/pta-directory-help-tabs.php:51
 msgid ""
 "You may also generate a directory for a specific position by passing in a "
 "position argument in the shortcode. For example, if you have a position "
-"called Management, pass in the slug version of the position: <br/"
-">[pta_member_directory position=\"management\"]"
+"called Management, pass in the slug version of the position: <br/>"
+"[pta_member_directory position=\"management\"]"
 msgstr ""
+"U kunt ook een ledenlijst maken voor een specifieke postitie door de positie "
+"parameter mee te geven in de verkorte code. U heeft bijvoorbeeld een positie "
+"dat management heeft, u kunt deze als volgt opnemen:<br/>"
+"[pta_member_directory position=\"management\"]"
 
 #: ../includes/pta-directory-help-tabs.php:52
 msgid ""
@@ -1033,6 +1257,14 @@ msgid ""
 "to the contact form, which will send a message only to that group (the "
 "recipient select box will not show)."
 msgstr ""
+"Indien de positie parameter is gebruik in een verkorte code van de "
+"ledenlijst of in een link wordt de positie altijd bovenaan de ledenlijst "
+"getoond. De kolom Postitie wordt verwijderd uit de tabel. Een link om de "
+"gehele groep een bericht te sturen wordt onder de tabel getoond. Door de "
+"klikken op deze link wordt de postitie parameter ook door gegeven aan het "
+"contactformulier, deze zal het bericht vervolgens alleen versturen naar de "
+"leden met deze positie (de mogelijkheid om een ontvanger te selecteren wordt "
+"niet getoond)."
 
 #: ../includes/pta-directory-help-tabs.php:53
 msgid ""
@@ -1044,6 +1276,14 @@ msgid ""
 "for specific positions without letting the user select an alternate "
 "receipient."
 msgstr ""
+"De postitie parameter werkt ook in de verkorte code van het "
+"contactformulier. Indien u een postie opgeeft in de verkorte code van een "
+"contractformulier, of deze doorgeeft in de link (zoals boven beschreven) dan "
+"werkt het contactformulier alleen voor de opgegeven postitie. In het "
+"conctactformulier wordt dan niet de mogelijkheid geboden om een ontvanger te "
+"kiezen. Op deze manier is het mogelijk om voor een specifieke positie een "
+"contactformulier te maken zonder dat het mogelijk is een andere ontvanger te "
+"kiezen."
 
 #: ../includes/pta-directory-help-tabs.php:54
 msgid ""
@@ -1051,6 +1291,9 @@ msgid ""
 "the Positions page and view the list of all positions to see the slug for "
 "each position."
 msgstr ""
+"Zorg ervoor dat u de <strong>verwijzing</strong> gebruikt voor de positie "
+"parameter! Ga naar de posities pagina en bekijk de lijst met posities voor "
+"alle verwijzingen."
 
 #: ../includes/pta-directory-help-tabs.php:55
 msgid ""
@@ -1058,10 +1301,13 @@ msgid ""
 "into a shortcode. See the custom links section for help on creating those "
 "links."
 msgstr ""
+"Het is ook mogelijk om postities door te geven als parameter in een link i.p."
+"v. deze op te nemen in de verkorte code. Zie hulp aangepaste verwijzingen "
+"pagina voor details."
 
 #: ../includes/pta-directory-help-tabs.php:60
 msgid "PTA Member Directory &amp; Contact Form - Custom Links Help"
-msgstr ""
+msgstr "PTA Ledenlijst Contactformulier - Hulp bij aangepaste verwijzigen"
 
 #: ../includes/pta-directory-help-tabs.php:61
 msgid ""
@@ -1070,6 +1316,10 @@ msgid ""
 "can use custom links to those pages to pre-select an individual, group, or "
 "location."
 msgstr ""
+"Op het moment dat de ledenlijst is geconfigureerd, gevuld is met leden en de "
+"ledelijst en contactformulieren hebben allemaal de gewenste verkortecode "
+"kunt u aangepaste verwijzingen gebruiken om zo een voorselectie te maken van "
+"een individu, groep of locatie."
 
 #: ../includes/pta-directory-help-tabs.php:62
 msgid ""
@@ -1078,6 +1328,10 @@ msgid ""
 "that these IDs are the custom post type IDs, and NOT the user ID for any "
 "site user accounts."
 msgstr ""
+"Indien u een link naar een enkele persoon wilt maken kunt u gebruikmaken van "
+"het \"id\" parameter en geeft deze dezelfde waarde als het ID dat getoond "
+"wordt op Alle Leden beheer pagina. Deze ID's zijn van het aanpast verstuur "
+"type en niet het ID van één van de website gebruikers."
 
 #: ../includes/pta-directory-help-tabs.php:63
 msgid ""
@@ -1085,6 +1339,10 @@ msgid ""
 "your site, and you want to create a contact link for a member with ID 101, "
 "the link would be: <br/> http://yoursite.com/contact/?id=101"
 msgstr ""
+"Indien u een verkorte code heeft aangemaakt op de pagina \"/contact\" van uw "
+"website en u wilt een link maken naar een contactformulier voor een lid met "
+"ID 101, dan ziet de link er als volgt uit:<br/> http://website.com/contact/?"
+"id=101"
 
 #: ../includes/pta-directory-help-tabs.php:64
 msgid ""
@@ -1092,6 +1350,11 @@ msgid ""
 "without the recipient select box. With that id, the message will get sent to "
 "the site admin email: <br/> http://yoursite.com/contact/?id=-1"
 msgstr ""
+"Door het ID op -1 te zetten kunt u eenvouding een contactformulier maken "
+"voor de beheerder van de website, zonder dat de mogelijkheid wordt geboden "
+"om de ontvanger te selecteren. Door ID -1 op te geven wordt het bericht "
+"verstuurd naar het beheerders email adres van u website.<br/>http://uwsite."
+"com/contact/?id=-1"
 
 #: ../includes/pta-directory-help-tabs.php:65
 msgid ""
@@ -1101,12 +1364,20 @@ msgid ""
 "So, if your directory is on page \"/directory\", the link would be:<br/> "
 "http://yoursite.com/directory/?action=contact&id=101"
 msgstr ""
+"Indien u GEEN gebruik maak van een apart contactformulier (dynamisch "
+"gegenereerd op de ledenlijst pagina), kunt u nog steeds een link maken voor "
+"een contactformulier. In deze moet dan de \"action\" parameter gevuld wordem "
+"met \"contact\". Er vanuit gegaan dat de ledenlijst op de pagina \"/directory"
+"\" staat dan ziet de link er als volgt uit:<br/> http://uwsite.com/"
+"directory/?action=contact&id=101"
 
 #: ../includes/pta-directory-help-tabs.php:66
 msgid ""
 "Note that you use a ? for the first argument, and any additional arguments "
 "are added using &"
 msgstr ""
+"Let op dat voor de eerste parameter altijd een ? staat en dat additonele "
+"parameters worden toegevoegd door gebruikt te maken van &"
 
 #: ../includes/pta-directory-help-tabs.php:67
 msgid ""
@@ -1116,6 +1387,12 @@ msgid ""
 "contact all members who have the position of President, the link would look "
 "like: <br/> http://yoursite.com/contact/?id=president"
 msgstr ""
+"Op een link te maken voor een contactformulier die gebruikt kan worden voor "
+"het verzenden van een bericht naar een specifieke positie (groepsbericht) "
+"kunt u ook gebruik maken van het id parameter en de verwijziging naar de "
+"specifieke positie. Stel dat u een contactformulier wilt maken om een "
+"bericht te sturen naar alle voorzitters komt de link er als volgt uit te "
+"zien:<br/> http://uwsite.com/contact/?id=voorzitter"
 
 #: ../includes/pta-directory-help-tabs.php:68
 msgid ""
@@ -1124,6 +1401,11 @@ msgid ""
 "a link to the directory for only Seattle members, the link would be: <br/> "
 "http://yoursite.com/directory/?location=seattle"
 msgstr ""
+"Op dezelfde manier kunt u ook een locatie doorgeven in een link door gebruik "
+"te maken van de \"location\" paramater en verwijzing naar de locatie die "
+"getoond moet worden. Om een link te maken naar een lijst met alleen personen "
+"uit Amsterdam ziet de link er als volgt uit:<br/> http://uwwebsite.com/"
+"directory/?location=amsterdam"
 
 #: ../includes/pta-directory-help-tabs.php:68
 msgid ""
@@ -1133,6 +1415,10 @@ msgid ""
 "\"Management\", the link would be: <br/> http://yoursite.com/directory/?"
 "position=Management"
 msgstr ""
+"Er is ook een parameter voor \"positie\" waarmee een overzicht met alleen de "
+"leden met de opgegeven postitie worden getoond. Om bijvoorbeeld een "
+"overzicht te tonen met alleen leden met de postite \"Management\" te tonen "
+"wordt link:<br/> http://uwebsite.com/directory/?postion=Manangement"
 
 #: ../includes/pta-directory-help-tabs.php:69
 msgid ""
@@ -1141,6 +1427,11 @@ msgid ""
 "separate contact form, the link would be: <br/> http://yoursite.com/"
 "directory/?action=contact&id=president&location=seattle"
 msgstr ""
+"Het is mogelijk om parameters te combineren in één link. Als u bijvoorbeeld "
+"een contactformulier wilt maken voor alle leden die voorzitter zijn in "
+"Amsterdam en hiervoor geen apart formulier wil maken moet de link als volgt "
+"zijn:<br/> http://uwwebsite.com/directory/?"
+"action=contact&id=voorzitter&location=amsterdam"
 
 #: ../includes/pta-directory-help-tabs.php:70
 msgid ""
@@ -1149,10 +1440,15 @@ msgid ""
 "send to only members who hold that position (without a recipient select box "
 "to choose a different recipient)."
 msgstr ""
+"Hou er rekening mee dat op het moment dat een posititie en een ID als "
+"parameter wordt meegegeven aan het contactformulier de posititie parameter "
+"het ID parameter overschrijft en het contactformulier alleen berichten kan "
+"versturen naar de leden met de opgegeven positie (zonder de mogelijkheid een "
+"andere ontvanger te kiezen)."
 
 #: ../includes/pta-directory-help-tabs.php:71
 msgid "The order of the arguments does not matter."
-msgstr ""
+msgstr "De volgorde van argumenten is niet van belang."
 
 #: ../includes/pta-directory-help-tabs.php:72
 msgid ""
@@ -1160,6 +1456,10 @@ msgid ""
 "can still combine the id and location arguments, such as: <br/> http://"
 "yoursite.com/contact/?id=president&location=seattle"
 msgstr ""
+"Indien u het contactformulier gebruikt op een aparte pagina met een verkorte "
+"code is het nog steeds mogelijk om het id en de locatie opties te "
+"combineren, bijvoorbeeld:,<br/> http://uwwebsite.com/contact/?"
+"id=voorzitter&location=amsterdam"
 
 #: ../includes/pta-directory-help-tabs.php:73
 msgid ""
@@ -1167,10 +1467,13 @@ msgid ""
 "from the members list. You can also see the permalink under the member name "
 "when you create or edit a member."
 msgstr ""
+"Indien u een link naar een biografie/over pagina van een lid nodig heeft "
+"kunt u de Bekijk link van de leden overzicht kopieren. Ook wordt de perma "
+"link getoond onder de naam veld bij het toevoegen of wijzigen van een lid."
 
 #: ../includes/pta-directory-help-tabs.php:78
 msgid "PTA Member Directory &amp; Contact Form - Sort Positions Help"
-msgstr ""
+msgstr "PTA ledenlijst contactformulier - Hulp bij sorteren van postities"
 
 #: ../includes/pta-directory-help-tabs.php:79
 msgid ""
@@ -1179,22 +1482,30 @@ msgid ""
 "them in the order that you want them. The position order numbers will change "
 "the next time you refresh the page."
 msgstr ""
+"De ledenlijst wordt getoond op basis van posities. Om de volgorde te "
+"veranderen kunt u dat eenvoudig doen op de sorteer postities pagina en met "
+"het verplaatsen de volgorde aanpassen. De volgorde van postities wordt "
+"automatisch aangepast bij de volgende keer dat de pagina herladen wordt."
 
 #: ../includes/pta-directory-help-tabs.php:80
 msgid ""
 "<strong>Note: Members will NOT show up in the directory if they do not have "
 "at least one position.</strong>"
 msgstr ""
+"<strong>Note: leden worden NIET getoond in de ledenlijst op het moment dat "
+"zij niet aan tenminste één postitie zijn gekoppeld.</strong>"
 
 #: ../includes/pta-directory-help-tabs.php:86
 msgid "PTA Member Directory &amp; Contact Form - Styling/Appearance Help"
-msgstr ""
+msgstr "PTA ledenlijst contactformulier - Hulp bij opmaak."
 
 #: ../includes/pta-directory-help-tabs.php:87
 msgid ""
 "As this is a plugin, the main focus is on adding functionality. Styling and "
 "appearance should be handled by the theme."
 msgstr ""
+"Omdat dit een plugin is ligt de focus op het toevoegen van functionaliteit. "
+"Opmaak en weergave zou door het thema geregeld moeten worden."
 
 #: ../includes/pta-directory-help-tabs.php:88
 msgid ""
@@ -1202,6 +1513,10 @@ msgid ""
 "simple form fields for the contact form. The appearance of the table and "
 "forms on your site is mostly determined by your theme."
 msgstr ""
+"De plugin gebruikt een eenvoudige tabel opmaak voor het tonen van de "
+"ledenlijst en eenvoudige formuliervelden voor het contactformulier. De "
+"weergave van de tabel en de formulier worden voor het grootste deel bepaald "
+"door het gebruikte thema."
 
 #: ../includes/pta-directory-help-tabs.php:89
 msgid ""
@@ -1210,6 +1525,11 @@ msgid ""
 "contact form, the plugin formats the fields display styling to block, sets "
 "some margins, and increases the label font size to \"larger\"."
 msgstr ""
+"Standaard voegt de plugin alleen opmaak toe voor het maken van een tabel met "
+"een breedte van 100% en het naar links uitlijnen van de tabel kop. Verder "
+"wordt de opmaak van de te tonen velden aangepast om zo de opmaak uit het "
+"thema te blokkeren, wat marges aan te passen en de front grootte op \"larger"
+"\" te zetten."
 
 #: ../includes/pta-directory-help-tabs.php:90
 msgid ""
@@ -1218,12 +1538,18 @@ msgid ""
 "custom CSS), or you can modify the plugin's CSS file (pta-contact-form.css "
 "in the includes/css directory of the plugin)."
 msgstr ""
+"Om de opmaak van de plugin aan te passen kunt u uw eigen opmaak aan "
+"toevoegen aan de CSS van het thema (veel themas bieden de mogelijkheid om "
+"eigen opmaak toe te voegen), of u kunt de opmaak van de plugin (pta-contact-"
+"form.css in de map includes/css) zelf wijzigen."
 
 #: ../includes/pta-directory-help-tabs.php:91
 msgid ""
 "The contact form uses the class \"pta-contact-form\" and the directory table "
 "uses the class \"pta_directory_table\"."
 msgstr ""
+"Het contact formulier gebruikt de class \"pta-contact-form\"en de lijst "
+"tabel gebruikt de class \"pat_directory_table\"."
 
 #: ../includes/pta-directory-help-tabs.php:92
 msgid ""
@@ -1233,10 +1559,15 @@ msgid ""
 "added to make it easy to add your own border to the directory table, making "
 "it much easier to read."
 msgstr ""
+"Indien u geen zin heeft om de CSS-opmaak aan te passen kunt u met de optie "
+"Forceer tabel kaders er zorgen dat de ledenlijst kaders toont. Hierbij kunt "
+"u zowel de kleuren, grootte als de marges instellen. Veel themas in "
+"wordpress ondersteunen geen kaders en met deze optie kunt u deze eenvoudig "
+"toevoegen zodat de lijst makelijk leesbaar is."
 
 #: ../includes/pta-directory-help-tabs.php:97
 msgid "PTA Member Directory &amp; Contact Form - Modifying the text output"
-msgstr ""
+msgstr "PTA Ledenlijst Contactformulier - Aanpassen uitvoer tekst"
 
 #: ../includes/pta-directory-help-tabs.php:98
 msgid ""
@@ -1244,12 +1575,17 @@ msgid ""
 "you to modify almost any text output to the public side of the Directory and "
 "Contact Form."
 msgstr ""
+"In versie 1.3.6 is een nieuw filter toegevoegd aan alle uitvoer tekst, "
+"hierdoor is het mogelijk bijna alle tekstuitvoer aan te passen die wordt "
+"getoond in de ledenlijst en contactformulier."
 
 #: ../includes/pta-directory-help-tabs.php:99
 msgid ""
 "There is one output filter hook that is used for all public side text "
 "strings.  The hook is: pta_md_output"
 msgstr ""
+"Er is één tekstuitvoer filter haak die gebruikt wordt voor alle publieke "
+"tekst. Het haak is: pta_md_output"
 
 #: ../includes/pta-directory-help-tabs.php:100
 msgid ""
@@ -1258,6 +1594,10 @@ msgid ""
 "string which is only used for a few of the outputs (e.g., position, "
 "location, group name)."
 msgstr ""
+"Het filter gebruikt drie parameters: De eerste is de tekst die uitgevoerd "
+"moet worden, de tweede is een identificerende tekst en de derde is een vrij "
+"tekst die alleen wordt gebruikt een aantal teksten (bijv. positie, locatie, "
+"groepsnaam)."
 
 #: ../includes/pta-directory-help-tabs.php:101
 msgid ""
@@ -1265,6 +1605,9 @@ msgid ""
 "your theme. If you aren't comfortable with this, then you should use the "
 "Customizer add-on plugin available from StephenSherrardPlugins.com"
 msgstr ""
+"Om het filter te gebruiken moet u code toevoegen aan de functions.php "
+"bestand in uw theme. Indien dit niet wilt doen kunt u gebruik maken van "
+"Customizer add-on plugin die beschikbaar is op StephanSherrardPlugins.com"
 
 #: ../includes/pta-directory-help-tabs.php:102
 msgid ""
@@ -1273,136 +1616,143 @@ msgid ""
 "identifiers, and brief description, for each public side output string that "
 "you can modify."
 msgstr ""
+"Open het output-filters.php bestand in de hoofdmap van deze plugin voor code "
+"voorbeelden. Ook vindt u hier het bestand output-filters.txt, hierin staat "
+"een lijst met identificerende teksten en een korte omschrijving voor elke "
+"tekst die publiekelijk getoond wordt die u kunt aanpassen."
 
 #: ../includes/pta-display-directory.php:21
 #: ../includes/pta-display-directory.php:282
 msgid "Sorry!  There is nothing to display yet."
-msgstr ""
+msgstr "Sorry! Er is niets dat kan worden getoond."
 
 #: ../includes/pta-display-directory.php:29
 msgid "Sorry!  You must be logged in to view the directory."
-msgstr ""
+msgstr "Sorry! U moet ingelogd zijn om de ledenlijst te mogen bekijken."
 
 #: ../includes/pta-display-directory.php:32
 msgid "Sorry!  You don't have the proper user level to view the directory."
-msgstr ""
+msgstr "Sorry! U heeft niet voldoende rechten om de lijst te mogen bekijken."
 
 #: ../includes/pta-display-directory.php:50
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #: ../includes/pta-display-directory.php:53
 msgid "VACANT"
-msgstr ""
+msgstr "VACANT"
 
 #: ../includes/pta-display-directory.php:54
 msgid "Send A Message"
-msgstr ""
+msgstr "Verstuur een bericht"
 
 #: ../includes/pta-display-directory.php:55
 msgid "Send Group A Message"
-msgstr ""
+msgstr "Verstuur een groepsbericht"
 
 #: ../includes/pta-display-directory.php:56
 msgid "more info..."
-msgstr ""
+msgstr "meer informatie..."
 
 #: ../includes/pta-display-directory.php:81
 msgid "Directory Listing for "
-msgstr ""
+msgstr "Ledenlijst voor:"
 
 #: ../includes/pta-display-directory.php:363
 #: ../includes/pta-display-directory.php:398
 msgid "Send a message to: "
-msgstr ""
+msgstr "Verstuur een bericht naar:"
 
 #: ../includes/pta-display-directory.php:364
 #: ../includes/pta-display-directory.php:397
 msgid "Or select a different recipient:"
-msgstr ""
+msgstr "Of selecteer een andere ontvanger:"
 
 #: ../includes/pta-display-directory.php:403
 msgid "Please select a different recipient:"
-msgstr ""
+msgstr "Selecteer een andere ontvanger a.u.b."
 
 #: ../includes/pta-display-directory.php:404
 msgid "There are currently no contact emails for group: "
-msgstr ""
+msgstr "Op dit moment zijn voor deze groep geen emailadressen opgegeven:"
 
 #: ../includes/pta-display-directory.php:411
 msgid "Please select a recipient:"
-msgstr ""
+msgstr "Selecteer een ontvanger:"
 
 #: ../includes/pta-display-directory.php:412
 msgid "Send a message: "
-msgstr ""
+msgstr "Verstuur een bericht:"
 
 #: ../includes/pta-display-directory.php:417
 msgid "Your Name"
-msgstr ""
+msgstr "Uw naam"
 
 #: ../includes/pta-display-directory.php:418
 msgid "Your E-mail Address"
-msgstr ""
+msgstr "Uw emailadres"
 
 #: ../includes/pta-display-directory.php:419
 msgid "Subject"
-msgstr ""
+msgstr "Onderwerp"
 
 #: ../includes/pta-display-directory.php:420
 msgid "Your Message"
-msgstr ""
+msgstr "Uw bericht"
 
 #: ../includes/pta-display-directory.php:421
 msgid "Submit"
-msgstr ""
+msgstr "Verstuur"
 
 #: ../includes/pta-display-directory.php:422
 msgid "Select a recipient"
-msgstr ""
+msgstr "Selecteer een ontvanger"
 
 #: ../includes/pta-display-directory.php:424
 msgid "Please fill in all the required fields."
-msgstr ""
+msgstr "Eén of meer verplichte velden ontbreken."
 
 #: ../includes/pta-display-directory.php:426
 msgid "Please enter a valid e-mail address."
-msgstr ""
+msgstr "Vul een geldig emailadres in."
 
 #: ../includes/pta-display-directory.php:427
 msgid ""
 "That recipient doesn't currently have a valid email address.  Please choose "
 "another recipient."
 msgstr ""
+"De gekozen ontvanger heeft op dit moment geen geldig emailadres. Selecteer a."
+"u.b. een andere ontvanger."
 
 #: ../includes/pta-display-directory.php:429
 msgid "Spambot!"
-msgstr ""
+msgstr "Spambot!"
 
 #: ../includes/pta-display-directory.php:430
 msgid "No recipient selected.  Please select one."
-msgstr ""
+msgstr "Geen ontvanger geselecteerd, selecteer a.u.b. een ontvanger"
 
 #: ../includes/pta-display-directory.php:431
 msgid "Spamcheck Failed!"
-msgstr ""
+msgstr "Fout opgetreden bij de spam controle!"
 
 #: ../includes/pta-display-directory.php:432
 msgid "Wordpress Mail Error! Check server mail settings."
 msgstr ""
+"Fout opgetreden in Wordpress Mail! Controleer de mailserver instellingen."
 
 #: ../includes/pta-display-directory.php:511
 msgid "Sender Name: "
-msgstr ""
+msgstr "Naam verzender:"
 
 #: ../includes/pta-display-directory.php:512
 msgid "Sender email: "
-msgstr ""
+msgstr "Email adres verzender:"
 
 #: ../includes/pta-display-directory.php:513
 msgid "Sender IP: "
-msgstr ""
+msgstr "IP-adres verzender:"
 
 #: ../includes/pta-display-directory.php:678
 msgid "Individuals"
-msgstr ""
+msgstr "Individuen"
