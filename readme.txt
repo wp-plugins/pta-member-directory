@@ -3,7 +3,6 @@ Contributors: DBAR Productions
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7U6S4U46CKYPJ
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
-<<<<<<< .mine
 Tested up to: 3.8.1
 Stable tag: 1.3.8
 =======
@@ -106,7 +105,6 @@ http://stephensherrardplugins.com
 1. Contact Form - Public Side
 
 == Changelog ==
-<<<<<<< .mine
 **Version 1.3.8**
 
 *	Added wp_reset_postdata() to end of directory display loop to fix extra post display issues with some themes.
@@ -121,7 +119,6 @@ http://stephensherrardplugins.com
 *	Minor Action/Filter hook updates for extensions ( extension available at http://stephensherrardplugins.com )
 *	Added Dutch translation by Remco Spil
 
->>>>>>> .r848625
 **Version 1.3.6**
 
 *	Added option to show/hide "more info..." link in photo column for members with post content
