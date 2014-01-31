@@ -4,8 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.8.1
-Stable tag: 1.3.8
-=======
+Stable tag: 1.3.9
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -107,13 +106,16 @@ http://stephensherrardplugins.com
 == Changelog ==
 **Version 1.3.8**
 
+*	Readme.txt cleanup. No functional changes after 1.3.8
+
+**Version 1.3.8**
+
 *	Added wp_reset_postdata() to end of directory display loop to fix extra post display issues with some themes.
 
 **Version 1.3.7**
 
 *	Minor Action/Filter hook updates for extensions
 
-=======
 **Version 1.3.7**
 
 *	Minor Action/Filter hook updates for extensions ( extension available at http://stephensherrardplugins.com )
