@@ -3,8 +3,10 @@ Contributors: DBAR Productions
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7U6S4U46CKYPJ
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
-Tested up to: 3.8
-Stable tag: 1.3.7
+<<<<<<< .mine
+Tested up to: 3.8.1
+Stable tag: 1.3.8
+=======
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -98,16 +100,28 @@ http://stephensherrardplugins.com
 == Screenshots ==
 
 1. Add New Member - Admin
-1. Options Page - Admin
+1. Options Page part1 - Admin
+1. Options Page part2 - Admin
 1. Member Directory - Public Side
 1. Contact Form - Public Side
 
 == Changelog ==
+<<<<<<< .mine
+**Version 1.3.8**
+
+*	Added wp_reset_postdata() to end of directory display loop to fix extra post display issues with some themes.
+
+**Version 1.3.7**
+
+*	Minor Action/Filter hook updates for extensions
+
+=======
 **Version 1.3.7**
 
 *	Minor Action/Filter hook updates for extensions ( extension available at http://stephensherrardplugins.com )
 *	Added Dutch translation by Remco Spil
 
+>>>>>>> .r848625
 **Version 1.3.6**
 
 *	Added option to show/hide "more info..." link in photo column for members with post content

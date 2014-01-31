@@ -130,8 +130,8 @@ function pta_display_directory($location='', $position='') {
 	        }
 	        // Allow other plugins to modify the query
 	        $member_posts = apply_filters( 'pta_directory_member_post_query', $member_posts );
-	        $loop = new WP_Query( $member_posts );
-	        $count = $loop->post_count;
+	        $member_loop = new WP_Query( $member_posts );
+	        $count = $member_loop->post_count;
 	        // Keep track of how many members we have shown
 	        $members_shown += $count;  
 	        if ( 0 == $count) {
@@ -178,7 +178,7 @@ function pta_display_directory($location='', $position='') {
 	            } 
 	        }
 	        $i=0;
-	        while ( $loop->have_posts() ) : $loop->the_post();
+	        while ( $member_loop->have_posts() ) : $member_loop->the_post();
 	        	$id = get_the_ID();
 	            $link = get_permalink( $id );
 		        if (isset($options['use_contact_form']) && true === $options['use_contact_form']) {	            
@@ -268,6 +268,7 @@ function pta_display_directory($location='', $position='') {
 	            </tr>';
 	        	$i++;
 	        endwhile; 
+	        wp_reset_postdata();
 	    } 
 		 $return .='     
 	    </tbody>
