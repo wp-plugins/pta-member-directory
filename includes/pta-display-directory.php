@@ -90,6 +90,7 @@ function pta_display_directory($location='', $position='') {
 	            if($show_positions) {
 	            	$return .= '<th>'.esc_html($column_position).'</th>';
 	            } 
+	            $return .= apply_filters( 'pta_directory_table_headers_after_position', '', $show_positions );
 	            $return .='   
 	                <th>'.esc_html($column_name).'</th>';
                 $return .= apply_filters( 'pta_directory_table_headers_after_name', '' );
@@ -173,10 +174,12 @@ function pta_display_directory($location='', $position='') {
 	            }
 	            if($show_positions) {
 	            	$return .= '<td rowspan="'.(int)$count.'" style="vertical-align: middle;"><strong>'.esc_html($category).'</strong>';
+	            	$return .= apply_filters( 'pta_directory_position_cell_before_group_contact_link', '', $term );
 	                $return .= ' <br/>'. $group_contact_link;
 		            $return .= '</td>';
 	            } 
 	        }
+	        $return .= apply_filters( 'pta_directory_table_content_after_position', '', $show_positions, $count, $term );
 	        $i=0;
 	        while ( $member_loop->have_posts() ) : $member_loop->the_post();
 	        	$id = get_the_ID();
@@ -297,7 +300,7 @@ function pta_directory_get_the_ip() {
     }
 }
 
-function pta_directory_contact_form($id='', $location='', $position='') {
+function pta_directory_contact_form($id='', $location='', $position='', $hide_select = false) {
 	// check if they selected a recipient from the drop down select box, and update the id for proper name/email
 	$location = esc_html($location);
 	$selected = false;
@@ -587,20 +590,23 @@ function pta_directory_contact_form($id='', $location='', $position='') {
 		} elseif ( '' != $position && $selected ) {
 			$email_form .= '<input type="hidden" name="recipient" value="'.esc_attr($group).'"/>';
 			$email_form .= '<input type="hidden" name="position" value="'.esc_attr($group).'"/>';
+		} elseif ( ($id || $group) && $selected && $hide_select) {
+			$recipient = $id ? $id : $group;
+			$email_form .= '<input type="hidden" name="recipient" value="'.esc_attr($recipient).'"/>';
 		} else {
 			$email_form .='
 			<div>
 				<label for="cf_recipient">'.esc_html($label_recipient).'</label>
 				<select name="recipient" id="cf_recipient">
 					<option value="">'.esc_html($label_option).'</option>';
-				$members = get_posts(  array(
+				$members = get_posts(  apply_filters('pta_contact_form_members_args', array(
 					'numberposts'		=> -1,
 					'orderby'			=>	'meta_value',
 					'order'				=>	'ASC',
 					'meta_key'			=>	'_pta_member_directory_lastname',
 					'post_type'			=>	'member',
 					'post_status'		=>	'publish' )
-				);
+				), $id, $location );
 				// Allow other plugins to change the members for the recipient list
 				$members = apply_filters( 'pta_member_contact_form_members', $members, $id, $location );
 
@@ -838,6 +844,8 @@ function pta_member_contact_shortcode($atts) {
 	extract( shortcode_atts( array(
 			'location' => '',
 			'position'	=> '',
+			'id' => '',
+			'hide_select' => false,
 		), $atts ) );
 	if ('' != $location) {
 		$location = sanitize_title($atts['location']);
@@ -853,8 +861,17 @@ function pta_member_contact_shortcode($atts) {
 	} else {
 		$position = '';
 	}
-	$id = ''; // won't be passing in contact form id from shortcode
-	return pta_directory_contact_form($id, $location, $position);
+	if ('' != $id) {
+		$id = sanitize_title($atts['id']);
+	} elseif (isset($_GET['id']) && '' != $_GET['id']) {
+		$id = sanitize_title($_GET['id']);
+	} else {
+		$id = '';
+	}
+	if('true' !== $hide_select) {
+		$hide_select = false;
+	}
+	return pta_directory_contact_form($id, $location, $position, $hide_select);
 }
 
 function pta_admin_contact_shortcode() {

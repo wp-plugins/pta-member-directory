@@ -12,7 +12,7 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.3.9
+Version: 1.5
 Author URI: http://stephensherrardplugins.com
 Text Domain: pta-member-directory
 Domain Path: /languages
@@ -22,7 +22,7 @@ if (!defined('PTA_MEMBER_DIRECTORY_VERSION_KEY'))
     define('PTA_MEMBER_DIRECTORY_VERSION_KEY', 'pta_member_directory_version');
 
 if (!defined('PTA_MEMBER_DIRECTORY_VERSION_NUM'))
-    define('PTA_MEMBER_DIRECTORY_VERSION_NUM', '1.3.9');
+    define('PTA_MEMBER_DIRECTORY_VERSION_NUM', '1.5');
 
 add_option(PTA_MEMBER_DIRECTORY_VERSION_KEY, PTA_MEMBER_DIRECTORY_VERSION_NUM);
 
@@ -32,6 +32,7 @@ include(dirname(__FILE__).'/includes/process-ajax.php');
 include_once(dirname(__FILE__).'/includes/pta-display-directory.php');
 
 add_action( 'init', 'pta_member_directory_init' );
+register_activation_hook(__FILE__, 'pta_member_directory_activate');
 
 /**
  * Initialization function.  Sets up the custom Post Type and Custom Taxonomy
@@ -1142,6 +1143,9 @@ function pta_directory_options_form( $options=array() ) {
  * @return HTML Calls and Processes the options page form
  */
 function pta_directory_settings_page() {
+	if (!current_user_can('manage_options') && !current_user_can('manage_pta'))  {
+        wp_die( __( 'You do not have sufficient permissions to access this page.', 'pta_volunteer_sus' ) );
+    }
 	$options = get_option( 'pta_directory_options' );
 	$messages = '';
 	$text_fields = array('capability', 'position_label', 'location_label', 'contact_display', 'form_title');
@@ -1270,8 +1274,8 @@ function pta_directory_sort_page() {
 function pta_member_plugin_menu() {
 	global $pta_directory_page;
 	global $pta_directory_sort_page;	
-	$pta_directory_page = add_submenu_page( 'edit.php?post_type=member', 'settings',  __('Options','pta-member-directory'), 'manage_options', 'pta_member_settings', 'pta_directory_settings_page');
-	$pta_directory_sort_page = add_submenu_page( 'edit.php?post_type=member', 'sort',  __('Sort Positions','pta-member-directory'), 'manage_options', 'pta_member_sort', 'pta_directory_sort_page');
+	$pta_directory_page = add_submenu_page( 'edit.php?post_type=member', 'settings',  __('Options','pta-member-directory'), 'manage_pta', 'pta_member_settings', 'pta_directory_settings_page');
+	$pta_directory_sort_page = add_submenu_page( 'edit.php?post_type=member', 'sort',  __('Sort Positions','pta-member-directory'), 'manage_pta', 'pta_member_sort', 'pta_directory_sort_page');
 	add_action('admin_print_styles-' . $pta_directory_sort_page, 'pta_member_directory_load_scripts');
 	add_action('admin_print_styles-' . $pta_directory_page, 'pta_member_directory_options_load_scripts');
 }
@@ -1386,10 +1390,44 @@ add_action('delete_member_category', 'pta_save_member_categories', 10, 1); // Up
 $pta_md_plugin_file = 'pta-member-directory/pta-member-directory.php';
 add_filter( "plugin_action_links_{$pta_md_plugin_file}", 'pta_md_plugin_action_links', 10, 2 );
 function pta_md_plugin_action_links( $links, $file ) {
-	$extensions_link = '<a href="http://stephensherrardplugins.com">' . __( 'Extensions', 'pta-member-directory' ) . '</a>';
+	$extensions_link = '<a href="https://stephensherrardplugins.com">' . __( 'Extensions', 'pta-member-directory' ) . '</a>';
 	array_unshift( $links, $extensions_link );
 	$settings_link = '<a href="' . admin_url( 'edit.php?post_type=member&page=pta_member_settings' ) . '">' . __( 'Settings', 'pta-member-directory' ) . '</a>';
 	array_unshift( $links, $settings_link );
 	return $links;
+}
+
+function pta_member_directory_activate() {
+	$role = get_role('pta_manager');
+	// check if role already exists, if not, create it
+	if( null === $role ) {
+		$role = get_role('editor');
+        if (is_object($role)) {
+            $role->add_cap('manage_students');
+            $role->add_cap('view_directory');
+            $role->add_cap('manage_signup_sheets');
+        }
+        // Clone the editor role to PTA Manager then add our own capabilities
+        add_role('pta_manager', 'PTA Manager', $role->capabilities);
+        $role = get_role('pta_manager');
+        if (is_object($role)) {
+            $role->add_cap('manage_students');
+            $role->add_cap('manage_pta');
+            $role->add_cap('manage_signup_sheets');
+            $role->add_cap('manage_registrations');
+            $role->add_cap('view_directory');
+            $role->add_cap('create_users');
+            $role->add_cap('edit_users');
+            $role->add_cap('delete_users');
+            $role->add_cap('list_users');
+            $role->add_cap('promote_users');
+        }
+	}
+
+	// make sure admin also has manage_pta capability
+	$role = get_role('administrator');
+    if (is_object($role)) {
+        $role->add_cap('manage_pta');
+    }
 }
 /* EOF */

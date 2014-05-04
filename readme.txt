@@ -3,8 +3,8 @@ Contributors: DBAR Productions
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7U6S4U46CKYPJ
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
-Tested up to: 3.8.1
-Stable tag: 1.3.9
+Tested up to: 3.9
+Stable tag: 1.5
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -21,6 +21,8 @@ The contact form can be set up to select an individual, a position, or both.  If
 There is built-in integration with the Contact Form DB plugin so any form submissions (that pass validation and spambot check) will be saved to the database via the CFDB plugin.
 
 Detailed Help tabs for all admin screens for the plugin
+
+Version 1.4 adds a new role "PTA Manager" which has all the same capabilities as the Wordpress "Editor" role, but also adds capabilities to manage this and other PTA plugins settings. This allows you to give control of the settings of this plugin to somebody else in your organization without giving them full admin level access.
 
 The directory has a variety of options for customization:
 
@@ -65,7 +67,9 @@ However, you can also use the shortcode [pta\_member\_contact] to put the Contac
 
 There is also a new shortcode to create a simple admin contact form without the recipient select box. Just use the shortcode [pta\_admin\_contact] . All messages sent from that form will go to the site\'s admin email. You can also force a simple admin contact form by passing in -1 as the id in a contact form link, such as: http://yoursite.com/your_contact_form/?id=-1
 
-Simplify the shortcode generation by downloading the free extension, PTA Zilla Shortcodes, from my plugin site at:
+Additional shortcode arguments for the contact form have been added in version 1.5 to allow you to specify an ID for a specific member as well as to hide the recipient select box, so that you can hard-code contact forms for specific members. For example, if you enter content (such as bio) for a member and set the directory to link to member posts, you could embed a contact form shortcode for each member on their own post so visitors can contact them directly from the bio pages without having to select a recipient.
+
+Simplify the shortcode generation by downloading the free extension, PTA Shortcodes, from my plugin site at:
 http://stephensherrardplugins.com
 
 **Is there any spam protection?  There is no captcha field?**
@@ -104,7 +108,18 @@ http://stephensherrardplugins.com
 1. Contact Form - Public Side
 
 == Changelog ==
-**Version 1.3.8**
+**Version 1.5**
+
+*	Allow id argument for contact form shortcode, so you can create a contact form for a specific member on their own page or post (can be used in each member's post content area)
+*	Added a "hide_select" argument to the contact form shortcode that will not show the recipient select box if set to "true" AND if an id argument is set in the shortcode or passed in via a link.
+*	Additional hooks added for extensions
+
+**Version 1.4.0**
+
+*	Add PTA Manager Role - same as Editor role but with added capabilities to manage PTA plugins
+*	Additional hooks added for extensions
+
+**Version 1.3.9**
 
 *	Readme.txt cleanup. No functional changes after 1.3.8
 
