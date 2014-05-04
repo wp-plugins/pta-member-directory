@@ -143,6 +143,7 @@ function pta_display_directory($location='', $position='') {
 	        	}
 	            $return .= '<tr>';
 	            if($show_positions) $return .= '<td><strong>'.esc_html($category).'</strong></td>';
+	            $return .= apply_filters( 'pta_directory_table_content_after_vacant_position', '', $show_positions, $term );
 	            $return .= '<td colspan="'.(int)$cols.'">'.esc_html($vacant).'</td></tr>';
 	        } else {
 	        	// Do we already have a contact page setup with the contact form shortcode?
@@ -178,8 +179,8 @@ function pta_display_directory($location='', $position='') {
 	                $return .= ' <br/>'. $group_contact_link;
 		            $return .= '</td>';
 	            } 
+	            $return .= apply_filters( 'pta_directory_table_content_after_position', '', $show_positions, $count, $term );
 	        }
-	        $return .= apply_filters( 'pta_directory_table_content_after_position', '', $show_positions, $count, $term );
 	        $i=0;
 	        while ( $member_loop->have_posts() ) : $member_loop->the_post();
 	        	$id = get_the_ID();

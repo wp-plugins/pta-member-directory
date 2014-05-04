@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PTA Member Directory 1.3.6\n"
-"POT-Creation-Date: 2014-05-03 16:17-0800\n"
-"PO-Revision-Date: 2014-05-03 16:17-0800\n"
+"POT-Creation-Date: 2014-05-03 18:13-0800\n"
+"PO-Revision-Date: 2014-05-03 18:14-0800\n"
 "Last-Translator: Stephen Sherrard <stephen@dbar-productions.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -555,7 +555,7 @@ msgid ""
 msgstr ""
 
 #: ../includes/pta-display-directory.php:21
-#: ../includes/pta-display-directory.php:286
+#: ../includes/pta-display-directory.php:287
 msgid "Sorry!  There is nothing to display yet."
 msgstr ""
 
@@ -599,103 +599,103 @@ msgstr ""
 msgid "Directory Listing for "
 msgstr ""
 
-#: ../includes/pta-display-directory.php:367
-#: ../includes/pta-display-directory.php:402
+#: ../includes/pta-display-directory.php:368
+#: ../includes/pta-display-directory.php:403
 msgid "Send a message to: "
 msgstr ""
 
-#: ../includes/pta-display-directory.php:368
-#: ../includes/pta-display-directory.php:401
+#: ../includes/pta-display-directory.php:369
+#: ../includes/pta-display-directory.php:402
 msgid "Or select a different recipient:"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:407
+#: ../includes/pta-display-directory.php:408
 msgid "Please select a different recipient:"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:408
+#: ../includes/pta-display-directory.php:409
 msgid "There are currently no contact emails for group: "
 msgstr ""
 
-#: ../includes/pta-display-directory.php:415
+#: ../includes/pta-display-directory.php:416
 msgid "Please select a recipient:"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:416
+#: ../includes/pta-display-directory.php:417
 msgid "Send a message: "
 msgstr ""
 
-#: ../includes/pta-display-directory.php:421
+#: ../includes/pta-display-directory.php:422
 msgid "Your Name"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:422
+#: ../includes/pta-display-directory.php:423
 msgid "Your E-mail Address"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:423
+#: ../includes/pta-display-directory.php:424
 msgid "Subject"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:424
+#: ../includes/pta-display-directory.php:425
 msgid "Your Message"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:425
+#: ../includes/pta-display-directory.php:426
 msgid "Submit"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:426
+#: ../includes/pta-display-directory.php:427
 msgid "Select a recipient"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:428
+#: ../includes/pta-display-directory.php:429
 msgid "Please fill in all the required fields."
 msgstr ""
 
-#: ../includes/pta-display-directory.php:430
+#: ../includes/pta-display-directory.php:431
 msgid "Please enter a valid e-mail address."
 msgstr ""
 
-#: ../includes/pta-display-directory.php:431
+#: ../includes/pta-display-directory.php:432
 msgid ""
 "That recipient doesn't currently have a valid email address.  Please choose "
 "another recipient."
 msgstr ""
 
-#: ../includes/pta-display-directory.php:432 ../pta-member-directory.php:1156
+#: ../includes/pta-display-directory.php:433 ../pta-member-directory.php:1156
 msgid "Invalid Referrer!"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:433
+#: ../includes/pta-display-directory.php:434
 msgid "Spambot!"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:434
+#: ../includes/pta-display-directory.php:435
 msgid "No recipient selected.  Please select one."
 msgstr ""
 
-#: ../includes/pta-display-directory.php:435
+#: ../includes/pta-display-directory.php:436
 msgid "Spamcheck Failed!"
 msgstr ""
 
-#: ../includes/pta-display-directory.php:436
+#: ../includes/pta-display-directory.php:437
 msgid "Wordpress Mail Error! Check server mail settings."
 msgstr ""
 
-#: ../includes/pta-display-directory.php:515
+#: ../includes/pta-display-directory.php:516
 msgid "Sender Name: "
 msgstr ""
 
-#: ../includes/pta-display-directory.php:516
+#: ../includes/pta-display-directory.php:517
 msgid "Sender email: "
 msgstr ""
 
-#: ../includes/pta-display-directory.php:517
+#: ../includes/pta-display-directory.php:518
 msgid "Sender IP: "
 msgstr ""
 
-#: ../includes/pta-display-directory.php:685
+#: ../includes/pta-display-directory.php:686
 msgid "Individuals"
 msgstr ""
 
