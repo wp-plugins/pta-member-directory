@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 3.9
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -52,12 +52,12 @@ A help tab has been added to the Member Directory admin section. Click on the He
 **I'm getting a Wordpress Mail Error when submitting the contact form, or emails are not getting delivered**
 
 This is a server issue and has nothing to do with the contact form or this plugin. Version 1.2 added the Wordpress Mail Error message to let you know that the built-in Wordpress mailer (wp\_mail) returned an error. This means that your server is not compatible with the built-in Wordpress mail function. You can use one of the many SMTP mail plugins, that change the Wordpress Mail function to use SMTP for sending emails. Since this plugin uses Wordpress Mail, any of those plugins that modify Wordpress Mail to use SMTP should work with this plugin to fix your mail errors. Note that some of those SMTP plugins will change the reply-to address to equal the from address instead of the address of the person filling out the contact form. I have created my own PTA SMTP Mailer plugin which is a modified version of Easy WP SMTP that does not change the reply-to address, and also has improved settings and built-in help tabs. You can download the PTA SMTP Mailer plugin for free at:
-http://stephensherrardplugins.com
+https://stephensherrardplugins.com
 
 **How do I display the directory on a page?**
 
 Place the shortcode [pta\_member\_directory] on the page where you want the directory. You can use shortcode arguments to specify a location or position. You can download a free extension to automatically generate the shortcodes for the directory and contact form, along with properly formatted arguments for location or position, from my plugins site at:
-http://stephensherrardplugins.com
+https://stephensherrardplugins.com
 
 **How do I use the contact form?**
 
@@ -70,7 +70,11 @@ There is also a new shortcode to create a simple admin contact form without the 
 Additional shortcode arguments for the contact form have been added in version 1.5 to allow you to specify an ID for a specific member as well as to hide the recipient select box, so that you can hard-code contact forms for specific members. For example, if you enter content (such as bio) for a member and set the directory to link to member posts, you could embed a contact form shortcode for each member on their own post so visitors can contact them directly from the bio pages without having to select a recipient.
 
 Simplify the shortcode generation by downloading the free extension, PTA Shortcodes, from my plugin site at:
-http://stephensherrardplugins.com
+https://stephensherrardplugins.com
+
+**Can I add more fields to the contact form? Or use a different contact form?**
+
+At this time there are no built-in options for adding additional fields to the contact form. However, there is a Gravity Forms extension available which will allow you to create your own contact form with the very powerful Gravity Forms. The extension will prepopulate a recipient select box in your Gravity Forms from existing members and positions, pre-select one of those recipients based on links/arguments passed to it, and will alter the notification email to address to make sure the message gets sent to the correct recipient. The Gravity Forms extension is available at: https://stephensherrardplugins.com
 
 **Is there any spam protection?  There is no captcha field?**
 
@@ -78,7 +82,7 @@ I'm not a fan of captcha as I often can't even read them myself, and it makes se
 
 **How can I change the text that appears in the member directory or contact form?**
 
-As of version 1.3.6 a filter hook has been added for almost all text that is output to the public side of the member directory and contact form. There is some information in the help tab in the admin section on how to use this, and there are now 2 files in the main directory of this plugin, output-filters.php and output-filters.txt, that provide all the information and sample code needed to modify any of the text strings.  If you are not comfortable with PHP or adding code to your theme\'s functions.php file, there is a very simple Customizer add-on extension plug-in available at http://stephensherrardplugins.com
+As of version 1.3.6 a filter hook has been added for almost all text that is output to the public side of the member directory and contact form. There is some information in the help tab in the admin section on how to use this, and there are now 2 files in the main directory of this plugin, output-filters.php and output-filters.txt, that provide all the information and sample code needed to modify any of the text strings.  If you are not comfortable with PHP or adding code to your theme\'s functions.php file, there is a very simple Customizer add-on extension plug-in available at https://stephensherrardplugins.com
 
 **How do I make a contact link for an individual or group on other pages of my site?**
 
@@ -97,7 +101,10 @@ http://yoursite.com/your_directory_page/?location=seattle
 **Can I add custom fields to the directory?**
 
 Hooks and filters are in place to allow the creation of custom fields. This requires a significant amount of programming and knowledge of how to create inputs and save data from custom meta boxes on the admin post editor page for the custom post type.  I have created an add-on Custom Fields plugin extension for this that allows you to create any number of custom fields, with 4 different field types (text, link, file, textarea), and 3 output locations for these fields (after name, after email, and after the last column).  You can have more than one custom field in each location as well, so you are only limited by how many fields you want to try to fit into the directory table.  This plugin extension is available at my new site: 
-http://stephensherrardplugins.com
+https://stephensherrardplugins.com
+
+Version 1.5.1 also now supports the Descriptions extension, which will grab any content you put into the description box for each Position, and either display it as a new column in the directory, or put a tooltip icon with pop-up description dialog next to position names that have description content.  Our school PTA wanted to list job description and responsibilities for each position to help people decide what to volunteer for in the new school year, so I put created this extension, which can be found at:
+https://stephensherrardplugins.com
 
 == Screenshots ==
 
@@ -108,6 +115,12 @@ http://stephensherrardplugins.com
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.5.2**
+
+*	Adds some additional logic checking to the member directory contact links. If the contact form is set to show only positions, but you click on an individual member "send message" link, we need to change the id argument to be the position instead of the individual id, otherwise the contact form won't work properly since it's expecting position name slugs instead of numerical member ids in this case.
+*	Adds a check to make sure PTA Manager role is added and Admin has manage_pta capability if plugin was upgraded without the activation function being triggered. If the role and capabilitiy wasn't added, the options and sort positions pages for the plugin may not appear unless you deactivate and reactivate the plugin.
+*	Supports the Descriptions extension available at https://stephensherrardplugins.com
+
 **Version 1.5.1**
 
 *	Minor filter hooks change for upcoming extensions compatibility

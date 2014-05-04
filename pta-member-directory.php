@@ -12,7 +12,7 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.5.1
+Version: 1.5.2
 Author URI: http://stephensherrardplugins.com
 Text Domain: pta-member-directory
 Domain Path: /languages
@@ -22,7 +22,7 @@ if (!defined('PTA_MEMBER_DIRECTORY_VERSION_KEY'))
     define('PTA_MEMBER_DIRECTORY_VERSION_KEY', 'pta_member_directory_version');
 
 if (!defined('PTA_MEMBER_DIRECTORY_VERSION_NUM'))
-    define('PTA_MEMBER_DIRECTORY_VERSION_NUM', '1.5.1');
+    define('PTA_MEMBER_DIRECTORY_VERSION_NUM', '1.5.2');
 
 add_option(PTA_MEMBER_DIRECTORY_VERSION_KEY, PTA_MEMBER_DIRECTORY_VERSION_NUM);
 
@@ -42,6 +42,13 @@ register_activation_hook(__FILE__, 'pta_member_directory_activate');
 function pta_member_directory_init() {
 
 	load_plugin_textdomain( 'pta-member-directory', false, dirname(plugin_basename( __FILE__ )) . '/languages/' );
+
+	// Check to make sure the PTA Manager role was added, 
+	// and if not, run the activation function again to set role and add capability to admin
+	$role = get_role('pta_manager');
+	if (null === $role) {
+		pta_member_directory_activate();
+	}
 
 	// Set up labels for all our custom post type fields
     $labels = array(

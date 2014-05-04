@@ -189,7 +189,13 @@ function pta_display_directory($location='', $position='') {
 		            // Do we already have a contact page setup with the contact form shortcode?
 		            // if so, get the link and add the id argument
 		            if ( isset($options['contact_page_id']) && 0 != $options['contact_page_id'] ) {
-		            	$contact_url = get_permalink($options['contact_page_id']) .'?id='.$id;
+		            	// If only showing positions on contact form, then we need to set the contact id argument to the slug for the position to contact
+		            	if ('positions' == $options['contact_display']) {
+		            		$cid = $slug;
+		            	} else {
+		            		$cid = $id;
+		            	}
+		            	$contact_url = get_permalink($options['contact_page_id']) .'?id='.$cid;
 		            	if ($options['enable_location'] && '' != $location ) {
 		            		$contact_url .= '&location='.$location;
 		            	}
