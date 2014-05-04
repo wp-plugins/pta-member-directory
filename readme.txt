@@ -117,8 +117,8 @@ https://stephensherrardplugins.com
 == Changelog ==
 **Version 1.5.2**
 
-*	Adds some additional logic checking to the member directory contact links. If the contact form is set to show only positions, but you click on an individual member "send message" link, we need to change the id argument to be the position instead of the individual id, otherwise the contact form won't work properly since it's expecting position name slugs instead of numerical member ids in this case.
-*	Adds a check to make sure PTA Manager role is added and Admin has manage_pta capability if plugin was upgraded without the activation function being triggered. If the role and capabilitiy wasn't added, the options and sort positions pages for the plugin may not appear unless you deactivate and reactivate the plugin.
+*	Adds some additional logic checking to the member directory contact links for when contact form is set to only show positions.
+*	Adds a check to make sure PTA Manager role is added and Admin has manage_pta capability if plugin was upgraded without the activation function being triggered.
 *	Supports the Descriptions extension available at https://stephensherrardplugins.com
 
 **Version 1.5.1**
