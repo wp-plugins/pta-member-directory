@@ -149,7 +149,7 @@ function pta_display_directory($location='', $position='') {
 	        	// Do we already have a contact page setup with the contact form shortcode?
 	            // if so, get the link and add the id argument for the group
 	            if ( isset($options['contact_page_id']) && 0 != $options['contact_page_id'] ) {
-	            	$contact_url = get_permalink($options['contact_page_id']) .'?id='.$slug;
+	            	$contact_url = add_query_arg( 'id', $slug, get_permalink($options['contact_page_id']) );
 	            	if ($options['enable_location'] && '' != $location ) {
 	            		$contact_url .= '&location='.$location;
 	            	}
@@ -195,7 +195,7 @@ function pta_display_directory($location='', $position='') {
 		            	} else {
 		            		$cid = $id;
 		            	}
-		            	$contact_url = get_permalink($options['contact_page_id']) .'?id='.$cid;
+		            	$contact_url = add_query_arg( 'id', $cid, get_permalink($options['contact_page_id']) );
 		            	if ($options['enable_location'] && '' != $location ) {
 		            		$contact_url .= '&location='.$location;
 		            	}
