@@ -3,7 +3,7 @@ Contributors: DBAR Productions
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7U6S4U46CKYPJ
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
-Tested up to: 3.9
+Tested up to: 4.0
 Stable tag: 1.5.3
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
