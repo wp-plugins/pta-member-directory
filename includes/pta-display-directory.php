@@ -440,6 +440,7 @@ function pta_directory_contact_form($id='', $location='', $position='', $hide_se
     $error_bot = apply_filters( 'pta_md_output', __("Spambot!", 'pta-member-directory'), 'contact_error_bot' );
     $error_recipient = apply_filters( 'pta_md_output', __("No recipient selected.  Please select one.", 'pta-member-directory'), 'contact_error_recipient' );
     $error_spamcheck = apply_filters( 'pta_md_output', __("Spamcheck Failed!", 'pta-member-directory'), 'contact_error_spamcheck' );
+    $error_toofast = apply_filters( 'pta_md_output', __("Multiple submissions! Please wait at least 20 seconds between submissions.", 'pta-member-directory'), 'contact_error_toofast' );
     $wp_mail_error = apply_filters( 'pta_md_output', __("Wordpress Mail Error! Check server mail settings.", 'pta-member-directory'), 'contact_error_wp_mail' );
     $result = '';
     $sent = false;
@@ -456,7 +457,7 @@ function pta_directory_contact_form($id='', $location='', $position='', $hide_se
 		if ( isset($_POST['contactbot']) && '' != $_POST['contactbot']) {
 			$error = true;
 		   	$result = $error_bot;
-		}
+		}	
 	    // set the "required fields" to check
 	    $required_fields = array( "your_name", "email", "message", "subject" );
 	 
@@ -508,9 +509,23 @@ function pta_directory_contact_form($id='', $location='', $position='', $hide_se
 	        	$result = $error_spamcheck;
 	    	}
 	    }
-	    
+
+	    // check for duplicate/multiple submissions
+		$last_submit = get_transient('pta_md_last_submit');
+		$last_ip = get_transient('pta_md_last_ip');
+		$time = current_time( 'timestamp');
+		if(false === $error && false !== $last_submit && false !== $last_ip) {
+			if($time - $last_submit < 20 && $last_ip == $form_data['user_ip']) {
+				$error = true;
+				$result = $error_toofast;
+			}
+		}
+
 	    // but if $error is still FALSE, put together the POSTed variables and send the e-mail!
 	    if ( $error == false ) {
+	    	// Update the transient if no errors (successful submit)
+	    	set_transient( 'pta_md_last_submit', $time, 360 );
+	    	set_transient( 'pta_md_last_ip', $form_data['user_ip'], 360 );
 	    	$email_subject = '';
 	    	if(true === $options['add_blog_title']) {
 	    		// get the website's name and puts it in front of the subject

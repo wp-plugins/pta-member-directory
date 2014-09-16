@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.5.3
+Stable tag: 1.6
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -115,6 +115,11 @@ https://stephensherrardplugins.com
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.6**
+
+*	Adds a transient time and IP check to contact form processing to prevent multiple submissions of the contact form due to the user hitting refresh and re-submitting the form, or from theme & other plugin issues tha may cause the contact form to be processed more than once.
+*	Tested for compatilbility with Wordpress version 4.0
+
 **Version 1.5.3**
 
 *	Minor change to the way contact links for individuals are generated to work better with certain permalink structures.
