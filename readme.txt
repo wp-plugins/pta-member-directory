@@ -4,11 +4,15 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.6
+Stable tag: 1.6.1
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
 == Description ==
+
+**PLEASE DO NOT USE THE SUPPORT FORUM FOR FEATURE REQUESTS!!**
+You may submit and vote for new features here:
+https://stephensherrardplugins.com/support/forum/feature-requests/
 
 This plugin lets you create a custom member (or staff) directory, along with an associated contact form, for your organization.  Create as many positions and members (staff) as you like.  Each person can have multiple positions, and each position can have multiple members (staff).
 
@@ -44,6 +48,17 @@ The directory has a variety of options for customization:
 
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 == Frequently Asked Questions ==
+
+**Can this plugin do (insert a feature request here)? **
+**Can you add (insert a feature request here)?**
+
+PLEASE DO NOT USE THE SUPPORT FORUM FOR FEATURE REQUESTS!!
+
+This plugin has a lot of options and features, but I have been getting overwhelmed with feature requests recently. This plugin already does MUCH more than I originally intended, and more than we needed for our own school PTA web site. I have created some extensions that I thought would be helpful to the largest number of people, which you can find at:
+https://stephensherrardplugins.com
+
+PLEASE USE THE FEATURE REQUEST FORUM TO REQUEST NEW FEATURES!!
+https://stephensherrardplugins.com/support/forum/feature-requests/
 
 **Is there any documentation or help on how to use this?**
 
@@ -115,6 +130,10 @@ https://stephensherrardplugins.com
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.6.1**
+
+*	Minor change to admin menu position to avoid conflict with another plugin that specified the same position.
+
 **Version 1.6**
 
 *	Adds a transient time and IP check to contact form processing to prevent multiple submissions of the contact form due to the user hitting refresh and re-submitting the form, or from theme & other plugin issues tha may cause the contact form to be processed more than once.
