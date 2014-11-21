@@ -59,8 +59,10 @@ function pta_display_directory($location='', $position='') {
 	// This is used to determine colspan for vacant positions
 	$cols = (int)apply_filters( 'pta_directory_column_count', 2 );
 
+	$return = '<div class="ptamd_directory_table">';
+
 	// Allow other plugins to add content before the directory table
-	$return = apply_filters( 'pta_directory_before_table', '', $location );
+	$return .= apply_filters( 'pta_directory_before_table', '', $location );
 
 	if($options['enable_location'] && '' != $location) {
 		$args = array( 'hide_empty'=>false,  'slug' => $location  );
@@ -68,7 +70,7 @@ function pta_display_directory($location='', $position='') {
         if ($terms) {
             $term = array_shift($terms);
             $show_location = $term->name;
-            $return .= '<h3>'.apply_filters( 'pta_md_output', esc_html($options['location_label']).': '.esc_html($show_location), 'location_header', $show_location).'</h3>';
+            $return .= '<h3 class="ptamd_location_header">'.apply_filters( 'pta_md_output', esc_html($options['location_label']).': '.esc_html($show_location), 'location_header', $show_location).'</h3>';
         }		
 	}
 	$show_positions = true;
@@ -78,7 +80,7 @@ function pta_display_directory($location='', $position='') {
         if ($terms) {
             $term = array_shift($terms);
             $display_position = $term->name;
-            $return .= '<h3>'. apply_filters( 'pta_md_output', __('Directory Listing for ', 'pta-member-directory') . esc_html($column_position).': '.esc_html($display_position), 'position_header', $display_position ) . '</h3>';
+            $return .= '<h3 class="ptamd_position_header">'. apply_filters( 'pta_md_output', __('Directory Listing for ', 'pta-member-directory') . esc_html($column_position).': '.esc_html($display_position), 'position_header', $display_position ) . '</h3>';
             $show_positions = false;
             $cols--;
         }		
@@ -285,6 +287,7 @@ function pta_display_directory($location='', $position='') {
 	</table>
 	';
 	$return .= apply_filters( 'pta_directory_after_table', '', $location );
+	$return .= '</div>'; // close our table wrapper
 	if(!$show_positions) {
 		// If we aren't showing positions, add a group message link under the table
 		$return .= $group_contact_link;

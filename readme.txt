@@ -3,8 +3,8 @@ Contributors: DBAR Productions
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7U6S4U46CKYPJ
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
-Tested up to: 4.0
-Stable tag: 1.6.1
+Tested up to: 4.0.1
+Stable tag: 1.6.2
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -49,7 +49,7 @@ The directory has a variety of options for customization:
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 == Frequently Asked Questions ==
 
-**Can this plugin do (insert a feature request here)? **
+**Can this plugin do (insert a feature request here)?**
 **Can you add (insert a feature request here)?**
 
 PLEASE DO NOT USE THE SUPPORT FORUM FOR FEATURE REQUESTS!!
@@ -130,6 +130,12 @@ https://stephensherrardplugins.com
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.6.2**
+
+*	Due to continuing conflicts for the limited number of custom post type menu positions in the normal location (has to be an integer), I have changed the menu position yet again to a large, and hopefully not used by any other custom post type, menu position number. Wordpress needs to fix this issue in the core code so menus items don't disappear when two of them have the same menu position! In the meantime, the Member Directory admin menu will move much further down the list.
+*	Added a div wrapper around the member directory table with class: ptamd_directory_table and added classes to the h3 headers for position or location that show up when you specifiy a position or location in the shortcode. Those h3 classes are: ptamd_position_header and ptamd_location_header . This allows you to target elements of the directory table with your own CSS to modify the appearance.
+*	If you're using a responsive theme that doesn't handle tables well on small screens, you can create your own CSS styles to restyle the Member Directory table using the updated CSS classes and the new div container. If that doesn't work for you, I have created a simple and lightweight plugin that simply loads the jQuery Stacktable plugin from John Polacek and applies that to ALL tables on the public side of your site (it automatically stacks table columns on smaller screens). You can download that free from my plugins site.
+
 **Version 1.6.1**
 
 *	Minor change to admin menu position to avoid conflict with another plugin that specified the same position.
