@@ -595,6 +595,7 @@ function pta_directory_contact_form($id='', $location='', $position='', $hide_se
 	// 
 	// First, allow others to add output before the form
 	$email_form = apply_filters( 'pta_member_before_contact_form', '', $id, $location );
+	$email_form .= '<div class="ptamd_contact_form">';
 
 	if($options['enable_location'] && '' != $location) {
 		$args = array( 'hide_empty'=>false,  'slug' => $location  );
@@ -602,10 +603,10 @@ function pta_directory_contact_form($id='', $location='', $position='', $hide_se
         if ($terms) {
             $term = array_shift($terms);
             $show_location = $term->name;
-            $email_form .= '<h2>'.esc_html($options['location_label']).': '.esc_html($show_location).'</h2>';
+            $email_form .= '<h2 class="ptamd_location_header">'.esc_html($options['location_label']).': '.esc_html($show_location).'</h2>';
         }
 	}
-	$email_form .= '<h3>'.esc_html($label_send_message).'</h3>
+	$email_form .= '<h3 class="ptamd_send_message">'.esc_html($label_send_message).'</h3>
 	<form class="pta-contact-form" method="post" action="' . get_permalink() . '">
 		<input type="hidden" name="form_title" value="'.esc_attr($options["form_title"]).'"/>';
 		// Allow other plugins to add fields before the recipient
@@ -796,7 +797,7 @@ function pta_directory_contact_form($id='', $location='', $position='', $hide_se
     $email_form = apply_filters( 'pta_member_contact_form_before_submit', $email_form, $id, $location );
     $email_form .='
 	    <div>
-	    	'.wp_nonce_field("pta_directory_contact_form", "pta_directory_contact_form_nonce").'
+	    	'.wp_nonce_field("pta_directory_contact_form", "pta_directory_contact_form_nonce", true, false).'
 	    	<input type="hidden" name="contact_mode" value="submitted" />
 	        <input type="submit" value="' . esc_attr($label_submit) . '" name="send" id="cf_send" />
 	        <input type="hidden" value="'.esc_attr($id).'" name="id" />

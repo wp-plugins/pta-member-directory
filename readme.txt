@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 4.0.1
-Stable tag: 1.6.2
+Stable tag: 1.6.3
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -130,6 +130,11 @@ https://stephensherrardplugins.com
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.6.3**
+
+*	Added wrapper div and classes to the headings for the contact form.
+*	Minor change in the output of the Wordpress nonce field on the contact form.
+
 **Version 1.6.2**
 
 *	Due to continuing conflicts for the limited number of custom post type menu positions in the normal location (has to be an integer), I have changed the menu position yet again to a large, and hopefully not used by any other custom post type, menu position number. Wordpress needs to fix this issue in the core code so menus items don't disappear when two of them have the same menu position! In the meantime, the Member Directory admin menu will move much further down the list.
