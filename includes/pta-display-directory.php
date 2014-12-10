@@ -804,6 +804,7 @@ function pta_directory_contact_form($id='', $location='', $position='', $hide_se
 	        <input type="hidden" value="'.esc_attr($location).'" name="location" />
 	    </div>
 	</form>';
+	$email_form .='</div>'; // close the wrapper div
 	// Allow other plugins to put content after the form
 	$email_form = apply_filters( 'pta_member_contact_form_after_form', $email_form, $id, $location );
 	if ( $sent == true ) {
