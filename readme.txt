@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 1.6.4
+Stable tag: 1.6.5
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -130,6 +130,10 @@ https://stephensherrardplugins.com
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.6.5**
+
+*	Minor query fix to allow use of purely numerical positions or locations.
+
 **Version 1.6.4**
 
 *	Added missing close div to the contact form wrapper.
