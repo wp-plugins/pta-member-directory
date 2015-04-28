@@ -3,8 +3,8 @@ Contributors: DBAR Productions
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7U6S4U46CKYPJ
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
-Tested up to: 4.1
-Stable tag: 1.6.5
+Tested up to: 4.2.1
+Stable tag: 1.6.6
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
@@ -130,6 +130,12 @@ https://stephensherrardplugins.com
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.6.6**
+
+*	Minor code fix for undefined variable on admin side when using Gravity Forms extension.
+*   Confirmed compatibility with WordPress 4.2.1
+*   Confirmed that all URLs generated with add_query_arg were already being properly escaped, so no issues with the recently discovered XSS vulnerability with the add_query_arg function.
+
 **Version 1.6.5**
 
 *	Minor query fix to allow use of purely numerical positions or locations.

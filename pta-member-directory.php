@@ -12,7 +12,7 @@ yoursite.com/member
 Or, put it on any page with the shortcode.  Separate shortcodes for directory and the contact form.  Contact form can be used stand alone and will
 show a drop down list of all members to choose who to send the message to.
 Author: Stephen Sherrard
-Version: 1.6.5
+Version: 1.6.6
 Author URI: http://stephensherrardplugins.com
 Text Domain: pta-member-directory
 Domain Path: /languages
@@ -660,14 +660,20 @@ function pta_perform_filtering( $query ) {
     }
     if ( ( $qv['member_category'] ) && is_numeric( $qv['member_category'] ) ) {
         $term = get_term_by( 'id', $qv['member_category'], 'member_category' );
-        $qv['member_category'] = $term->slug;
+	    if($term) {
+		    $qv['member_category'] = $term->slug;
+	    }
+
     }
     if (!array_key_exists( 'member_location', $qv )) {
     	return;
     }
     if ( ( $qv['member_location'] ) && is_numeric( $qv['member_location'] ) ) {
         $term = get_term_by( 'id', $qv['member_location'], 'member_location' );
-        $qv['member_location'] = $term->slug;
+	    if($term) {
+		    $qv['member_location'] = $term->slug;
+	    }
+
     }
 }
 if(is_admin()) {

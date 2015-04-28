@@ -86,7 +86,7 @@ function pta_display_directory($location='', $position='') {
         }		
 	}
 	$return .= '
-	<table class="pta_directory_table">
+	<table class="pta_directory_table" id="pta_directory_table">
 	        <thead>
 	            <tr>';
 	            if($show_positions) {
