@@ -379,7 +379,7 @@ function pta_directory_contact_form($id='', $location='', $position='', $hide_se
 		$selected = true; // recipient selected
 	} else {
 		if ($group) { // $group recipient selected, so get posts with that taxonomy
-			$args = array( 'post_type' => 'member', 'member_category' => $group );
+			$args = array( 'post_type' => 'member', 'member_category' => $group, 'numberposts' => -1 );
 			if ($options['enable_location'] && '' != $location) {
 				$args['member_location'] = $location;
 			}

@@ -3,15 +3,15 @@ Contributors: DBAR Productions
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7U6S4U46CKYPJ
 Tags: Staff,Members,Directory,Contact Form
 Requires at least: 3.3
-Tested up to: 4.2.1
-Stable tag: 1.6.6
+Tested up to: 4.2.4
+Stable tag: 1.6.7
 
 Create and display a member/staff directory and contact form. Sortable list of staff by position/title. Spambot protected contact form. Many options.
 
 == Description ==
 
 **PLEASE DO NOT USE THE SUPPORT FORUM FOR FEATURE REQUESTS!!**
-You may submit and vote for new features here:
+You may submit new features here:
 https://stephensherrardplugins.com/support/forum/feature-requests/
 
 This plugin lets you create a custom member (or staff) directory, along with an associated contact form, for your organization.  Create as many positions and members (staff) as you like.  Each person can have multiple positions, and each position can have multiple members (staff).
@@ -130,6 +130,10 @@ https://stephensherrardplugins.com
 1. Contact Form - Public Side
 
 == Changelog ==
+**Version 1.6.7**
+
+*	Fix when selecting a group in the contact form, the email would only be sent to the first 5 members of that groups (or whatever # you had WordPress set to return as default # of posts to show). Fixed the query argument so that all members in that group would be emailed.
+
 **Version 1.6.6**
 
 *	Minor code fix for undefined variable on admin side when using Gravity Forms extension.
